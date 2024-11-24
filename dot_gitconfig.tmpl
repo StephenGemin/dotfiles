@@ -18,11 +18,11 @@
 
 [user]
     name = "{{ .name }}" 
-	email = "{{ .email }}"
+    email = "{{ .email }}"
 [core]
-	autocrlf = input
-	editor = vim
-	excludesfile = ~/.gitignore_global
+    autocrlf = input
+    editor = vim
+    excludesfile = ~/.gitignore_global
 [rebase]
     autosquash = true
 [fetch]
@@ -40,7 +40,6 @@
 [init]
     defaultBranch = main
 [alias]
-    g = git
     gco = checkout
     gnb = git checkout -b
     br = branch
@@ -80,13 +79,13 @@
         git fetch; \
     }; f"
 [rerere]
-	enabled = true
+    enabled = true
 [column]
-	ui = auto
+    ui = auto
 [branch]
-	sort = -committerdate
+    sort = -committerdate
 [filter "lfs"]
-	clean = git-lfs clean -- %f
-	smudge = git-lfs smudge -- %f
-	process = git-lfs filter-process
-	required = true
+    clean = git-lfs clean -- %f
+    smudge = git-lfs smudge -- %f
+    process = git-lfs filter-process
+    required = true

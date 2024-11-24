@@ -23,7 +23,6 @@ FOR %%A in (%DESTFILE%) do (
     )
 )
 
-
 :: Skip if destination is a symbolic link.
 dir %DESTFILE% | findstr "<SYMLINK>" > nul
 IF %errorlevel% == 0 (

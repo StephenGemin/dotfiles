@@ -1,0 +1,84 @@
+# The git prompt's git commands are read-only and should not interfere with
+# other processes. This environment variable is equivalent to running with `git
+# --no-optional-locks`, but falls back gracefully for older versions of git.
+# See git(1) for and git-status(1) for a description of that flag.
+
+function __git_prompt_git() {
+  GIT_OPTIONAL_LOCKS=0 command git "$@"
+}
+
+function git_current_branch() {
+  local ref
+  ref=$(__git_prompt_git symbolic-ref --quiet HEAD 2> /dev/null)
+  local ret=$?
+  if [[ $ret != 0 ]]; then
+    [[ $ret == 128 ]] && return  # no git repo.
+    ref=$(__git_prompt_git rev-parse --short HEAD 2> /dev/null) || return
+  fi
+  echo ${ref#refs/heads/}
+}
+
+# aliases
+alias g='git'
+alias ga='git add --all'
+alias gaa='git add'  # git add any
+
+alias gb='git branch'
+alias gbr='git branch -r'
+alias gbl='git branch -l'
+alias gco='git checkout'
+alias gcob='git checkout -b'
+alias gcoB='git checkout -B'
+alias gcod='git checkout $(git_develop_branch)'
+alias gcom='git checkout $(git_main_branch)'
+
+alias gcp='git cherry-pick'
+alias gcpa='git cherry-pick --abort'
+alias gcpc='git cherry-pick --continue'
+
+alias gc='git commit --verbose'
+alias gcm='git commit --verbose -m'
+alias gc!='git commit --verbose --amend'
+
+alias gd='git diff'
+alias gdst='git diff --stat'
+alias gst='git status'
+
+alias gf='git fetch'
+alias gfo='git fetch origin'
+alias gl='git pull -v'
+alias glr='git pull --rebase -v'
+
+function gl() { git log --oneline -"$1" }
+
+alias gp='git push -v'
+alias gpo='git push -v origin'
+alias gpu='git push -v upstream'
+alias gpf='git push --force-with-lease'
+alias gpf!='git push --force'
+
+alias grb='git rebase --interactive'
+alias grba='git rebase --abort'
+alias grbc='git rebase --continue'
+function grbo() { git rebase -i origin/"$1" }
+function grbu() { git rebase -i upstream/"$1" }
+alias grbd='git rebase --interactive $(git_develop_branch)'
+alias grbm='git rebase --interactive $(git_main_branch)'
+alias grbom='git rebase --interactive origin/$(git_main_branch)'
+alias grbum='git rebase --interactive upstream/$(git_main_branch)'
+
+alias gm='git merge'
+alias gma='git merge --abort'
+alias gmc='git merge --continue'
+alias gms="git merge --squash"
+alias gmff="git merge --ff-only"
+alias gmom='git merge origin/$(git_main_branch)'
+alias gmum='git merge upstream/$(git_main_branch)'
+alias gmod='git merge origin/$(git_develop_branch)'
+
+alias gsta='git stash --all'
+alias gstc='git stash clear'
+alias gstd='git stash drop'
+alias gstl='git stash list'
+alias gstp='git stash pop'
+

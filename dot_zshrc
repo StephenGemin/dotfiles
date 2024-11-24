@@ -18,6 +18,8 @@ zinit light zsh-users/zsh-autosuggestions
 
 # Add in snippets
 zinit snippet OMZP::command-not-found
+zinit snippet OMZP::common-aliases
+zinit snippet OMZP::colored-man-pages
 
 # Load completions
 autoload -Uz compinit && compinit
@@ -30,6 +32,7 @@ bindkey '^['    history-search-backward
 bindkey '^]'    history-search-forward
 
 # History
+export ZSH_AUTOSUGGEST_USE_ASYNC=true
 HISTSIZE=5000
 HISTFILE=~/.zsh_history
 SAVEHIST=$HISTSIZE
@@ -50,8 +53,22 @@ zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
 zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 
 # Aliases
-alias ls='ls --color'
 alias cd="d"
+if [ -f $HOME/.dot_git_aliases ]; then
+  source $HOME/.dot_git_aliases
+fi
+
+# You may need to manually set your language environment
+export LANG=en_US.UTF-8
+
+# Set preferred editor for local and remote sessions.
+if [[ -n $SSH_CONNECTION ]]; then
+    export EDITOR='vim'
+elif command -v mvim > /dev/null; then
+    export EDITOR='mvim';
+else
+    export EDITOR='vim'
+fi
 
 # Shell integrations
 eval "$(fzf --zsh)"

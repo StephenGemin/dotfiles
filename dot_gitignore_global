@@ -6,8 +6,6 @@
 #
 # This list defines global exclusions to all local repositories.
 # See https://git-scm.com/docs/gitignore
-
-
 *~
 .DS_Store
 .git/
@@ -18,3 +16,4 @@ __pycache__/
 *.pyc
 venv/
 .venv/
+
