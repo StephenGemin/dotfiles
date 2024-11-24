@@ -21,7 +21,8 @@ function git_current_branch() {
 alias gacm='git add --all && git commit --verbose -m'
 function grbo() { git rebase --interactive origin/"$1" }
 function gafxpo() { git add --all && git commit --fixup $1 && git push origin }
-function gapo() { git add --all && git commit -m $1 && git push origin }
+alias gcpo='git add --all && git commit && git push origin'
+function gcmpo() { git add --all && git commit -m $1 && git push origin }
 alias gapof!='git add --all && git commit --amend && git push --force-with-lease origin --set-upstream $(git_current_branch)'
 alias ganvpof!='git add --all && git commit --amend --no-verify && git push origin --force-with-lease --set-upstream $(git_current_branch)'
 function gafx() { git add --all && git commit --verbose --fixup $1 }
