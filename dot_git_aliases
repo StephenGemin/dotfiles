@@ -17,8 +17,17 @@ function git_current_branch() {
   fi
   echo ${ref#refs/heads/}
 }
+# my most used commands
+alias gacm='git add --all && git commit --verbose -m'
+function grbo() { git rebase --interactive origin/"$1" }
+function gafxpo() { git add --all && git commit --fixup $1 && git push origin }
+function gapo() { git add --all && git commit -m $1 && git push origin }
+alias gapof!='git add --all && git commit --amend && git push --force-with-lease origin --set-upstream $(git_current_branch)'
+alias ganvpof!='git add --all && git commit --amend --no-verify && git push origin --force-with-lease --set-upstream $(git_current_branch)'
+function gafx() { git add --all && git commit --verbose --fixup $1 }
+alias gds='git diff --stat'
+function gl() { git log --oneline -"$1" }
 
-# aliases
 alias g='git'
 alias ga='git add --all'
 alias gaa='git add'  # git add any
@@ -35,37 +44,29 @@ alias gcom='git checkout $(git_main_branch)'
 alias gcp='git cherry-pick'
 alias gcpa='git cherry-pick --abort'
 alias gcpc='git cherry-pick --continue'
+alias gacpc='git add --all && git cherry-pick --continue'
 
 alias gc='git commit --verbose'
 alias gcm='git commit --verbose -m'
 alias gc!='git commit --verbose --amend'
+function gcfx() { git commit --verbose --fixup $1 }
+alias gc!nv='git commit --verbose --amend --no-verify'
+alias gacmnv='git add --all && git commit --verbose --no-verify -m'
 
 alias gd='git diff'
-alias gdst='git diff --stat'
-alias gst='git status'
+alias gs='git status'
+alias gsh='git show'
 
 alias gf='git fetch'
 alias gfo='git fetch origin'
-alias gl='git pull -v'
-alias glr='git pull --rebase -v'
-
-function gl() { git log --oneline -"$1" }
+alias gpl='git pull -v'
+alias gplr='git pull --rebase -v'
 
 alias gp='git push -v'
 alias gpo='git push -v origin'
+alias gpo!='git push origin --force'
+alias gpof='git push origin --force-with-lease'
 alias gpu='git push -v upstream'
-alias gpf='git push --force-with-lease'
-alias gpf!='git push --force'
-
-alias grb='git rebase --interactive'
-alias grba='git rebase --abort'
-alias grbc='git rebase --continue'
-function grbo() { git rebase -i origin/"$1" }
-function grbu() { git rebase -i upstream/"$1" }
-alias grbd='git rebase --interactive $(git_develop_branch)'
-alias grbm='git rebase --interactive $(git_main_branch)'
-alias grbom='git rebase --interactive origin/$(git_main_branch)'
-alias grbum='git rebase --interactive upstream/$(git_main_branch)'
 
 alias gm='git merge'
 alias gma='git merge --abort'
@@ -76,9 +77,40 @@ alias gmom='git merge origin/$(git_main_branch)'
 alias gmum='git merge upstream/$(git_main_branch)'
 alias gmod='git merge origin/$(git_develop_branch)'
 
+alias grb='git rebase --interactive'
+alias grba='git rebase --abort'
+alias grbc='git rebase --continue'
+alias garbc='git add --all && git rebase --continue'
+function grbu() { git rebase --interactive upstream/"$1" }
+alias grbd='git rebase --interactive $(git_develop_branch)'
+alias grbm='git rebase --interactive $(git_main_branch)'
+alias grbom='git rebase --interactive origin/$(git_main_branch)'
+alias grbum='git rebase --interactive upstream/$(git_main_branch)'
+
+alias grs='git reset'
+function grsh() { if [ -z "$1" ]; then git reset HEAD~1; else git reset HEAD~"$1"; fi; }
+
 alias gsta='git stash --all'
 alias gstc='git stash clear'
 alias gstd='git stash drop'
 alias gstl='git stash list'
 alias gstp='git stash pop'
+
+# more personal aliases & functions
+# nkf family -> checkout to branch, nuke previous local branch, then pull
+#function nkf() { CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD); git checkout $1 && git branch -D $CURRENT_BRANCH && git pull; }
+function nkf() { CURRENT_BRANCH=$(git_current_branch); git checkout $1 && git branch -D $CURRENT_BRANCH && git pull; }
+function nkfm() { CURRENT_BRANCH=$(git_current_branch); git checkout $(git_main_branch) && git branch -D $CURRENT_BRANCH && git pull }
+function nkfd() { CURRENT_BRANCH=$(git_current_branch); git checkout $(git_develop_branch) && git branch -D $CURRENT_BRANCH && git pull }
+
+
+# add-hoc aliases & functions
+function migrate-origin() {
+    git remote remove origin && \
+    git remote add origin "$1" && \
+    git fetch && \
+    git checkout "$2" && \
+    git branch --set-upstream-to=origin/"$2" "$2" && \
+    git fetch
+}
 

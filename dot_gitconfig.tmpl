@@ -39,45 +39,6 @@
     keepBackup = false
 [init]
     defaultBranch = main
-[alias]
-    gco = checkout
-    gnb = git checkout -b
-    br = branch
-    ci = commit
-    log1 = log --oneline
-    po = "!f() { CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD); git push origin --set-upstream $CURRENT_BRANCH; }; f"
-    pof = "!f() { CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD); git push origin --force-with-lease --set-upstream $CURRENT_BRANCH; }; f"
-    dstat = diff --stat
-    cm = commit
-    cp = cherry-pick
-    cma = "!f() { git add . && git commit; }; f"  # add all and commit
-    cmanv = "!f() { git add . && git commit --no-verify; }; f"  # add all and commit
-    amd = "!f() { git add . && git commit --amend; }; f"
-    amdnv = "!f() { git add . && git commit --no-verify --amend; }; f"
-    pamd = !git add . && git cm --amend && git push --force-with-lease
-    cmf = "!f() { git add . && git commit --fixup $1; }; f"
-    pcmf= "!f() { git add . && git commit --fixup $1 && git push origin -u; }; f"
-    rbo = "!f() { git rebase -i origin/$1; }; f"
-    rbf = "!f() { git rebase -i upstream/$1; }; f"
-    fnrb = "!f() { git fetch && git rebase -i $1; }; f"
-    arbc = "!f() { git add . && git rebase --continue; }; f"
-    acpc = "!f() { git add . && git cherry-pick --continue; }; f"
-    alias = config --get-regexp ^alias\\.
-    nkf = "!f() { CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD); git checkout $1 && git branch -D $CURRENT_BRANCH && git pull; }; f"
-    # $1 is the default branch
-    bclean = "!f() { git branch --merged ${1-$1} | grep -v " ${1-$1}$" | xargs -r git branch -d; }; f"
-    gc = git clone
-    staash = stash --all
-    
-    # temporary aliases
-    migrate-origin = "!f() { \
-        git remote remove origin && \
-        git remote add origin $1 && \
-        git fetch && \
-        git checkout $2 && \
-        git branch --set-upstream-to=origin/$2 $2 && \
-        git fetch; \
-    }; f"
 [rerere]
     enabled = true
 [column]
@@ -89,3 +50,6 @@
     smudge = git-lfs smudge -- %f
     process = git-lfs filter-process
     required = true
+[include]
+    path = ".gitconfig_local"  # include extra local configuration (if needed)
+
