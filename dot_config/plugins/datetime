@@ -1,0 +1,20 @@
+# Gets local/UTC date and time in ISO-8601 format `YYYY-MM-DDThh:mm:ss`.
+alias now='date +"%Y-%m-%dT%H:%M:%S"'
+alias unow='date -u +"%Y-%m-%dT%H:%M:%S"'
+
+# Gets date in `YYYY-MM-DD` format`
+alias nowdate='date +"%Y-%m-%d"'
+alias unowdate='date -u +"%Y-%m-%d"'
+
+# Gets time in `hh:mm:ss` format`
+alias nowtime='date +"%T"'
+alias unowtime='date -u +"%T"'
+
+# Gets Unix time stamp`
+alias tstamp='date -u +%s'
+
+# Gets week number in ISO-8601 format `YYYY-Www`.
+alias week='date +"%Y-W%V"'
+
+# Gets weekday number.
+alias weekday='date +"%u"'

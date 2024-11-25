@@ -1,0 +1,49 @@
+# System clipboard integration
+#
+# This file has support for doing system clipboard copy and paste operations
+# from the command line in a generic cross-platform fashion.
+
+function cb() {
+    if [ -z "$1" ]; then
+        echo "Usage: cb <path>"
+        echo "Help: cb copies a file contents to the clipboard."
+        return 0
+    fi
+
+    if command -v pbcopy > /dev/null; then
+        pbcopy < "$1"
+    elif command -v xclip > /dev/null; then
+        xclip -selection clipboard < "$1"
+    elif command -v xsel > /dev/null; then
+        xsel -ib < "$1"
+    elif command -v clipboard > /dev/null; then # node.js clipboard-cli
+        clipboard < "$1"
+    elif command -v clip > /dev/null; then
+        clip < "$1"
+    elif command -v powershell > /dev/null; then
+        powershell -NoProfile -Command "Set-Clipboard"
+    fi
+}
+
+clip() {
+    if [[ "$1" == "--help" ]]; then
+        echo "Usage: clip"
+        echo "Copy input to the clipboard using the platform-specific clipboard utility."
+        echo "Supported platforms: macOS, Windows, Linux (X11, Wayland)."
+        return 0
+    fi
+    if command -v pbcopy > /dev/null; then  # macOS
+        pbcopy
+    elif command -v clip > /dev/null; then  # Windows
+        command clip "$@"
+    elif command -v xclip > /dev/null; then  # Linux
+        xclip -selection clipboard
+    elif command -v wl-copy > /dev/null; then  # Linux
+        wl-copy
+    elif command -v powershell > /dev/null; then  # Windows powershell
+        powershell.exe -NoProfile -Command "Set-Clipboard"
+    else
+        echo "Error: No clipboard utility found." >&2
+        return 1
+    fi
+}

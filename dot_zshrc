@@ -20,6 +20,20 @@ zinit light zsh-users/zsh-autosuggestions
 zinit snippet OMZP::command-not-found
 zinit snippet OMZP::colored-man-pages
 
+local_plugins=(
+  override_standards
+  clipboard
+  datetime
+  file_management
+  file_navigation
+  git
+)
+for plugin in "${local_plugins[@]}"; do
+    # would prefer to use zinit, but couldn't figure out syntax
+    # particulaly not cloning file, but using local source
+    source "$HOME/.config/plugins/$plugin"
+done
+
 # Load completions
 autoload -Uz compinit && compinit
 
@@ -52,10 +66,8 @@ zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
 zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 
 # Aliases
-alias cd="d"
-if [ -f $HOME/.git_aliases ]; then
-  source $HOME/.git_aliases
-fi
+alias cd="d" # map zoxide alias
+alias d-='d -'
 
 # You may need to manually set your language environment
 export LANG=en_US.UTF-8

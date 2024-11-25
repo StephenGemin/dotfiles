@@ -1,0 +1,13 @@
+# Redefine standard commands to improve their behavior
+# -----------------------------------------------------------------------------
+
+# Makes file commands verbose.
+alias cp='cp -v';
+alias mv='mv -v';
+
+# Displays drives and space in human readable format.
+alias df='df -h'
+
+# Prints disk usage per directory non-recursively, in human readable format.
+alias du='du -h -d1'
+

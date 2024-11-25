@@ -1,0 +1,28 @@
+# Utilities to improve file navigation and browsing
+
+# Nagivates up a directory.
+alias cd-='cd -'
+alias cd..='cd ..'
+alias ..='cd ..'
+
+# Nagivates up two directories.
+alias ...='cd ../../../'
+
+# Nagivates up X directories.
+alias ..3='cd ../../..'
+alias ..4='cd ../../../..'
+alias ..5='cd ../../../../..'
+
+# Lists visible files in long format.
+alias l='ls -l --color'
+alias la='ls -la --color'
+
+# Lists all files in long format, excluding `.` and `..`.
+alias lA='ls -lA --color'
+
+# Lists directories only, in long format.
+alias lsd='ls -l | grep --color=never "^d"'
+
+# Lists hidden files in long format.
+alias lsh='ls -dlA .?*'
+
