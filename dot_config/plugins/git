@@ -84,9 +84,8 @@ alias grba='git rebase --abort'
 alias grbc='git rebase --continue'
 alias garbc='git add --all && git rebase --continue'
 function grbu() { git rebase --interactive upstream/"$1" }
-alias grbd='git rebase --interactive $(git_develop_branch)'
-alias grbm='git rebase --interactive $(git_main_branch)'
-alias grbom='git rebase --interactive origin/$(git_main_branch)'
+alias grbd='git rebase --interactive origin/$(git_develop_branch)'
+alias grbm='git rebase --interactive origin/$(git_main_branch)'
 alias grbum='git rebase --interactive upstream/$(git_main_branch)'
 
 alias grs='git reset'
