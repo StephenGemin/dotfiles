@@ -13,10 +13,12 @@
 
 # {{- $email := promptString "Git email address for the author/committer" }}
 # {{- $name := promptString "Git username for the author/committer" }}
+# {{- $git_install_dir := promptString "Only pass if != default path '%PROGRAMFILES%/Git'" }}
 
 [data]
     email = "{{ $email }}"
     name = "{{ $name }}"
+    git_install_dir = "{{ $git_install_dir }}"
 
 # https://www.chezmoi.io/user-guide/tools/diff/#dont-show-scripts-in-the-diff-output
 [diff]

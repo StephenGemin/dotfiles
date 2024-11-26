@@ -67,7 +67,7 @@
             {
                 "closeOnExit": "graceful",
                 "colorScheme": "One Half Dark",
-                "commandline": "%PROGRAMFILES%/git/usr/bin/bash.exe -i -l",
+                "commandline": "{{ default `%PROGRAMFILES%/Git` .git_install_dir }}/usr/bin/bash.exe -i -l",
                 "cursorColor": "#FFFFFF",
                 "cursorShape": "bar",
                 "font": 
@@ -77,11 +77,11 @@
                 },
                 "guid": "{00000000-0000-0000-ba54-000000000002}",
                 "hidden": false,
-                "icon": "%PROGRAMFILES%/Git/mingw64/share/git/git-for-windows.ico",
+                "icon": "{{ default `%PROGRAMFILES%/Git` .git_install_dir }}/mingw64/share/git/git-for-windows.ico",
                 "name": "Git-Bash",
                 "padding": "0, 0, 0, 0",
                 "snapOnInput": true,
-                "startingDirectory": "D:\\repos"
+                "startingDirectory": "%USERPROFILE%"
             },
             {
                 "closeOnExit": "graceful",
