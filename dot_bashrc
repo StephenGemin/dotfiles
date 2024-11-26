@@ -1,0 +1,35 @@
+# Command-line shell completions
+# -----------------------------------------------------------------------------
+
+# Provide Chezmoi completions (if installed).
+# See https://github.com/twpayne/chezmoi/blob/master/docs/REFERENCE.md
+if command -v chezmoi > /dev/null; then
+    eval "$(chezmoi completion bash)"
+fi
+
+# Development environments
+# -----------------------------------------------------------------------------
+if command -v pyenv > /dev/null; then
+    eval "$(pyenv init -)"
+fi
+
+# Includes
+# -----------------------------------------------------------------------------
+local_plugins=(
+    override_standards
+    clipboard
+    datetime
+    file_management
+    file_navigation
+    #git  need to fix syntax error: unexpected end of line
+)
+for plugin in "${local_plugins[@]}"; do
+    # would prefer to use zinit, but couldn't figure out syntax
+    # particulaly not cloning file, but using local source
+    source "$HOME/.config/plugins/$plugin"
+done
+
+# Load custom code from separate configuration file.
+if [ -f "$HOME"/.bash_extras ]; then
+    \. "$HOME"/.bash_extras
+fi
