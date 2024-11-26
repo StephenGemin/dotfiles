@@ -17,6 +17,39 @@ function git_current_branch() {
   fi
   echo ${ref#refs/heads/}
 }
+
+# Check for develop and similarly named branches
+function git_develop_branch() {
+  command git rev-parse --git-dir &>/dev/null || return
+  local branch
+  for branch in dev devel develop development; do
+    if command git show-ref -q --verify refs/heads/$branch; then
+      echo $branch
+      return 0
+    fi
+  done
+  
+  # If no develop branch was found, use fall back but return error
+  echo develop
+  return 1
+}
+
+# Check if main exists and use instead of master
+function git_main_branch() {
+  command git rev-parse --git-dir &>/dev/null || return
+  local ref
+  for ref in refs/{heads,remotes/{origin,upstream}}/{main,master,trunk,mainline,default,stable}; do
+    if command git show-ref -q --verify $ref; then
+      echo ${ref:t}
+      return 0
+    fi
+  done
+
+  # If no main branch was found, use fall back but return error
+  echo master
+  return 1
+}
+
 # my most used commands
 alias gac='git add --all && git commit --verbose'
 alias gacm='git add --all && git commit --verbose -m'
@@ -29,6 +62,7 @@ alias ganvpof!='git add --all && git commit --amend --no-verify && git push orig
 function gafx() { git add --all && git commit --verbose --fixup $1 }
 alias gds='git diff --stat'
 function gl() { git log --oneline -"$1" }
+alias gwip='git add --all && git commit -v -m "[skip-ci] WIP"'
 
 alias g='git'
 alias ga='git add --all'
