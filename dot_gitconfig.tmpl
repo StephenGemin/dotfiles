@@ -23,9 +23,14 @@
     autocrlf = input
     editor = vim
     excludesfile = ~/.gitignore_global
+
     # Speed up commands involving untracked files such as `git status`.
     # See https://git-scm.com/docs/git-update-index#_untracked_cache
     untrackedCache = true
+
+    # Set comment character to something that allows mentioning issue numbers.
+    commentChar = ";"
+
 [commit]
     template = ~/.gitmessage.txt
 [rebase]

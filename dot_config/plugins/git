@@ -134,9 +134,9 @@ alias gstp='git stash pop'
 # more personal aliases & functions
 # nkf family -> checkout to branch, nuke previous local branch, then pull
 #function nkf() { CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD); git checkout $1 && git branch -D $CURRENT_BRANCH && git pull; }
-function nkf() { CURRENT_BRANCH=$(git_current_branch); git checkout $1 && git branch -D $CURRENT_BRANCH && git pull; }
-function nkfm() { CURRENT_BRANCH=$(git_current_branch); git checkout $(git_main_branch) && git branch -D $CURRENT_BRANCH && git pull }
-function nkfd() { CURRENT_BRANCH=$(git_current_branch); git checkout $(git_develop_branch) && git branch -D $CURRENT_BRANCH && git pull }
+function gnkf() { CURRENT_BRANCH=$(git_current_branch); git checkout $1 && git branch -D $CURRENT_BRANCH && git pull; }
+function gnkfm() { CURRENT_BRANCH=$(git_current_branch); git checkout $(git_main_branch) && git branch -D $CURRENT_BRANCH && git pull }
+function gnkfd() { CURRENT_BRANCH=$(git_current_branch); git checkout $(git_develop_branch) && git branch -D $CURRENT_BRANCH && git pull }
 
 
 # add-hoc aliases & functions
