@@ -18,6 +18,7 @@ function git_current_branch() {
   echo ${ref#refs/heads/}
 }
 # my most used commands
+alias gac='git add --all && git commit --verbose'
 alias gacm='git add --all && git commit --verbose -m'
 function grbo() { git rebase --interactive origin/"$1" }
 function gafxpo() { git add --all && git commit --fixup $1 && git push origin }
