@@ -1,52 +1,26 @@
 {
+    "defaultProfile": "{574e775e-4f2a-5b96-ac1e-a2962a402336}",
     "$help": "https://aka.ms/terminal-documentation",
     "$schema": "https://aka.ms/terminal-profiles-schema",
-    "actions": 
-    [
-        {
-            "command": 
-            {
-                "action": "copy",
-                "singleLine": false
-            },
-            "id": "User.copy.644BA8F2",
-            "keys": "ctrl+shift+c"
-        },
-        {
-            "command": "paste",
-            "id": "User.paste",
-            "keys": "ctrl+shift+v"
-        },
-        {
-            "command": "find",
-            "id": "User.find",
-            "keys": "ctrl+shift+f"
-        },
-        {
-            "command": 
-            {
-                "action": "splitPane",
-                "split": "auto",
-                "splitMode": "duplicate"
-            },
-            "id": "User.splitPane.A6751878",
-            "keys": "alt+shift+d"
-        }
-    ],
+    "confirmCloseAllTabs": false,
     "copyFormatting": "none",
     "copyOnSelect": false,
-    "defaultProfile": "{00000000-0000-0000-ba54-000000000002}",
-    "newTabMenu": 
+    "actions": 
     [
-        {
-            "type": "remainingProfiles"
-        }
+        {"command": "closeTab", "keys": "ctrl+w", "id": "Terminal.closeTab"},
+        {"command": {"action": "splitPane", "split": "auto", "splitMode": "duplicate"}, "id": "User.splitPane.A6751878","keys": "alt+shift+d"},
+        {"command": {"action": "copy", "singleLine": false}, "id": "User.copy.644BA8F2", "keys": "ctrl+shift+c"},
+        {"command": "paste", "id": "User.paste", "keys": "ctrl+shift+v"},
+        {"command": "find", "id": "User.find", "keys": "ctrl+shift+f"}
     ],
     "profiles": 
     {
-        "defaults": {
-            "fontFace": "JetBrainsMono Nerd Font",
-            "fontSize": 14
+        "defaults": 
+        {
+            "colorScheme": "UnixDark",
+            "cursorShape": "underscore",
+            "font": {"face": "JetBrainsMono Nerd Font", "size": 14},
+            "bellStyle": "taskbar"
         },
         "list": 
         [
@@ -61,7 +35,6 @@
                 "hidden": false,
                 "name": "Git-Bash",
                 "closeOnExit": "graceful",
-                "colorScheme": "One Half Dark",
                 "commandline": "{{ default `%PROGRAMFILES%/Git` .git_install_dir }}/usr/bin/bash.exe -i -l",
                 "cursorColor": "#FFFFFF",
                 "cursorShape": "bar",
@@ -75,7 +48,6 @@
                 "name": "Command Prompt",
                 "hidden": false,
                 "closeOnExit": "graceful",
-                "colorScheme": "One Half Dark",
                 "cursorColor": "#FFFFFF",
                 "cursorShape": "bar",
                 "padding": "0, 0, 0, 0",
@@ -83,13 +55,12 @@
                 "startingDirectory": "%USERPROFILE%"
             },
             {
+                "guid": "{61c54bbd-c2c6-5271-96e7-009a87ff44bf}",
+                "name": "Windows PowerShell",
+                "hidden": false,
                 "closeOnExit": "graceful",
-                "colorScheme": "One Half Dark",
                 "cursorColor": "#FFFFFF",
                 "cursorShape": "bar",
-                "guid": "{61c54bbd-c2c6-5271-96e7-009a87ff44bf}",
-                "hidden": false,
-                "name": "Windows PowerShell",
                 "opacity": 90,
                 "padding": "0, 0, 0, 0",
                 "snapOnInput": true,
@@ -134,6 +105,29 @@
             "selectionBackground": "#FFFFFF",
             "white": "#EEE8D5",
             "yellow": "#B58900"
+        },
+        {
+            "background": "#1E1D2F",
+            "black": "#6E6C7E",
+            "blue": "#96CDFB",
+            "brightBlack": "#988BA2",
+            "brightBlue": "#96CDFB",
+            "brightCyan": "#89DCEB",
+            "brightGreen": "#ABE9B3",
+            "brightPurple": "#F5C2E7",
+            "brightRed": "#F28FAD",
+            "brightWhite": "#D9E0EE",
+            "brightYellow": "#FAE3B0",
+            "cursorColor": "#F5E0DC",
+            "cyan": "#89DCEB",
+            "foreground": "#D9E0EE",
+            "green": "#ABE9B3",
+            "name": "UnixDark",
+            "purple": "#F5C2E7",
+            "red": "#F28FAD",
+            "selectionBackground": "#FFFFFF",
+            "white": "#D9E0EE",
+            "yellow": "#FAE3B0"
         }
     ],
     "themes": []

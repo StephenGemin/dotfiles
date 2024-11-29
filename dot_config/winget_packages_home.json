@@ -1,0 +1,43 @@
+{
+	"$schema" : "https://aka.ms/winget-packages.schema.2.0.json",
+	"CreationDate" : "2024-11-28T17:05:56.257-00:00",
+	"Sources" :
+	[
+		{
+			"Packages" :
+			[
+				{"PackageIdentifier" : "7zip.7zip"},
+				{"PackageIdentifier" : "ShareX.ShareX"},
+				{"PackageIdentifier" : "TGRMNSoftware.BulkRenameUtility"},
+				{"PackageIdentifier" : "Git.Git"},
+				{"PackageIdentifier" : "Mozilla.Firefox"},
+				{"PackageIdentifier" : "Notepad++.Notepad++"},
+				{"PackageIdentifier" : "UB-Mannheim.TesseractOCR"},
+				{"PackageIdentifier" : "DBBrowserForSQLite.DBBrowserForSQLite"},
+				{"PackageIdentifier" : "alexx2000.DoubleCommander"},
+				{"PackageIdentifier" : "Microsoft.PowerShell"},
+				{"PackageIdentifier" : "JetBrains.Toolbox"},
+				{"PackageIdentifier" : "VideoLAN.VLC"},
+				{"PackageIdentifier" : "Notion.Notion"},
+				{"PackageIdentifier" : "flux.flux"},
+				{"PackageIdentifier" : "GitHub.GitHubDesktop"},
+				{"PackageIdentifier" : "JanDeDobbeleer.OhMyPosh"},
+				{"PackageIdentifier" : "Opera.Opera"},
+				{"PackageIdentifier" : "ajeetdsouza.zoxide"},
+				{"PackageIdentifier" : "junegunn.fzf"},
+				{"PackageIdentifier" : "twpayne.chezmoi"},
+				{"PackageIdentifier" : "Microsoft.VisualStudioCode"},
+				{"PackageIdentifier" : "Microsoft.AppInstaller"},
+				{"PackageIdentifier" : "Microsoft.WindowsTerminal"}
+			],
+			"SourceDetails" :
+			{
+				"Argument" : "https://cdn.winget.microsoft.com/cache",
+				"Identifier" : "Microsoft.Winget.Source_8wekyb3d8bbwe",
+				"Name" : "winget",
+				"Type" : "Microsoft.PreIndexed.Package"
+			}
+		}
+	],
+	"WinGetVersion" : "1.9.25200"
+}

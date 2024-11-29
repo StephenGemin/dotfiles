@@ -1,0 +1,153 @@
+{{ if eq .chezmoi.os "windows" -}}
+# -*-mode:powershell-*- vim:ft=powershell
+
+# =============================================================================
+# Idempotent manual setup script to install or update Windows dependencies.
+
+# Requires that PowerShell be running with elevated privileges to be able to
+# change system properties.
+#Disabled Requires -RunAsAdministrator
+
+# Note to future self, chezmoi runs this script on Powershell 5 even if a 
+# higher level version is installed!
+
+# Create missing $IsWindows if running Powershell 5 or below.
+if (!(Test-Path variable:global:IsWindows)) {
+    Set-Variable "IsWindows" -Scope "Global" -Value ([System.Environment]::OSVersion.Platform -eq "Win32NT")
+}
+
+if ($null -eq (Get-Variable "ColorInfo" -ErrorAction "Ignore")) {
+    Set-Variable -Name ColorInfo -Value "DarkYellow"
+}
+
+Set-Variable -Name count -Value 0 -Scope Script
+
+function eos {
+    <#
+    .SYNOPSIS
+        Terminates the script and counts the actions taken.
+    .INPUTS
+        None
+    .OUTPUTS
+        None
+    #>
+    if ($count) {
+        Write-Host "Done! $count modification(s) applied." -ForegroundColor $ColorInfo
+    }
+    else {
+        Write-Host "No modifications performed." -ForegroundColor $ColorInfo
+    } 
+    Remove-Variable -Name count -Scope Script
+}
+
+# Ask for confirmation.
+$hereString = "
+    This script will perform the following non-destructive adjustements to the system (if required):
+        - Install missing or update existing Powershell modules"
+if ($IsWindows) {
+    $hereString += "
+        - Install packages with winget, scoop and/or chocolately"    
+    $hereString += "
+        - Enable LongPaths support for file paths above 260 characters"
+}
+$hereString += [Environment]::NewLine
+Write-Host $hereString -ForegroundColor $ColorInfo
+# $confirmation = Read-Host -Prompt "Do you want to proceed? [y/N]"
+# if ($confirmation -notMatch '^y(es)?$') {
+#     eos
+#     exit
+# }
+# Remove-Variable -Name ("confirmation", "hereString")
+
+# #
+# # Dependencies
+# #
+if ($PSVersionTable.PSVersion.Major -le 5) {
+    Import-Module PowerShellGet
+}
+
+# Install or update Powershell modules from Powershell Gallery
+$modules = @{
+    "PSFzf" = @{
+        Info = "fzf wrapper for pwsh";
+        Repo = "https://github.com/kelleyma49/PSFzf";
+        Install = $true;
+        Force = $false;
+        Prerelease = $false;
+        AllowClobber = $false;
+        SkipPublisherCheck = $false;
+        Update = $false;
+    };
+}
+($modules.GetEnumerator() | Sort-Object -Property name) | ForEach-Object {
+    if (!$_.Value.Install) {
+        continue
+    }
+    if (Get-Module -ListAvailable -Name $_.Name -ErrorAction "Ignore") {
+        if ($Update) {
+            Write-Host "Checking for $($_.Name) updates ($($_.Value.Info))..." -ForegroundColor $ColorInfo
+            Install-Module $_.Name -Scope CurrentUser
+        }
+    }
+    else {
+        Write-Host "Installing $($_.Name) ($($_.Value.Info))..." -ForegroundColor $ColorInfo
+        if ($AllowPrerelease -and $_.Value.Prerelease) {
+            Install-Module $_.Name -Scope CurrentUser -Force:$_.Value.Force -SkipPublisherCheck:$_.Value.SkipPublisherCheck -AllowClobber:$_.Value.AllowClobber -AllowPrerelease:$_.Value.Prerelease
+        }
+        else {
+            Install-Module $_.Name -Scope CurrentUser -Force:$_.Value.Force -SkipPublisherCheck:$_.Value.SkipPublisherCheck -AllowClobber:$_.Value.AllowClobber
+        }
+        Get-Module -ListAvailable -Name $_.Name
+        $count++
+    }
+}
+
+# https://github.com/pyenv-win/pyenv-win
+if (-not (Get-Command pyenv -ErrorAction SilentlyContinue)) {
+    Write-Host "Installing pyenv-win"
+    Invoke-WebRequest -UseBasicParsing -Uri "https://raw.githubusercontent.com/pyenv-win/pyenv-win/master/pyenv-win/install-pyenv-win.ps1" -OutFile "./install-pyenv-win.ps1"; &"./install-pyenv-win.ps1"
+    $count++
+}
+
+# Check if winget is available
+$wingetPath = Get-Command winget -ErrorAction SilentlyContinue
+if (-not $wingetPath) {
+    Write-Host "Installing winget" -ForegroundColor Yellow
+    Install-Module -Name Microsoft.WinGet.Client -Force -Repository PSGallery | Out-Null
+    $count++
+}
+
+# Install packages with winget
+{{ if eq .install_type "home" -}}
+  $wingetImportFileName = "winget_packages_home.json"
+{{ else }}
+  $wingetImportFileName = "winget_packages_work.json"
+{{ end }}
+$wingetImportPath = Join-Path -Path (Join-Path -Path $HOME -ChildPath ".config") -ChildPath $wingetImportFileName
+Invoke-Command -ScriptBlock {
+    winget import -i $wingetImportPath --ignore-unavailable --accept-package-agreements --accept-source-agreements --disable-interactivity
+    $count++
+}
+
+#
+# System tweaks
+#
+
+# Enable LongPaths support for file paths above 260 characters.
+# See https://social.msdn.microsoft.com/Forums/en-US/fc85630e-5684-4df6-ad2f-5a128de3deef
+if ($IsWindows) {
+    $property = 'HKLM:\SYSTEM\CurrentControlSet\Control\FileSystem'
+    $name = 'LongPathsEnabled'
+    if ((Get-ItemPropertyValue $property -Name $name) -ne 0) {
+        Write-Host "LongPaths support already enabled, skipping." -ForegroundColor $ColorInfo
+    }
+    else {
+        Write-Host "Enabling LongPaths support for file paths above 260 characters." -ForegroundColor $ColorInfo
+        Set-ItemProperty $property -Name $name -Value 1
+        $count++
+    }
+}
+
+# Display termination message.
+eos
+{{- end }}

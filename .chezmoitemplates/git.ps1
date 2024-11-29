@@ -1,0 +1,167 @@
+# This is a shell -> pwsh conversion
+# Give the same cmd feel in pwsh as shell
+
+function __git_prompt_git {
+    $env:GIT_OPTIONAL_LOCKS = 0
+    git @Args
+    Remove-Item Env:\GIT_OPTIONAL_LOCKS -ErrorAction SilentlyContinue
+}
+
+function git_current_branch {
+    try {
+        $ref = __git_prompt_git symbolic-ref --quiet HEAD 2>$null
+    } catch {
+        # If not a git repo or symbolic ref fails, fallback
+        $ref = __git_prompt_git rev-parse --short HEAD 2>$null
+        if (-not $ref) { return }
+    }
+    return $ref -replace 'refs/heads/', ''
+}
+
+function git_develop_branch {
+    if (-not (git rev-parse --git-dir 2>$null)) { return }
+
+    $branches = @('dev', 'devel', 'develop', 'development')
+    foreach ($branch in $branches) {
+        if (git show-ref -q --verify "refs/heads/$branch") {
+            return $branch
+        }
+    }
+
+    # Fallback to 'develop' but return error
+    Write-Output 'develop'
+    return 1
+}
+
+function git_main_branch {
+    if (-not (git rev-parse --git-dir 2>$null)) { return }
+
+    $refs = @(
+        'refs/heads/main', 'refs/heads/master', 'refs/heads/trunk',
+        'refs/heads/mainline', 'refs/heads/default', 'refs/heads/stable',
+        'refs/remotes/origin/main', 'refs/remotes/origin/master',
+        'refs/remotes/upstream/main', 'refs/remotes/upstream/master'
+    )
+
+    foreach ($ref in $refs) {
+        $result = git show-ref --verify $ref 2>$null
+        if ($result) {
+            return ($ref -split '/')[-1]
+        }
+    }
+
+    # Fallback to 'main' but return error
+    Write-Output 'main'
+    return 1
+}
+
+# my most used commands
+function gac { git add --all; git commit --verbose }
+function gac! { git add --all; git commit --verbose --amend }
+function gacfx { param([string]$1); git add --all; git commit --verbose --fixup $1 }
+function grbo { param([string]$1); git rebase --interactive origin/$1 }
+function gacpo { git add --all; git commit --verbose; git push origin }
+function gacpo! { $b = git rev-parse --abbrev-ref HEAD; git add --all; git commit --amend; git push --force-with-lease origin --set-upstream $b }
+function gacnvpo! { $b = git rev-parse --abbrev-ref HEAD; git add --all; git commit --amend --no-verify; git push origin --force-with-lease --set-upstream $b }
+function gds { git diff --stat }
+function gl { param([int]$1=10); git log --oneline -$1 }
+function gwip { git add --all; git commit -v -m "[skip-ci] WIP" }
+
+function g { git }
+function ga { git add --all }
+function gaa { git add }  # git add any
+
+function gb { git branch }
+function gbr { git branch -r }
+function gbl { git branch -l }
+function gco {param ([string]$BranchName); git checkout $BranchName}
+function gcob {param ([string]$BranchName); git checkout -b $BranchName}
+function gcoB {param ([string]$BranchName); git checkout -B $BranchName}
+function gcod { git checkout $(git_develop_branch) }
+function gcom { git checkout $(git_main_branch) }
+
+function gcp {git cherry-pick @args}
+function gcpa { git cherry-pick --abort }
+function gcpc { git cherry-pick --continue }
+function gacpc { git add --all; git cherry-pick --continue }
+
+function gc { git commit --verbose }
+function gc! { git commit --verbose --amend }
+
+function gd { git diff }
+function gs { git status }
+function gsh { git show }
+function glastsha { git log -1 --pretty="%H" }
+
+function gf { git fetch }
+function gfo { git fetch origin }
+function gfu { git fetch upstream }
+function gpl { git pull -v }
+function gplr { git pull --rebase -v }
+
+function gp { git push -v }
+function gpo { git push -v origin }
+function gpo! { git push origin --force }
+function gpof { git push origin --force-with-lease }
+function gpu { git push -v upstream }
+
+function gm { git merge }
+function gma { git merge --abort }
+function gmc { git merge --continue }
+function gms { git merge --squash }
+function gmff { git merge --ff-only }
+function gmom { git merge origin/$(git_main_branch) }
+function gmum { git merge upstream/$(git_main_branch) }
+function gmod { git merge origin/$(git_develop_branch) }
+
+function grb { git rebase --interactive }
+function grba { git rebase --abort }
+function grbc { git rebase --continue }
+function garbc { git add --all; git rebase --continue }
+function grbu { param([string]$1); git rebase --interactive upstream/$1 }
+function grbd { git rebase --interactive origin/$(git_develop_branch) }
+function grbm { git rebase --interactive origin/$(git_main_branch) }
+function grbum { git rebase --interactive upstream/$(git_main_branch) }
+
+function grs { git reset }
+function grsh { param([int]$1=1); git reset HEAD~$1 }
+
+function gsts { git stash save }
+function gstc { git stash clear }
+function gstd { git stash drop }
+function gstl { git stash list }
+function gstp { git stash pop }
+
+# more personal aliases & functions
+# nkf family -> checkout to branch, nuke previous local branch, then pull
+function gnkf { 
+    $CURRENT_BRANCH = git rev-parse --abbrev-ref HEAD; 
+    git checkout $args[0]
+    git branch -D $CURRENT_BRANCH 
+    git pull 
+}
+
+function gnkfm { 
+    $CURRENT_BRANCH = git rev-parse --abbrev-ref HEAD; 
+    git checkout $(git_main_branch)
+    git branch -D $CURRENT_BRANCH
+    git pull 
+}
+
+function gnkfd { 
+    $CURRENT_BRANCH = git rev-parse --abbrev-ref HEAD; 
+    git checkout $(git_develop_branch)
+    git branch -D $CURRENT_BRANCH
+    git pull 
+}
+
+# add-hoc
+function migrate-origin { 
+    param([string]$NewOrigin, [string]$Branch); 
+    git remote remove origin
+    git remote add origin $NewOrigin
+    git fetch
+    git checkout $Branch
+    git branch --set-upstream-to=origin/$Branch $Branch
+    git fetch 
+}

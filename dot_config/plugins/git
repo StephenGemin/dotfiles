@@ -46,7 +46,7 @@ function git_main_branch() {
   done
 
   # If no main branch was found, use fall back but return error
-  echo master
+  echo main
   return 1
 }
 
