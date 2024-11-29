@@ -64,23 +64,23 @@ function gacpo { git add --all; git commit --verbose; git push origin }
 function gacpo! { $b = git rev-parse --abbrev-ref HEAD; git add --all; git commit --amend; git push --force-with-lease origin --set-upstream $b }
 function gacnvpo! { $b = git rev-parse --abbrev-ref HEAD; git add --all; git commit --amend --no-verify; git push origin --force-with-lease --set-upstream $b }
 function gds { git diff --stat }
-function gl { param([int]$1=10); git log --oneline -$1 }
+function glg { param([int]$1=15); git log --oneline -$1 }
 function gwip { git add --all; git commit -v -m "[skip-ci] WIP" }
 
 function g { git }
 function ga { git add --all }
-function gaa { git add }  # git add any
+function gaa { git add @args }  # git add any
 
-function gb { git branch }
+function gb { git branch @args }
 function gbr { git branch -r }
 function gbl { git branch -l }
-function gco {param ([string]$BranchName); git checkout $BranchName}
-function gcob {param ([string]$BranchName); git checkout -b $BranchName}
-function gcoB {param ([string]$BranchName); git checkout -B $BranchName}
+function gco {git checkout @args }
+function gcob { git checkout -b @args }
+function gcoB {git checkout -B @args }
 function gcod { git checkout $(git_develop_branch) }
 function gcom { git checkout $(git_main_branch) }
 
-function gcp {git cherry-pick @args}
+function gcp {git cherry-pick @args }
 function gcpa { git cherry-pick --abort }
 function gcpc { git cherry-pick --continue }
 function gacpc { git add --all; git cherry-pick --continue }
@@ -99,13 +99,14 @@ function gfu { git fetch upstream }
 function gpl { git pull -v }
 function gplr { git pull --rebase -v }
 
-function gp { git push -v }
-function gpo { git push -v origin }
-function gpo! { git push origin --force }
-function gpof { git push origin --force-with-lease }
-function gpu { git push -v upstream }
+# aliases are set to gg because gp is a protected alias in powershell (Windows)
+function gg { git push -v }
+function ggo { git push -v origin }
+function ggo! { git push -v origin --force }
+function ggof { git push -v origin --force-with-lease }
+function ggu { git push -v upstream }
 
-function gm { git merge }
+function gm { git merge @args }
 function gma { git merge --abort }
 function gmc { git merge --continue }
 function gms { git merge --squash }
@@ -114,7 +115,7 @@ function gmom { git merge origin/$(git_main_branch) }
 function gmum { git merge upstream/$(git_main_branch) }
 function gmod { git merge origin/$(git_develop_branch) }
 
-function grb { git rebase --interactive }
+function grb { git rebase --interactive @args }
 function grba { git rebase --abort }
 function grbc { git rebase --continue }
 function garbc { git add --all; git rebase --continue }
@@ -123,14 +124,28 @@ function grbd { git rebase --interactive origin/$(git_develop_branch) }
 function grbm { git rebase --interactive origin/$(git_main_branch) }
 function grbum { git rebase --interactive upstream/$(git_main_branch) }
 
-function grs { git reset }
-function grsh { param([int]$1=1); git reset HEAD~$1 }
+function grs { git reset @args }
+function grsh { git reset HEAD~@args[0] }
 
 function gsts { git stash save }
 function gstc { git stash clear }
-function gstd { git stash drop }
+function gstd {
+    param ([string]$Ref = "")
+    if ($Ref -match '^\d+$') {
+        # Convert integer to stash format "@{0}"
+        $Ref = "@{$Ref}"
+    }
+    git stash drop $Ref
+}
 function gstl { git stash list }
-function gstp { git stash pop }
+function gstp {
+    param ([string]$Ref = "")
+    if ($Ref -match '^\d+$') {
+        # Convert integer to stash format "@{0}"
+        $Ref = "@{$Ref}"
+    }
+    git stash pop $Ref
+}
 
 # more personal aliases & functions
 # nkf family -> checkout to branch, nuke previous local branch, then pull
