@@ -28,7 +28,12 @@
 				{"PackageIdentifier" : "twpayne.chezmoi"},
 				{"PackageIdentifier" : "Microsoft.VisualStudioCode"},
 				{"PackageIdentifier" : "Microsoft.AppInstaller"},
-				{"PackageIdentifier" : "Microsoft.WindowsTerminal"}
+				{"PackageIdentifier" : "Microsoft.WindowsTerminal"},
+				{"PackageIdentifier" : "neovim.neovim"},
+				{"PackageIdentifier" : "Microsoft.VisualStudio.2022.BuildTools"},
+				{"PackageIdentifier" : "burntsushi.ripgrep.MSVC"},
+				{"PackageIdentifier" : "zig.zig"},
+				{"PackageIdentifier" : "sharkdp.fd"}
 			],
 			"SourceDetails" :
 			{

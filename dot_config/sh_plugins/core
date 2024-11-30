@@ -1,1 +1,2 @@
 alias cl='printf "\033c"'
+alias vim='nvim'
