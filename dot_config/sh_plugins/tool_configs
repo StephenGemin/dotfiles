@@ -15,3 +15,10 @@ if [[ "$OSTYPE" =~ ^(cygwin|mingw|msys) ]]; then
 else
     alias psconf='cd $HOME/.config/powershell'
 fi
+
+# Navigates to Powershell's profile location.
+if [[ "$OSTYPE" =~ ^(cygwin|mingw|msys) ]]; then
+    alias nvimconf='cd $env:APPDATA/nvim'
+else
+    alias nvimconf='cd $HOME/.config/nvim'
+fi
