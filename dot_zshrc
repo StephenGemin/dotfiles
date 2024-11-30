@@ -32,7 +32,7 @@ local_plugins=(
 for plugin in "${local_plugins[@]}"; do
     # would prefer to use zinit, but couldn't figure out syntax
     # particulaly not cloning file, but using local source
-    source "$HOME/.config/plugins/$plugin"
+    source "$HOME/.config/sh_plugins/$plugin"
 done
 
 # Load completions
