@@ -104,8 +104,8 @@ function gpl { git pull -v }
 function gplr { git pull --rebase -v }
 
 # aliases are set to gg because gp is a protected alias in powershell (Windows)
-function gg { git push -v }
-function ggo { git push -v origin }
+function gg { git push -v @args }
+function ggo { git push -v origin @args }
 function ggo! { git push -v origin --force }
 function ggof { git push -v origin --force-with-lease }
 function ggu { git push -v upstream }
