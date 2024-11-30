@@ -41,10 +41,11 @@ oh-my-posh init pwsh --config "$env:USERPROFILE\.config\ohmyposh\zen.toml"| Invo
 $ProfilePath=Split-Path -parent $profile
 
 $LocalPlugins = @(
-    "core.ps1",
-    "git.ps1",
+    "tool_configs.ps1",
     "file_navigation.ps1",
-    "file_management.ps1"
+    "file_management.ps1",
+    "git.ps1",
+    "core.ps1"
 )
 foreach ($plugin in $LocalPlugins) {
     $PluginPath = Join-Path -Path $ProfilePath -ChildPath "$plugin"
