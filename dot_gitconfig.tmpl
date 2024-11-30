@@ -17,11 +17,11 @@
 #     https://git-scm.com/docs/git-config/
 
 [user]
-    name = "{{- .name }}" 
+    name = "{{- .name }}"
     email = "{{- .email }}"
 [core]
-    autocrlf = input
-    editor = vim
+    autocrlf = true
+    editor = nvim
     excludesfile = ~/.gitignore_global
 
     # Speed up commands involving untracked files such as `git status`.
