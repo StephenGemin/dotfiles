@@ -22,6 +22,8 @@ dot_Brewfile
 # Ignore non-Windows files.
 {{ if ne .chezmoi.os "windows" -}}
 dot_config/windows_terminal
+dot_config/winget_packages.json
+dot_config/powershell
 {{- end }}
 
 # For alacritty config

@@ -1,0 +1,9 @@
+{{- if eq .chezmoi.os "windows" -}}
+  {{- if eq .install_host "home" -}}
+    {{- template "winget_packages_home.json" . -}}
+  {{- else if eq .install_host "work" -}}
+    {{- template "winget_packages_work.json" . -}}
+  {{- else -}}
+    ""
+  {{- end -}}
+{{- end -}}

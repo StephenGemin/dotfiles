@@ -59,6 +59,13 @@ Write-Host $hereString -ForegroundColor $ColorInfo
 # }
 # Remove-Variable -Name ("confirmation", "hereString")
 
+# get XDG path
+$XDGPath = if ($env:XDG_CONFIG_HOME) {
+    $env:XDG_CONFIG_HOME
+} else {
+    Join-Path -Path $HOME -ChildPath ".config"
+}
+
 # #
 # # Dependencies
 # #
@@ -118,12 +125,7 @@ if (-not $wingetPath) {
 }
 
 # Install packages with winget
-{{ if eq .install_type "home" -}}
-  $wingetImportFileName = "winget_packages_home.json"
-{{ else }}
-  $wingetImportFileName = "winget_packages_work.json"
-{{ end }}
-$wingetImportPath = Join-Path -Path (Join-Path -Path $HOME -ChildPath ".config") -ChildPath $wingetImportFileName
+$wingetImportPath = Join-Path -Path $XDGPath -ChildPath "winget_packages.json"
 Invoke-Command -ScriptBlock {
     winget import -i $wingetImportPath --ignore-unavailable --accept-package-agreements --accept-source-agreements --disable-interactivity
     $count++
