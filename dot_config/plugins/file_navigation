@@ -1,6 +1,5 @@
 # Utilities to improve file navigation and browsing
 
-# Nagivates up a directory.
 alias cd-='cd -'
 alias cd..='cd ..'
 alias ..='cd ..'

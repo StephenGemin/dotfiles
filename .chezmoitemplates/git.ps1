@@ -1,3 +1,7 @@
+# -*-mode:powershell-*- vim:ft=powershell
+
+# =============================================================================
+# PowerShell functions sourced by `$profile`.
 # This is a shell -> pwsh conversion
 # Give the same cmd feel in pwsh as shell
 
@@ -67,7 +71,7 @@ function gds { git diff --stat }
 function glg { param([int]$1=15); git log --oneline -$1 }
 function gwip { git add --all; git commit -v -m "[skip-ci] WIP" }
 
-function g { git }
+function g { git @args }
 function ga { git add --all }
 function gaa { git add @args }  # git add any
 

@@ -10,6 +10,8 @@
 *.gz
 LICENSE
 README.md
+.editorconfig
+.gitattributes
 
 # Ignore non-macOS files.
 {{ if ne .chezmoi.os "darwin" -}}

@@ -20,11 +20,9 @@
 # Use "d" to be consistent with my zsh setup on Windows see .zshrc
 # due to alias conflict between zinit and zoxide for zsh on Windows
 # I also find it easier to hit d vs. z
-Function cd {
-    param ([string]$Path = '')
-    d $Path
-}
-# TODO: need to implement 'd -' or 'cd -' functionality to swap to last dir
+function cd {param ([string]$Path = ''); d $Path}
+# cd- alias set in dot sourced modules
+Set-Alias -Name "d-" -Value 'cd-'
 
 # Terminal Styling
 # -----------------------------------------------------------------------------
@@ -43,7 +41,10 @@ oh-my-posh init pwsh --config "$env:USERPROFILE\.config\ohmyposh\zen.toml"| Invo
 $ProfilePath=Split-Path -parent $profile
 
 $LocalPlugins = @(
-    "git.ps1"
+    "core.ps1",
+    "git.ps1",
+    "file_navigation.ps1",
+    "file_management.ps1"
 )
 foreach ($plugin in $LocalPlugins) {
     $PluginPath = Join-Path -Path $ProfilePath -ChildPath "$plugin"

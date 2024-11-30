@@ -1,0 +1,1 @@
+alias cl='printf "\033c"'
