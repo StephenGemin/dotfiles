@@ -134,21 +134,21 @@ function grsh { git reset HEAD~@args[0] }
 function gsts { git stash save }
 function gstc { git stash clear }
 function gstd {
-    param ([string]$Ref = "")
-    if ($Ref -match '^\d+$') {
-        # Convert integer to stash format "@{0}"
-        $Ref = "@{$Ref}"
+    param ([int]$Ref = 0)
+    if ($Ref -gt 0) {
+        git stash drop "@{$Ref}"
+    } else {
+        git stash drop
     }
-    git stash drop $Ref
 }
 function gstl { git stash list }
 function gstp {
-    param ([string]$Ref = "")
-    if ($Ref -match '^\d+$') {
-        # Convert integer to stash format "@{0}"
-        $Ref = "@{$Ref}"
+    param ([int]$Ref = 0)
+    if ($Ref -gt 0) {
+        git stash pop "@{$Ref}"
+    } else {
+        git stash pop
     }
-    git stash pop $Ref
 }
 
 # more personal aliases & functions
