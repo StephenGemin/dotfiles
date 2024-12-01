@@ -129,7 +129,7 @@ function grbm { git rebase --interactive origin/$(git_main_branch) }
 function grbum { git rebase --interactive upstream/$(git_main_branch) }
 
 function grs { git reset @args }
-function grsh { git reset HEAD~@args[0] }
+function grsh { param ([int]$num = 1); git reset HEAD~$num @args }
 
 function gsts { git stash save }
 function gstc { git stash clear }
