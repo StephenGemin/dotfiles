@@ -1,6 +1,11 @@
-# https://www.chezmoi.io/user-guide/include-files-from-elsewhere/#include-a-subdirectory-from-a-url
+{{- /* https://www.chezmoi.io/user-guide/include-files-from-elsewhere/ */ -}}
+{{- /* https://github.com/twpayne/chezmoi/discussions/3376 */ -}}
 
+{{ if eq .osid "windows" }}
 ["AppData\\Local\\nvim"]
+{{ else }}
+[".config/nvim"]
+{{ end }}
     type = "git-repo"
     url = "https://github.com/NvChad/starter"
     refreshPeriod = "720h"

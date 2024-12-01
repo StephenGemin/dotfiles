@@ -9,6 +9,7 @@
 				{"PackageIdentifier" : "7zip.7zip"},
 				{"PackageIdentifier" : "ShareX.ShareX"},
 				{"PackageIdentifier" : "TGRMNSoftware.BulkRenameUtility"},
+				{"PackageIdentifier" : "MSYS2.MSYS2"},
 				{"PackageIdentifier" : "Git.Git"},
 				{"PackageIdentifier" : "Mozilla.Firefox"},
 				{"PackageIdentifier" : "Notepad++.Notepad++"},
@@ -31,6 +32,7 @@
 				{"PackageIdentifier" : "Microsoft.WindowsTerminal"},
 				{"PackageIdentifier" : "neovim.neovim"},
 				{"PackageIdentifier" : "Microsoft.VisualStudio.2022.BuildTools"},
+				{"PackageIdentifier" : "Microsoft.VCRedist.2015+.x64"},
 				{"PackageIdentifier" : "burntsushi.ripgrep.MSVC"},
 				{"PackageIdentifier" : "zig.zig"},
 				{"PackageIdentifier" : "sharkdp.fd"}

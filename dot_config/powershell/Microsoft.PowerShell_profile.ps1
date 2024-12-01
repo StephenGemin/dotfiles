@@ -14,6 +14,13 @@
 # $ColorInfo = "DarkYellow"
 # $ColorWarn = "DarkRed"
 
+# PATH
+# -----------------------------------------------------------------------------
+
+# Update PATH to point to msys64 dependencies
+# i.e. make, gcc, mingw64, etc for neovim and it's plugins
+$env:Path += ";C:\msys64\usr\bin;C:\msys64\mingw64"
+
 # Aliases 
 # -----------------------------------------------------------------------------
 
