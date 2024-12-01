@@ -6,9 +6,9 @@
 
 
 ; FOOTER(S): optional, 72 chars ---------------------------------------|
+
 ;   BREAKING CHANGE:
 ;   CLOSED ISSUES:
-
 ; COMMIT GUIDELINES: Conventional Commits + AngularJS style -----------|
 ; Types:
 ;   - chore: change the tools and libraries
