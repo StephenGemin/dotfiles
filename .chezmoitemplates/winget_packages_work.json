@@ -7,8 +7,9 @@
 			"Packages" :
 			[
 				{"PackageIdentifier" : "7zip.7zip"},
+				{"PackageIdentifier" : "Microsoft.VCRedist.2015+.x64"},
+				{"PackageIdentifier" : "Microsoft.VisualStudio.2022.BuildTools"},
 				{"PackageIdentifier" : "ShareX.ShareX"},
-				{"PackageIdentifier" : "TGRMNSoftware.BulkRenameUtility"},
 				{"PackageIdentifier" : "MSYS2.MSYS2"},
 				{"PackageIdentifier" : "Git.Git"},
 				{"PackageIdentifier" : "Mozilla.Firefox"},
@@ -16,7 +17,6 @@
 				{"PackageIdentifier" : "alexx2000.DoubleCommander"},
 				{"PackageIdentifier" : "Microsoft.PowerShell"},
 				{"PackageIdentifier" : "JetBrains.Toolbox"},
-				{"PackageIdentifier" : "Notion.Notion"},
 				{"PackageIdentifier" : "flux.flux"},
 				{"PackageIdentifier" : "GitHub.GitHubDesktop"},
 				{"PackageIdentifier" : "JanDeDobbeleer.OhMyPosh"},
@@ -27,8 +27,6 @@
 				{"PackageIdentifier" : "Microsoft.AppInstaller"},
 				{"PackageIdentifier" : "Microsoft.WindowsTerminal"},
 				{"PackageIdentifier" : "neovim.neovim"},
-				{"PackageIdentifier" : "Microsoft.VisualStudio.2022.BuildTools"},
-				{"PackageIdentifier" : "Microsoft.VCRedist.2015+.x64"},
 				{"PackageIdentifier" : "burntsushi.ripgrep.MSVC"},
 				{"PackageIdentifier" : "zig.zig"},
 				{"PackageIdentifier" : "sharkdp.fd"}
