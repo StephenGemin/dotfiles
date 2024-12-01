@@ -1,0 +1,37 @@
+# -*-mode:powershell-*- vim:ft=powershell
+{{ if eq .osid "windows" -}}
+
+if ($env:XDG_CONFIG_PATH) {
+    $XDGPATH = $env:XDG_CONFIG_PATH
+} else {
+    $XDGPATH = Join-Path $HOME ".config"
+}
+
+$CopyFileMap = @{
+    "pwsh" = @{
+        "src"  = Join-Path $XDGPATH "powershell"
+        "dest" = Join-Path $HOME "Documents/PowerShell"
+    }
+    "powershell" = @{
+        "src"  = Join-Path $XDGPATH "powershell"
+        "dest" = Join-Path $HOME "Documents/WindowsPowerShell"
+    }
+    "windows_terminal" = @{
+        "src"  = Join-Path $XDGPATH "windows_terminal"
+        "dest" = Join-Path $env:LOCALAPPDATA "Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState"
+    }
+}
+
+foreach ($key in $CopyFileMap.Keys) {
+    $src_dir = $CopyFileMap[$key]["src"]
+    $dest_dir = $CopyFileMap[$key]["dest"]
+
+    if (-not (Test-Path -Path $dest_dir)) {
+        New-Item -ItemType Directory -Force -Path $dest_dir
+        Write-Output "Created destination: $dest_dir"
+    }
+    
+    Copy-Item -Path (Join-Path $src_dir "*") -Destination $dest_dir -Recurse -Force
+    Write-Host "Copied all files from $src_dir -> $dest_dir"
+}
+{{- end -}}
