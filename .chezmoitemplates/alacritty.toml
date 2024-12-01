@@ -1,5 +1,5 @@
 [terminal.shell]
-program = {{ if eq .chezmoi.os "windows" }}"C:\\msys64\\usr\\bin\\zsh.exe"{{ else }}"/usr/bin/zsh"{{ end }}
+program = {{ if eq .osid "windows" }}"pwsh"{{ else }}"/usr/bin/zsh"{{ end }}
 
 [bell]
 animation = "EaseOutExpo"

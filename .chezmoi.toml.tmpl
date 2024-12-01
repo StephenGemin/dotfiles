@@ -1,26 +1,39 @@
-# -*-mode:conf-toml-*- vim:ft=toml
+{{- /* mode:conf-toml-*- vim:ft=toml */ -}}
+{{- /* This file supports Go's text/template language. */ -}}
 
-# ~/.local/share/chezmoi/.chezmoi.toml.tmpl
-# =============================================================================
-# Used to customize configuration when doing a `chezmoi init`.
-#
-# This template file will trigger prompts to fill-in machine-specific
-# templateable values. The resulting file is then created at
-# `~/.config/chezmoi/chezmoi.toml`
-# See https://www.chezmoi.io/docs/how-to/
-#
-# {{- /* This file supports Go's text/template language. */}}
+{{- /* Note to future self, this is the way to do comments in this file!
+Using standard toml comments causes problems with chezmoi init */ -}}
+{{- /* Ex. [data] not on separate line, but on line with comment */ -}}
 
-# {{- $email := promptString "Git email address for the author/committer" }}
-# {{- $name := promptString "Git username for the author/committer" }}
-# {{- $install_host := promptString "Installation type (work/home)" }}
-# {{- $git_install_dir := promptString "Only pass if != default path '%PROGRAMFILES%/Git'" }}
+{{- $git_username := "StephenGemin" -}}
+{{- $name := promptString "❔ Git username (enter for default)" $git_username }}
+{{- writeToStdout (printf "✅ chezmoi init: name=%s\n" $name) -}}
 
+{{- $email := promptString "❔ Git email address" }}
+{{- writeToStdout (printf "✅ chezmoi init: email=%s\n" $email) -}}
+
+{{- $install_host := promptString "❔ Installation type (work/home; enter for default)" "home" }}
+
+{{- $wingit_install_dir := "" -}}
+{{- if eq .chezmoi.os "windows" }}
+  {{- $wingit_install_dir = promptString "❔ Windows Git install path (enter for default)" "%PROGRAMFILES%/Git" }}
+  {{- writeToStdout (printf "✅ chezmoi init: wingit_install_dir=%s\n" $wingit_install_dir) -}}
+{{- end -}}
+
+{{- /* https://www.chezmoi.io/user-guide/machines/linux/#combine-operating-system-and-linux-distribution-conditionals */ -}}
+{{- $osid := printf "%s" .chezmoi.os -}}
+{{- if hasKey .chezmoi.osRelease "id" -}}
+  {{- $osid = printf "%s-%s" .chezmoi.os .chezmoi.osRelease.id -}}
+{{- end -}}
+{{- writeToStdout (printf "✅ chezmoi init: osid=%s\n" $osid) -}}
+
+{{- /* To "export" the variables, for chezmoi to use within templates */ -}}
 [data]
-    email = "{{ $email }}"
-    name = "{{ $name }}"
-    install_host = "{{ $install_host }}"
-    git_install_dir = "{{ $git_install_dir }}"
+    email = {{ $email | quote }}
+    name = {{ $name | quote }}
+    install_host = {{ $install_host | quote }}
+    wingit_install_dir = {{ $wingit_install_dir | quote }}
+    osid = {{ $osid | quote }}
 
 # https://www.chezmoi.io/user-guide/tools/diff/#dont-show-scripts-in-the-diff-output
 [diff]

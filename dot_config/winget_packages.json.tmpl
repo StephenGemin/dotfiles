@@ -1,4 +1,4 @@
-{{- if eq .chezmoi.os "windows" -}}
+{{- if eq .osid "windows" -}}
   {{- if eq .install_host "home" -}}
     {{- template "winget_packages_home.json" . -}}
   {{- else if eq .install_host "work" -}}

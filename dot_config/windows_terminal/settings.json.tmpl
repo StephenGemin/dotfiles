@@ -35,10 +35,10 @@
                 "hidden": false,
                 "name": "Git-Bash",
                 "closeOnExit": "graceful",
-                "commandline": "{{ default `%PROGRAMFILES%/Git` .git_install_dir }}/usr/bin/bash.exe -i -l",
+                "commandline": "{{ .wingit_install_dir }}/usr/bin/bash.exe -i -l",
                 "cursorColor": "#FFFFFF",
                 "cursorShape": "bar",
-                "icon": "{{ default `%PROGRAMFILES%/Git` .git_install_dir }}/mingw64/share/git/git-for-windows.ico",
+                "icon": "{{ .wingit_install_dir }}/mingw64/share/git/git-for-windows.ico",
                 "padding": "0, 0, 0, 0",
                 "snapOnInput": true,
                 "startingDirectory": "%USERPROFILE%"
