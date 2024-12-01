@@ -20,7 +20,7 @@
     name = "{{- .name }}"
     email = "{{- .email }}"
 [core]
-    autocrlf = true
+    autocrlf = {{ if eq .osid "windows" }}true{{ else }}input{{ end }}
     editor = nvim
     excludesfile = ~/.gitignore_global
 
@@ -63,5 +63,5 @@
     process = git-lfs filter-process
     required = true
 [include]
-    path = ".gitconfig_local"  # include extra local configuration (if needed)
+    path = ".gitconfig_local"  # include local configuration (optional)
 
