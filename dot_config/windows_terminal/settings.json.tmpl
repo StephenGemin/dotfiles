@@ -19,7 +19,7 @@
         {
             "colorScheme": "UnixDark",
             "cursorShape": "underscore",
-            "font": {"face": "JetBrainsMono Nerd Font", "size": 14},
+            "font": {"face": {{ .terminalFont.name | quote }}, "size": {{ .terminalFont.size }}},
             "bellStyle": "taskbar"
         },
         "list":

@@ -27,16 +27,18 @@ My personal dotfiles, managed with [chezmoi](https://www.chezmoi.io/)
   - support TBD; when need arises
 
 ## Setup Notes
-- Windows
+- Windows (semi-automated)
   - Recommend init commands in PowerShell (not pwsh)
-  - [chezmoi install](https://www.chezmoi.io/install)
-    - `winget install twpayne.chezmoi`
+  - **Must have `winget`**
+  - `winget install twpayne.chezmoi`
   - `winget install -e --id Git.Git`
   - May need to install MSYS2 manually
-  - Do not start Neovim until NVChad reqs are installed!
-  - Install packages for NVChad (use MSYS2)
-    - `pacman -S --needed base-devel mingw-w64-ucrt-x86_64-toolchain`
-    - `pacman -S make gcc zsh`
+  - NeoVim with NVChad
+    - ***Do not start Neovim until NVChad reqs are installed!***
+    - Install dependencies for NVChad (use MSYS2)
+      - `pacman -S --needed base-devel mingw-w64-ucrt-x86_64-toolchain`
+      - `pacman -S make gcc zsh`
+  - Install fonts in `~\.local\share\fonts`; right-click and select **install**
 
 ## Tooling
 ❓ <span>== May support; but not right now</span> &nbsp; 🚫 <span>== Never support</span>
