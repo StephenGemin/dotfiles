@@ -27,36 +27,27 @@ function git_develop_branch {
 
     $branches = @('dev', 'devel', 'develop', 'development')
     foreach ($branch in $branches) {
-        if (git show-ref -q --verify "refs/heads/$branch") {
+        if (git show-ref --verify "refs/heads/$branch" 2>$null) {
             return $branch
         }
     }
-
-    # Fallback to 'develop' but return error
-    Write-Output 'develop'
-    return 1
+    return -1
 }
 
 function git_main_branch {
     if (-not (git rev-parse --git-dir 2>$null)) { return }
 
-    $refs = @(
-        'refs/heads/main', 'refs/heads/master', 'refs/heads/trunk',
-        'refs/heads/mainline', 'refs/heads/default', 'refs/heads/stable',
-        'refs/remotes/origin/main', 'refs/remotes/origin/master',
-        'refs/remotes/upstream/main', 'refs/remotes/upstream/master'
-    )
+    $scopes = @("heads", "remotes/origin", "remotes/upstream")
+    $branches = @("main", "master", "trunk", "mainline", "default", "stable")
 
-    foreach ($ref in $refs) {
-        $result = git show-ref --verify $ref 2>$null
-        if ($result) {
-            return ($ref -split '/')[-1]
+    foreach ($scope in $scopes) {
+        foreach ($branch in $branches) {
+            if (git show-ref --verify "refs/$scope/$branch" 2>$null) {
+                return $branch
+            }
         }
     }
-
-    # Fallback to 'main' but return error
-    Write-Output 'main'
-    return 1
+    return -1
 }
 
 # my most used commands
