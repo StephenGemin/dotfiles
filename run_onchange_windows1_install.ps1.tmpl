@@ -6,7 +6,8 @@
 
 # https://www.chezmoi.io/user-guide/use-scripts-to-perform-actions/#run-a-script-when-the-contents-of-another-file-changes
 # The idea here is that changes to the winget_packages.json allows this onchange script to run since it's contents have changed.
-# winget_packages.json hash: {{ (joinPath .chezmoi.homeDir ".config" "winget_packages.json") | sha256sum }}
+# Refer to dot_config/winget_packages.json.tmpl
+{{ include (joinPath .chezmoi.homeDir ".config" "winget_packages.json") | sha256sum }}
 
 # Requires that PowerShell be running with elevated privileges to be able to
 # change system properties.
