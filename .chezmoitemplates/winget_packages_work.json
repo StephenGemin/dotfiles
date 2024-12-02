@@ -6,30 +6,30 @@
 		{
 			"Packages" :
 			[
-				{"PackageIdentifier" : "7zip.7zip"},
+				{"PackageIdentifier" : "Microsoft.AppInstaller"},
+				{"PackageIdentifier" : "Git.Git"},
+				{"PackageIdentifier" : "flux.flux"},
 				{"PackageIdentifier" : "Microsoft.VCRedist.2015+.x64"},
 				{"PackageIdentifier" : "Microsoft.VisualStudio.2022.BuildTools"},
-				{"PackageIdentifier" : "ShareX.ShareX"},
 				{"PackageIdentifier" : "MSYS2.MSYS2"},
-				{"PackageIdentifier" : "Git.Git"},
-				{"PackageIdentifier" : "Mozilla.Firefox"},
+				{"PackageIdentifier" : "Microsoft.WindowsTerminal"},
+				{"PackageIdentifier" : "Alacritty.Alacritty"},
+				{"PackageIdentifier" : "Microsoft.PowerShell"},
+				{"PackageIdentifier" : "ShareX.ShareX"},
+				{"PackageIdentifier" : "Vitzo.ClipClip"},				{"PackageIdentifier" : "Mozilla.Firefox"},
+				{"PackageIdentifier" : "7zip.7zip"},
 				{"PackageIdentifier" : "Notepad++.Notepad++"},
 				{"PackageIdentifier" : "alexx2000.DoubleCommander"},
-				{"PackageIdentifier" : "Microsoft.PowerShell"},
 				{"PackageIdentifier" : "JetBrains.Toolbox"},
-				{"PackageIdentifier" : "flux.flux"},
+				{"PackageIdentifier" : "Microsoft.VisualStudioCode"},
 				{"PackageIdentifier" : "GitHub.GitHubDesktop"},
 				{"PackageIdentifier" : "JanDeDobbeleer.OhMyPosh"},
 				{"PackageIdentifier" : "ajeetdsouza.zoxide"},
 				{"PackageIdentifier" : "junegunn.fzf"},
-				{"PackageIdentifier" : "twpayne.chezmoi"},
-				{"PackageIdentifier" : "Microsoft.VisualStudioCode"},
-				{"PackageIdentifier" : "Microsoft.AppInstaller"},
-				{"PackageIdentifier" : "Microsoft.WindowsTerminal"},
 				{"PackageIdentifier" : "neovim.neovim"},
 				{"PackageIdentifier" : "burntsushi.ripgrep.MSVC"},
-				{"PackageIdentifier" : "zig.zig"},
-				{"PackageIdentifier" : "sharkdp.fd"}
+				{"PackageIdentifier" : "sharkdp.fd"},
+				{"PackageIdentifier" : "zig.zig"}
 			],
 			"SourceDetails" :
 			{
