@@ -28,10 +28,29 @@ foreach ($key in $CopyFileMap.Keys) {
 
     if (-not (Test-Path -Path $dest_dir)) {
         New-Item -ItemType Directory -Force -Path $dest_dir
-        Write-Output "Created destination: $dest_dir"
+        Write-Host "Created destination: $dest_dir"
     }
     
     Copy-Item -Path (Join-Path $src_dir "*") -Destination $dest_dir -Recurse -Force
     Write-Host "Copied all files from $src_dir -> $dest_dir"
 }
 {{- end -}}
+
+
+# https://github.com/catppuccin/notepad-plus-plus
+# copy theme files to notepad++ directory
+$catp_npp_src = Join-Path $HOME {{ joinPath (includeTemplate "get-catppuccin-themes-dir" .) "notepad_plus_plus" | quote }}
+Write-Host "catppuccin external path $catp_npp_src"
+$dest = Join-Path $env:APPDATA "Notepad++\themes"
+
+Set-Variable -Name count -Value 0 -Scope Script
+
+if ((Test-Path -Path $catp_npp_src) -and (Test-Path -Path $dest)) {
+   Set-Variable -Name count -Value 0 -Scope Script
+   Get-ChildItem -Path $catp_npp_src -Filter *.xml -Recurse | ForEach-Object {
+       Write-Host "Copy file $_ -> $dest"
+       Copy-Item -Path $_.FullName -Destination $dest -Force
+       $count++
+   }
+}
+Write-Host "$count Catppuccin .xml files copied to: $dest"
