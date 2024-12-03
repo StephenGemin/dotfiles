@@ -88,7 +88,7 @@ function gs { git status }
 function gsh { git show }
 function glastsha { git log -1 --pretty="%H" }
 
-function gf { git fetch }
+function gf { git fetch -v }
 function gfo { git fetch origin }
 function gfu { git fetch upstream }
 function gpl { git pull -v }
@@ -144,34 +144,34 @@ function gstp {
 
 # more personal aliases & functions
 # nkf family -> checkout to branch, nuke previous local branch, then pull
-function gnkf { 
-    $CURRENT_BRANCH = git rev-parse --abbrev-ref HEAD; 
+function gnkf {
+    $CURRENT_BRANCH = git rev-parse --abbrev-ref HEAD;
     git checkout $args[0]
-    git branch -D $CURRENT_BRANCH 
-    git pull 
+    git branch -D $CURRENT_BRANCH
+    git pull
 }
 
-function gnkfm { 
-    $CURRENT_BRANCH = git rev-parse --abbrev-ref HEAD; 
+function gnkfm {
+    $CURRENT_BRANCH = git rev-parse --abbrev-ref HEAD;
     git checkout $(git_main_branch)
     git branch -D $CURRENT_BRANCH
-    git pull 
+    git pull
 }
 
-function gnkfd { 
-    $CURRENT_BRANCH = git rev-parse --abbrev-ref HEAD; 
+function gnkfd {
+    $CURRENT_BRANCH = git rev-parse --abbrev-ref HEAD;
     git checkout $(git_develop_branch)
     git branch -D $CURRENT_BRANCH
-    git pull 
+    git pull
 }
 
 # add-hoc
-function migrate-origin { 
-    param([string]$NewOrigin, [string]$Branch); 
+function migrate-origin {
+    param([string]$NewOrigin, [string]$Branch);
     git remote remove origin
     git remote add origin $NewOrigin
     git fetch
     git checkout $Branch
     git branch --set-upstream-to=origin/$Branch $Branch
-    git fetch 
+    git fetch
 }

@@ -28,7 +28,7 @@ function git_develop_branch() {
       return 0
     fi
   done
-  
+
   # If no develop branch was found, use fall back but return error
   echo develop
   return 1
@@ -88,7 +88,7 @@ alias gs='git status'
 alias gsh='git show'
 alias glastsha='git log -1 --pretty="%H"'  # output full sha of last commit
 
-alias gf='git fetch'
+alias gf='git fetch -v'
 alias gfo='git fetch origin'
 alias gfu='git fetch upstream'
 alias gpl='git pull -v'
