@@ -28,6 +28,7 @@ local_plugins=(
   file_navigation
   git
   tool_configs
+  core
 )
 for plugin in "${local_plugins[@]}"; do
     # would prefer to use zinit, but couldn't figure out syntax

@@ -9,9 +9,12 @@ fi
 
 # Development environments
 # -----------------------------------------------------------------------------
-if command -v pyenv > /dev/null; then
+{{- /* Avoid on GitBash startup 'bash: pyenv:: command not found' */ -}}
+{{ if ne .osid "windows" }}
+if command -v pyenv 2> /dev/null; then
     eval "$(pyenv init -)"
 fi
+{{ end }}
 
 # Includes
 # -----------------------------------------------------------------------------
@@ -23,6 +26,7 @@ local_plugins=(
     file_navigation
     #git  need to fix syntax error: unexpected end of line
     tool_configs
+    core
 )
 for plugin in "${local_plugins[@]}"; do
     # would prefer to use zinit, but couldn't figure out syntax

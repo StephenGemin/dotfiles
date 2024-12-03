@@ -59,7 +59,7 @@ function gacpo { git add --all; git commit --verbose; git push origin }
 function gacpo! { $b = git rev-parse --abbrev-ref HEAD; git add --all; git commit --amend; git push --force-with-lease origin --set-upstream $b }
 function gacnvpo! { $b = git rev-parse --abbrev-ref HEAD; git add --all; git commit --amend --no-verify; git push origin --force-with-lease --set-upstream $b }
 function gds { git diff --stat }
-function glg { param([int]$1=15); git log --oneline -$1 }
+function gl { param([int]$1=15); git log --oneline -$1 }
 function gwip { git add --all; git commit -v -m "[skip-ci] WIP" }
 
 function g { git @args }

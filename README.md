@@ -15,6 +15,7 @@ My personal dotfiles, managed with [chezmoi](https://www.chezmoi.io/)
   - [Shells](#shells)
   - [Package Managers](#package-managers)
   - [Apps](#apps)
+  - [Other Notes](#other-notes)
 - [💡 Inspirations](#-inspirations)
 
 ## Project State | Decisions
@@ -56,7 +57,7 @@ My personal dotfiles, managed with [chezmoi](https://www.chezmoi.io/)
 |  | **Linux** | **Windows** | **Mac** | **Notes** |
 |---|---|---|---|---|
 | Bash | ❓ | ✅ | ❓ | Bash support limited; slow on Windows |
-| Zsh | ❓ | ✅ | ✅ | zsh on Windows is very slow |
+| Zsh | ❓ | ✅ | ✅ | slow on Windows see [Other Notes](#other-notes) |
 | PowerShell | ❌ | ✅ | ❌ |  |
 
 ### Package Managers

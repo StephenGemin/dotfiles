@@ -59,8 +59,7 @@ alias gacpo='git add --all && git commit --verbose && git push origin'
 alias gacpo!='git add --all && git commit --amend && git push --force-with-lease origin --set-upstream $(git_current_branch)'
 alias gacnvpo!='git add --all && git commit --amend --no-verify && git push origin --force-with-lease --set-upstream $(git_current_branch)'
 alias gds='git diff --stat'
-# gl is a protected Windows Powershell alias
-function glg() { git log --oneline -"${1:-10}"; }
+function gl() { git log --oneline -"${1:-15}"; }
 alias gwip='git add --all && git commit -v -m "[skip-ci] WIP"'
 
 alias g='git'

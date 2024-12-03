@@ -23,6 +23,9 @@ $env:Path += ";C:\msys64\usr\bin;C:\msys64\mingw64"
 
 # Aliases 
 # -----------------------------------------------------------------------------
+# Remove built-in powershell aliases that conflict with my aliases
+Remove-Item alias:\gc -Force
+Remove-Item alias:\gl -Force
 
 # Use "d" to be consistent with my zsh setup on Windows see .zshrc
 # due to alias conflict between zinit and zoxide for zsh on Windows
