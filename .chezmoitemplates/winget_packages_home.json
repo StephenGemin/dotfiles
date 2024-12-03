@@ -36,7 +36,8 @@
 				{"PackageIdentifier" : "neovim.neovim"},
 				{"PackageIdentifier" : "burntsushi.ripgrep.MSVC"},
 				{"PackageIdentifier" : "sharkdp.fd"},
-				{"PackageIdentifier" : "zig.zig"}
+				{"PackageIdentifier" : "zig.zig"},
+				{"PackageIdentifier" : "Zoom.Zoom"}
 			],
 			"SourceDetails" :
 			{

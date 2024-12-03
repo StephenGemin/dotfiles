@@ -39,6 +39,8 @@ My personal dotfiles, managed with [chezmoi](https://www.chezmoi.io/)
       - `pacman -S --needed base-devel mingw-w64-ucrt-x86_64-toolchain`
       - `pacman -S make gcc zsh`
   - Install fonts in `~\.local\share\fonts`; right-click and select **install**
+  - Install Whatsapp from MS store (unavailable from winget)
+    - Ref microsoft/winget-pkgs issue 156231
 
 ## Tooling
 ❓ <span>== May support; but not right now</span> &nbsp; 🚫 <span>== Never support</span>
