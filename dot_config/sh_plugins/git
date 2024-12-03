@@ -122,6 +122,7 @@ alias grbum='git rebase --interactive upstream/$(git_main_branch)'
 
 alias grs='git reset'
 function grsh() { if [ -z "$1" ]; then git reset HEAD~1; else git reset HEAD~"$1"; fi; }
+alias gclean! { git clean -fdx }
 
 alias gsts='git stash save'
 alias gstc='git stash clear'

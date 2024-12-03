@@ -122,6 +122,7 @@ function grbum { git rebase --interactive upstream/$(git_main_branch) }
 
 function grs { git reset @args }
 function grsh { param ([int]$num = 1); git reset HEAD~$num @args }
+function gclean! { git clean -fdx }
 
 function gsts { git stash save }
 function gstc { git stash clear }
