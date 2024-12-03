@@ -82,6 +82,7 @@ alias gacpc='git add --all && git cherry-pick --continue'
 
 alias gc='git commit --verbose'
 alias gc!='git commit --verbose --amend'
+alias gcfx='git commit --verbose --fixup'
 
 alias gd='git diff'
 alias gs='git status'

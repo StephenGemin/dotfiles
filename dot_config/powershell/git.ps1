@@ -82,6 +82,7 @@ function gacpc { git add --all; git cherry-pick --continue }
 
 function gc { git commit --verbose }
 function gc! { git commit --verbose --amend }
+function gcfx { param([string]$1); git commit --verbose --fixup $1 }
 
 function gd { git diff }
 function gs { git status }
