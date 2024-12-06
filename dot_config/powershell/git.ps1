@@ -125,6 +125,7 @@ function grsh { param ([int]$num = 1); git reset HEAD~$num @args }
 function gclean! { git clean -fdx }
 
 function gsts { git stash save @args }
+function gsta { git stash apply @args }
 function gstc { git stash clear }
 function gstd {
     param ([int]$Ref = 0)

@@ -125,6 +125,7 @@ function grsh() { if [ -z "$1" ]; then git reset HEAD~1; else git reset HEAD~"$1
 alias gclean! { git clean -fdx }
 
 alias gsts='git stash save'
+alias gsta='git stash apply'
 alias gstc='git stash clear'
 alias gstd='git stash drop'
 alias gstl='git stash list'
