@@ -42,6 +42,10 @@ My personal dotfiles, managed with [chezmoi](https://www.chezmoi.io/)
   - Install fonts in `~\.local\share\fonts`; right-click and select **install**
   - Install Whatsapp from MS store (unavailable from winget)
     - Ref microsoft/winget-pkgs issue 156231
+  - Add to PATH (if not there):
+    - %USERPROFILE%\.pyenv\pyenv-win\shims
+    - C:\Program Files\Git\cmd
+    - C:\Program Files\Neovim\bin
 
 ## Tooling
 ❓ <span>== May support; but not right now</span> &nbsp; 🚫 <span>== Never support</span>
