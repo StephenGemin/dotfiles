@@ -22,3 +22,5 @@ if [[ "$OSTYPE" =~ ^(cygwin|mingw|msys) ]]; then
 else
     alias nvimconf='cd $HOME/.config/nvim'
 fi
+
+alias kpass="keepassxc-cli"

@@ -1,12 +1,11 @@
 
+
 ; HEADER: <type>(<scope>): <subject>, 50 chars --|
 
 
 ; BODY: optional, 72 chars --------------------------------------------|
 
-
 ; FOOTER(S): optional, 72 chars ---------------------------------------|
-
 ;   BREAKING CHANGE:
 ;   CLOSED ISSUES:
 ; COMMIT GUIDELINES: Conventional Commits + AngularJS style -----------|

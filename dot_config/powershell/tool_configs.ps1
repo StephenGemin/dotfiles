@@ -24,3 +24,4 @@ function psconf {
 function nvimconf {
     Set-Location -Path (Join-Path -Path $env:LOCALAPPDATA -ChildPath "nvim")
 }
+set-Alias kpass "keepassxc-cli"
