@@ -1,37 +1,42 @@
 {{- /* mode:conf-toml-*- vim:ft=toml */ -}}
 {{- /* This file supports Go's text/template language. */ -}}
 
-{{- /* Note to future self, this is the way to do comments in this file!
-Using standard toml comments causes problems with chezmoi init */ -}}
-{{- /* Ex. [data] not on separate line, but on line with comment */ -}}
-
-{{ $email := "foo@bar.com" }}
-{{ if stdinIsATTY }}
+{{- $email := "foo@bar.com" }}
+{{- if stdinIsATTY }}
   {{- $email = promptString "❔ Git email address" $email -}}
-{{ end }}
-{{ writeToStdout (printf "ℹ️ chezmoi init: email=%s\n" $email) }}
+{{- end }}
+{{- writeToStdout (printf "ℹ️ chezmoi init: email=%s\n" $email) }}
 
 {{- $git_username := "StephenGemin" -}}
 {{- $name := promptString "❔ Git username (enter for default)" $git_username }}
 {{- writeToStdout (printf "✅ chezmoi init: name=%s\n" $name) -}}
 
-{{- $email := promptString "❔ Git email address" }}
-{{- writeToStdout (printf "✅ chezmoi init: email=%s\n" $email) -}}
+{{- $name := "StephenGemin" -}}
+{{- if stdinIsATTY }}
+{{-   $name = promptString "❔ Git username (enter for default)" $name }}
+{{- end }}
+{{- writeToStdout (printf "ℹ️ chezmoi init: name=%s\n" $name) }}
 
-{{- $install_host := promptString "❔ Installation type (work/home; enter for default)" "home" }}
+{{- $install_host := "home" }}
+{{- if stdinIsATTY }}
+  {{- $install_host = promptString "❔ Installation type (work/home; enter for default)" $install_host -}}
+{{- end }}
+{{- writeToStdout (printf "ℹ️ chezmoi init: install_host=%s\n" $install_host) }}
 
-{{- $wingit_install_dir := "" -}}
+{{- $wingit_install_dir := "%PROGRAMFILES%/Git" }}
 {{- if eq .chezmoi.os "windows" }}
-  {{- $wingit_install_dir = promptString "❔ Windows Git install path (enter for default)" "%PROGRAMFILES%/Git" }}
-  {{- writeToStdout (printf "✅ chezmoi init: wingit_install_dir=%s\n" $wingit_install_dir) -}}
-{{- end -}}
+  {{- if stdinIsATTY }}
+    {{- $wingit_install_dir = promptString "❔ Windows Git install path (enter for default)" $wingit_install_dir -}}
+  {{- end }}
+  {{- writeToStdout (printf "ℹ️ chezmoi init: wingit_install_dir=%s\n" $wingit_install_dir) }}
+{{- end }}
 
 {{- /* https://www.chezmoi.io/user-guide/machines/linux/#combine-operating-system-and-linux-distribution-conditionals */ -}}
 {{- $osid := printf "%s" .chezmoi.os -}}
-{{- if hasKey .chezmoi.osRelease "id" -}}
+{{- if hasKey .chezmoi.osRelease "id" }}
   {{- $osid = printf "%s-%s" .chezmoi.os .chezmoi.osRelease.id -}}
-{{- end -}}
-{{- writeToStdout (printf "✅ chezmoi init: osid=%s\n" $osid) -}}
+{{- end }}
+{{- writeToStdout (printf "ℹ️ chezmoi init: osid=%s\n" $osid) }}
 
 {{- /* To "export" the variables, for chezmoi to use within templates */ -}}
 [data]
