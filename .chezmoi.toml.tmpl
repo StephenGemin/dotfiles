@@ -5,6 +5,12 @@
 Using standard toml comments causes problems with chezmoi init */ -}}
 {{- /* Ex. [data] not on separate line, but on line with comment */ -}}
 
+{{ $email := "foo@bar.com" }}
+{{ if stdinIsATTY }}
+  {{- $email = promptString "❔ Git email address" $email -}}
+{{ end }}
+{{ writeToStdout (printf "ℹ️ chezmoi init: email=%s\n" $email) }}
+
 {{- $git_username := "StephenGemin" -}}
 {{- $name := promptString "❔ Git username (enter for default)" $git_username }}
 {{- writeToStdout (printf "✅ chezmoi init: name=%s\n" $name) -}}
