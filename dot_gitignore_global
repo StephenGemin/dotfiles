@@ -7,14 +7,22 @@
 # This list defines global exclusions to all local repositories.
 # See https://git-scm.com/docs/gitignore
 *~
+# MacOS
 .DS_Store
+
+# git folder in repos
 .git/
 .resin-sync.yml
 Thumbs.db
-__pycache__/
-*.pyc
+
+# Python files
 venv/
 .venv/
+*.pyc
+__pycache__/
+pytestdebug.log
+
+
 
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio, WebStorm and Rider
 # Reference: https://intellij-support.jetbrains.com/hc/en-us/articles/206544839
