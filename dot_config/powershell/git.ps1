@@ -68,7 +68,6 @@ function gaa { git add @args }  # git add any
 
 function gb { git branch @args }
 function gbr { git branch -r }
-function gbl { git branch -l }
 function gco {git checkout @args }
 function gcob { git checkout -b @args }
 function gcoB {git checkout -B @args }
