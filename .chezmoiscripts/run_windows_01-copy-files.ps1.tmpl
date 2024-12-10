@@ -1,5 +1,8 @@
-# -*-mode:powershell-*- vim:ft=powershell
 {{ if eq .osid "windows" -}}
+# -*-mode:powershell-*- vim:ft=powershell
+
+# =============================================================================
+# Idempotent manual setup script to move files to Windows specific locations
 
 if ($env:XDG_CONFIG_PATH) {
     $XDGPATH = $env:XDG_CONFIG_PATH
@@ -34,8 +37,6 @@ foreach ($key in $CopyFileMap.Keys) {
     Copy-Item -Path (Join-Path $src_dir "*") -Destination $dest_dir -Recurse -Force
     Write-Host "Copied all files from $src_dir -> $dest_dir"
 }
-{{- end -}}
-
 
 # https://github.com/catppuccin/notepad-plus-plus
 # copy theme files to notepad++ directory
@@ -54,3 +55,4 @@ if ((Test-Path -Path $catp_npp_src) -and (Test-Path -Path $dest)) {
    }
 }
 Write-Host "$count Catppuccin .xml files copied to: $dest"
+{{- end -}}
