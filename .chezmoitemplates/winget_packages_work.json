@@ -29,7 +29,9 @@
 				{"PackageIdentifier" : "neovim.neovim"},
 				{"PackageIdentifier" : "burntsushi.ripgrep.MSVC"},
 				{"PackageIdentifier" : "sharkdp.fd"},
-				{"PackageIdentifier" : "zig.zig"}
+				{"PackageIdentifier" : "zig.zig"},
+				{"PackageIdentifier" : "astral-sh.ruff"},
+				{"PackageIdentifier" : "astral-sh.uv"}
 			],
 			"SourceDetails" :
 			{

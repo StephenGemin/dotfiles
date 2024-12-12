@@ -39,7 +39,9 @@
 				{"PackageIdentifier" : "burntsushi.ripgrep.MSVC"},
 				{"PackageIdentifier" : "sharkdp.fd"},
 				{"PackageIdentifier" : "zig.zig"},
-				{"PackageIdentifier" : "Zoom.Zoom"}
+				{"PackageIdentifier" : "Zoom.Zoom"},
+				{"PackageIdentifier" : "astral-sh.ruff"},
+				{"PackageIdentifier" : "astral-sh.uv"}
 			],
 			"SourceDetails" :
 			{
