@@ -46,6 +46,7 @@ My personal dotfiles, managed with [chezmoi](https://www.chezmoi.io/)
     - %USERPROFILE%\.pyenv\pyenv-win\shims
     - C:\Program Files\Git\cmd
     - C:\Program Files\Neovim\bin
+  - Import PyCharm settings from `~\.config`
 
 ## Tooling
 ❓ <span>== May support; but not right now</span> &nbsp; 🚫 <span>== Never support</span>
