@@ -112,7 +112,7 @@ pytestdebug.log
 # https://github.com/github/gitignore/blob/e3e08c58b842beefa27d15e38b585c39c8ea6dba/Global/VisualStudioCode.gitignore
 .vscode/*
 #!.vscode/settings.json
-#!.vscode/tasks.json
+!.vscode/tasks.json
 #!.vscode/launch.json
 #!.vscode/extensions.json
 #!.vscode/*.code-snippets
