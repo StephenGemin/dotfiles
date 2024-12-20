@@ -10,7 +10,7 @@ if ($env:XDG_CONFIG_PATH) {
     $XDGPATH = Join-Path $HOME ".config"
 }
 
-$CopyFileMap = @{
+$CopyFilesInDirMap = @{
     "pwsh" = @{
         "src"  = Join-Path $XDGPATH "powershell"
         "dest" = Join-Path $HOME "Documents/PowerShell"
@@ -23,11 +23,15 @@ $CopyFileMap = @{
         "src"  = Join-Path $XDGPATH "windows_terminal"
         "dest" = Join-Path $env:LOCALAPPDATA "Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState"
     }
+    "doublecmd_shortcuts" = @{
+        "src"  = Join-Path $XDGPATH "doublecmd"
+        "dest" = Join-Path $env:APPDATA "doublecmd"
+    }
 }
 
-foreach ($key in $CopyFileMap.Keys) {
-    $src_dir = $CopyFileMap[$key]["src"]
-    $dest_dir = $CopyFileMap[$key]["dest"]
+foreach ($key in $CopyFilesInDirMap.Keys) {
+    $src_dir = $CopyFilesInDirMap[$key]["src"]
+    $dest_dir = $CopyFilesInDirMap[$key]["dest"]
 
     if (-not (Test-Path -Path $dest_dir)) {
         New-Item -ItemType Directory -Force -Path $dest_dir
