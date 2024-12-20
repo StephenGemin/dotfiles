@@ -2,7 +2,7 @@
 My personal dotfiles, managed with [chezmoi](https://www.chezmoi.io/)
 
 ## Project goals
-- Cross-platform == Windows, Mac, Linux PopOS/Ubuntu
+- Cross-platform == Windows, Mac, Debian
 - Cross-platform toolset
 - Unified, cross-platform set of aliases and commands
 - Setups for personal vs. work
@@ -49,43 +49,50 @@ My personal dotfiles, managed with [chezmoi](https://www.chezmoi.io/)
   - Import PyCharm settings from `~\.config`
 
 ## Tooling
-❓ <span>== May support; but not right now</span> &nbsp; 🚫 <span>== Never support</span>
+❓ <span>== May support or not tested</span> &nbsp; 🚫 <span>== Never support</span>
 
 ### Terminals
-|  | **Linux** | **Windows** | **Mac** |
+|  | **Debian** | **Windows** | **Mac** |
 |---|---|---|---|
-| Alacritty | ✅ | ✅ | ✅ |
+| Alacritty | ❓ | ✅ | ❓ |
 | Win Terminal | 🚫 | ✅ | 🚫 |
 | Mac Terminal | 🚫 | 🚫 | ✅ |
 
 ### Shells
-|  | **Linux** | **Windows** | **Mac** | **Notes** |
+|  | **Debian** | **Windows** | **Mac** | **Notes** |
 |---|---|---|---|---|
-| Bash | ❓ | ✅ | ❓ | Bash support limited; slow on Windows |
+| Bash | ❓ | ✅ | ❓ | slow on Windows |
 | Zsh | ❓ | ✅ | ✅ | slow on Windows see [Other Notes](#other-notes) |
-| PowerShell | ❌ | ✅ | ❌ |  |
+| PowerShell | ❓ | ✅ | ❓ |  |
 
 ### Package Managers
-- Linux: APT/Dpkg
+- Debian: dpkg
 - Windows: winget
 - Mac: brew
 
 ### Apps
-|  | **Linux** | **Windows** | **Mac** | **Notes** |
+|  | **Debian** | **Windows** | **Mac** | **Notes** |
 |---|---|---|---|---|
 | Chezmoi | ✅ | ✅ | ✅ |  |
 | Git | ✅ | ✅ | ✅ |  |
+| Double Commander | ❓ | ✅ | ❓ |  |
 | Oh-My-Posh | ❓ | ✅ | ❓ |  |
 | Neovim | ❓ | ✅ | ❓ |  |
 | NVChad | ❓ | ✅ | ❓ |  |
-| Nano | ❓ | 🚫 | ✅ | N/A for Windows |
-| MSYS2 | 🚫 | ✅ | 🚫 |  |
-| Double Commander | ❓ | ✅ | ❓ |  |
-| NotePad ++ | 🚫 | ✅ | 🚫 |  |
 | zoxide | ❓ | ✅ | ❓ |  |
 | Ripgrep | ❓ | ✅ | ❓ |  |
 | Zinit | ❓ | ✅ | ❓ | zsh only |
 | Oh-My-Zsh | ❓ | ✅ | ❓ | zsh only |
+| Nano | ✅ | ❓ | ✅ |  |
+| VLC | ❓ | ✅ | ❓ |  |
+| Firefox | ❓ | ✅ | ❓ |  |
+| Opera | ❓ | ✅ | ❓ |  |
+| Notion | ❓ | ✅ | ❓ |  |
+| JetBrains IDEs | ❓ | ✅ | ❓ |  |
+| VSC | ❓ | ✅ | ❓ |  |
+| F.lux | ❓ | ✅ | ❓ |  |
+| NotePad ++ | 🚫 | ✅ | 🚫 |  |
+| MSYS2 | 🚫 | ✅ | 🚫 |  |
 
 ## Other Notes
 
