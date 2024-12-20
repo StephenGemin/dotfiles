@@ -1,4 +1,4 @@
 *    text=lf
 
-# To avoid ^M showing in Git editor
+# To avoid ^M showing in Git editor on Windows
 dot_gitmessage.txt text eol=lf
