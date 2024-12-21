@@ -44,4 +44,5 @@ packages:
     snaps:
       - vlc
       - "--classic code"
+      - opera
 

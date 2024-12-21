@@ -7,4 +7,11 @@
 {{ range .packages.linux-debian.apts -}}
 {{ . | quote }}
 {{ end -}}
+{{ range .packages.linux-debian.cargos -}}
+{{ . | quote }}
+{{ end -}}
+{{ range .packages.linux-debian.snaps -}}
+{{ . | quote }}
+{{ end -}}
+
 {{ end -}}
