@@ -92,8 +92,8 @@ My personal dotfiles, managed with [chezmoi](https://www.chezmoi.io/). This proj
 | pyenv | ✅ | ✅ | ❓ | Windows uses pyenv-win |
 | Nano | ✅ | ❓ | ✅ |  |
 | VLC | ✅ | ✅ | ❓ |  |
-| Firefox | ❓ | ✅ | ❓ |  |
-| Opera | ❓ | ✅ | ❓ |  |
+| Firefox | ✅ | ✅ | ❓ |  |
+| Opera | ✅ | ✅ | ❓ |  |
 | Notion | ❓ | ✅ | ❓ |  |
 | JetBrains IDEs | ✅ | ✅ | ❓ |  |
 | VSC | ✅ | ✅ | ❓ |  |
