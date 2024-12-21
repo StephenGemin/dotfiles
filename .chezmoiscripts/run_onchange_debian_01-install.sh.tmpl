@@ -1,0 +1,7 @@
+{{ if includeTemplate "is-linux-debian" . -}}
+#!/bin/bash
+
+{{ $install_script:= joinPath .chezmoi.sourceDir "scripts" "install_debian.sh" -}}
+# {{ include $install_script | sha256sum }}
+source {{ $install_script }}
+{{ end -}}

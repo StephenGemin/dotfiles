@@ -12,24 +12,25 @@ LICENSE
 README.md
 .editorconfig
 .gitattributes
+scripts/
 
 # Ignore non-macOS files.
 {{ if ne .chezmoi.os "darwin" -}}
-dot_config/iterm
-dot_Brewfile
+.config/iterm
+.Brewfile
 {{- end }}
 
 # Ignore non-Windows files.
 {{ if ne .chezmoi.os "windows" -}}
-dot_config/windows_terminal
-dot_config/winget_packages.json
-dot_config/powershell
+.config/windows_terminal
+.config/winget_packages.json
+.config/powershell
 {{- end }}
 
 # For alacritty config
 {{ if ne .chezmoi.os "windows" }}
-AppData/Roaming/alacritty/alacritty.yml
+AppData/
 {{ else }}
-dot_config/alacritty/alacritty.yml
+.config/alacritty/alacritty.toml
 {{ end }}
 

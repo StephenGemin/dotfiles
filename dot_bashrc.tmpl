@@ -1,3 +1,5 @@
+# -*-mode:bash-*- vim:ft=bash
+
 # Command-line shell completions
 # -----------------------------------------------------------------------------
 
@@ -11,8 +13,13 @@ fi
 # -----------------------------------------------------------------------------
 {{- /* Avoid on GitBash startup 'bash: pyenv:: command not found' */ -}}
 {{ if ne .osid "windows" }}
-if command -v pyenv 2> /dev/null; then
-    eval "$(pyenv init -)"
+export PYENV_ROOT="$HOME/.pyenv"
+[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
+
+if [ -f "$HOME/.cargo/env" ]; then
+    . "$HOME/.cargo/env"
 fi
 {{ end }}
 
@@ -38,3 +45,8 @@ done
 if [ -f "$HOME"/.bash_extras ]; then
     \. "$HOME"/.bash_extras
 fi
+
+{{ if includeTemplate "is-linux-debian" . -}}
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+{{ end -}}
+

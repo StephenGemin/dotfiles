@@ -1,6 +1,18 @@
+# -*-mode:zsh-*- vim:ft=zsh
+
+{{ if eq .osid "windows" -}}
 # based on Windows path and /etc/nsswitch.conf
 # Add MSYS2 paths if not already present
 export PATH="/usr/bin:/bin:/c/msys64/usr/bin:$PATH"
+{{ else -}}
+# Set PATH so it includes user's private bins if they exist.
+if [ -d "$HOME/bin" ] ; then
+    PATH="$HOME/bin:$PATH"
+fi
+if [ -d "$HOME/.local/bin" ] ; then
+    PATH="$HOME/.local/bin:$PATH"
+fi
+{{ end -}}
 
 # Zinit configuration
 ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
@@ -10,15 +22,17 @@ ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
 source "${ZINIT_HOME}/zinit.zsh"
 
 # Add in zsh plugins
-# Below plugin causes problems in Windows
-# slow terminal, delayed text input, cursor appears to move backwards and forwars while typing, etc.
-#zinit light zsh-users/zsh-syntax-highlighting
+zinit light zsh-users/zsh-syntax-highlighting
 zinit light zsh-users/zsh-completions
 zinit light zsh-users/zsh-autosuggestions
 
 # Add in snippets
 zinit snippet OMZP::command-not-found
 zinit snippet OMZP::colored-man-pages
+
+{{ if includeTemplate "is-linux-debian" . -}}
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+{{ end -}}
 
 local_plugins=(
   override_standards
@@ -77,18 +91,20 @@ export LANG=en_US.UTF-8
 # Set preferred editor for local and remote sessions.
 if [[ -n $SSH_CONNECTION ]]; then
     export EDITOR='vim'
-elif command -v mvim > /dev/null; then
-    export EDITOR='mvim';
+elif command -v nvim > /dev/null; then
+    export EDITOR='nvim';
 else
     export EDITOR='vim'
 fi
 
 # Shell integrations
 source <(fzf --zsh)
+
 # alias/function conflict between zinit and zoxide
 # https://github.com/zdharma-continuum/zinit/discussions/312
 # https://github.com/orgs/z-shell/discussions/145
 eval "$(zoxide init --cmd d zsh)"
+
 if [ "$TERM_PROGRAM" != "Apple_Terminal" ]; then
   eval "$(oh-my-posh init zsh --config $HOME/.config/ohmyposh/zen.toml)"
 fi

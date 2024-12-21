@@ -1,0 +1,4 @@
+{{- /* Check if system is running with systemd. */ -}}
+{{- if or (eq .osid "linux-debian") (eq .osid "linux-ubuntu") (eq .osid "linux-pop") -}}
+true
+{{- end -}}
