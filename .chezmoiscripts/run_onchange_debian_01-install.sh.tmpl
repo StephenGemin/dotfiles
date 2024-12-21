@@ -1,0 +1,10 @@
+{{ if eq .osid "linux-debian" }}
+#!/bin/bash
+
+{{ range .packages.linux-debian.curls -}}
+{{ . | quote }}
+{{ end -}}
+{{ range .packages.linux-debian.apts -}}
+{{ . | quote }}
+{{ end -}}
+{{ end -}}

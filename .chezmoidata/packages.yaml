@@ -1,0 +1,47 @@
+packages:
+  linux-debian:
+    curls:
+      - https://sh.rustup.rs -sSf | sh
+      - https://pyenv.run | bash
+      - -sSfL https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | sh
+      - -fsSL https://raw.githubusercontent.com/JetBrains/JetBrainsMono/master/install_manual.sh | bash
+    apts:
+      - snapd
+      - doublecmd-gtk
+      - gpg
+
+      # Alacritty
+      - cmake
+      - g++
+      - pkg-config
+      - libfreetype6-dev
+      - libfontconfig1-dev
+      - libxcb-xfixes0-dev
+      - libxkbcommon-dev
+      # Python (refer to pyenv docs)
+      - build-essential
+      - libssl-dev
+      - zlib1g-dev
+      - libbz2-dev
+      - libreadline-dev
+      - libsqlite3-dev
+      - libncursesw5-dev
+      - xz-utils
+      - tk-dev
+      - libxml2-dev
+      - libxmlsec1-dev
+      - libffi-dev
+      - liblzma-dev
+      # JetBrains Toolbox
+      - libfuse2
+
+      # NeoVim & NVChad
+      - ripgrep
+      - neovim
+      - vim
+    cargos:
+      - alacritty
+    snaps:
+      - vlc
+      - "--classic code"
+

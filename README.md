@@ -1,10 +1,9 @@
 ## About
-My personal dotfiles, managed with [chezmoi](https://www.chezmoi.io/)
+My personal dotfiles, managed with [chezmoi](https://www.chezmoi.io/). This project aims to automate my setup.
 
 ## Project goals
-- Cross-platform == Windows, Mac, Debian
-- Cross-platform toolset
-- Unified, cross-platform set of aliases and commands
+- Cross-platform == Windows, Mac, Debian-based
+- Unified, cross-platform tools, aliases and commands
 - Setups for personal vs. work
 
 ## TOC
@@ -22,8 +21,8 @@ My personal dotfiles, managed with [chezmoi](https://www.chezmoi.io/)
 - Windows 
   - fully up and running
   - Decided to support Windows vs WSL. There are times where Windows cannot be avoided.
-- Linux
-  - next on the list
+- Debian
+  - in-progress
 - MacOS
   - support TBD; when need arises
 
@@ -47,9 +46,16 @@ My personal dotfiles, managed with [chezmoi](https://www.chezmoi.io/)
     - C:\Program Files\Git\cmd
     - C:\Program Files\Neovim\bin
   - Import PyCharm settings from `~\.config`
+- Debian
+    ```shell
+    sh -c "$(curl -fsLS get.chezmoi.io)"
+    sudo mv ~/bin/chezmoi /bin/chezmoi
+    chezmoi init https://github.com/StephenGemin/dotfiles.git    ```
+- [NVChad](https://nvchad.com/docs/quickstart/install/)
+  - Run `:MasonInstallAll` on first run
 
 ## Tooling
-❓ <span>== May support or not tested</span> &nbsp; 🚫 <span>== Never support</span>
+❓ <span>== May support, unused or not tested</span> &nbsp; 🚫 <span>== Never support</span>
 
 ### Terminals
 |  | **Debian** | **Windows** | **Mac** |
@@ -62,7 +68,7 @@ My personal dotfiles, managed with [chezmoi](https://www.chezmoi.io/)
 |  | **Debian** | **Windows** | **Mac** | **Notes** |
 |---|---|---|---|---|
 | Bash | ❓ | ✅ | ❓ | slow on Windows |
-| Zsh | ❓ | ✅ | ✅ | slow on Windows see [Other Notes](#other-notes) |
+| Zsh | ✅ | ✅ | ✅ | slow on Windows see [Other Notes](#other-notes) |
 | PowerShell | ❓ | ✅ | ❓ |  |
 
 ### Package Managers
@@ -77,19 +83,20 @@ My personal dotfiles, managed with [chezmoi](https://www.chezmoi.io/)
 | Git | ✅ | ✅ | ✅ |  |
 | Double Commander | ❓ | ✅ | ❓ |  |
 | Oh-My-Posh | ❓ | ✅ | ❓ |  |
-| Neovim | ❓ | ✅ | ❓ |  |
-| NVChad | ❓ | ✅ | ❓ |  |
-| zoxide | ❓ | ✅ | ❓ |  |
-| Ripgrep | ❓ | ✅ | ❓ |  |
-| Zinit | ❓ | ✅ | ❓ | zsh only |
-| Oh-My-Zsh | ❓ | ✅ | ❓ | zsh only |
+| Neovim | ✅ | ✅ | ❓ |  |
+| NVChad | ✅ | ✅ | ❓ |  |
+| zoxide | ✅ | ✅ | ❓ |  |
+| Ripgrep | ✅ | ✅ | ❓ |  |
+| Zinit | ✅ | ✅ | ❓ | zsh only |
+| Oh-My-Zsh | ✅ | ✅ | ❓ | zsh only |
+| pyenv | ✅ | ✅ | ❓ | Windows uses pyenv-win |
 | Nano | ✅ | ❓ | ✅ |  |
-| VLC | ❓ | ✅ | ❓ |  |
+| VLC | ✅ | ✅ | ❓ |  |
 | Firefox | ❓ | ✅ | ❓ |  |
 | Opera | ❓ | ✅ | ❓ |  |
 | Notion | ❓ | ✅ | ❓ |  |
-| JetBrains IDEs | ❓ | ✅ | ❓ |  |
-| VSC | ❓ | ✅ | ❓ |  |
+| JetBrains IDEs | ✅ | ✅ | ❓ |  |
+| VSC | ✅ | ✅ | ❓ |  |
 | F.lux | ❓ | ✅ | ❓ |  |
 | NotePad ++ | 🚫 | ✅ | 🚫 |  |
 | MSYS2 | 🚫 | ✅ | 🚫 |  |

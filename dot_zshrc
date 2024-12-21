@@ -10,9 +10,7 @@ ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
 source "${ZINIT_HOME}/zinit.zsh"
 
 # Add in zsh plugins
-# Below plugin causes problems in Windows
-# slow terminal, delayed text input, cursor appears to move backwards and forwars while typing, etc.
-#zinit light zsh-users/zsh-syntax-highlighting
+zinit light zsh-users/zsh-syntax-highlighting
 zinit light zsh-users/zsh-completions
 zinit light zsh-users/zsh-autosuggestions
 
@@ -77,8 +75,8 @@ export LANG=en_US.UTF-8
 # Set preferred editor for local and remote sessions.
 if [[ -n $SSH_CONNECTION ]]; then
     export EDITOR='vim'
-elif command -v mvim > /dev/null; then
-    export EDITOR='mvim';
+elif command -v nvim > /dev/null; then
+    export EDITOR='nvim';
 else
     export EDITOR='vim'
 fi
