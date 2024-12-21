@@ -3,8 +3,8 @@ packages:
     curls:
       - https://sh.rustup.rs -sSf | sh
       - https://pyenv.run | bash
-      - -sSfL https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | sh
-      - -fsSL https://raw.githubusercontent.com/JetBrains/JetBrainsMono/master/install_manual.sh | bash
+      - "-sSfL https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | sh"
+      - "-fsSL https://raw.githubusercontent.com/JetBrains/JetBrainsMono/master/install_manual.sh | bash"
     apts:
       - snapd
       - doublecmd-gtk
