@@ -1,20 +1,6 @@
 {{ if or (eq .osid "linux-debian") (eq .osid "linux-ubuntu") (eq .osid "linux-pop") }}
 #!/bin/bash
 
-{{ range .packages.linux-debian.curls }}
-{{ . | quote }}
-{{ end -}}
-
-{{ range .packages.linux-debian.apts }}
-{{ . | quote }}
-{{ end -}}
-
-{{ range .packages.linux-debian.cargos }}
-{{ . | quote }}
-{{ end -}}
-
-{{ range .packages.linux-debian.snaps }}
-{{ . | quote }}
-{{ end -}}
+source ../scripts/install.sh
 
 {{ end -}}
