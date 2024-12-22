@@ -107,7 +107,7 @@ chezmoi init --apply https://github.com/$GITHUB_USERNAME/dotfiles.git
 | VLC | ✅ | ✅ | ❓ |  |
 | Firefox | ✅ | ✅ | ❓ |  |
 | Opera | ✅ | ✅ | ❓ |  |
-| Notion | ❓ | ✅ | ❓ |  |
+| Notion | ✅ | ✅ | ❓ |  |
 | JetBrains IDEs | ✅ | ✅ | ❓ |  |
 | VSC | ✅ | ✅ | ❓ |  |
 | F.lux | ✅ | ✅ | ❓ | Linux uses Redshift |

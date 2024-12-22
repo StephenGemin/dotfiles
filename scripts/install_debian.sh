@@ -56,6 +56,7 @@ snaps=(
     "--classic code"
     "opera"
     "keepassxc"
+    "notion-snap-reborn"
     # "firefox"
 )
 
