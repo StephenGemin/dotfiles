@@ -110,7 +110,7 @@ chezmoi init --apply https://github.com/$GITHUB_USERNAME/dotfiles.git
 | Notion | ❓ | ✅ | ❓ |  |
 | JetBrains IDEs | ✅ | ✅ | ❓ |  |
 | VSC | ✅ | ✅ | ❓ |  |
-| F.lux | ❓ | ✅ | ❓ |  |
+| F.lux | ✅ | ✅ | ❓ | Linux uses Redshift |
 | NotePad ++ | 🚫 | ✅ | 🚫 |  |
 | MSYS2 | 🚫 | ✅ | 🚫 |  |
 

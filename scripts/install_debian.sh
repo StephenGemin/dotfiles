@@ -42,6 +42,8 @@ apts=(
     # JetBrains Toolbox
     # https://dev.to/janetmutua/installing-jetbrains-toolbox-on-ubuntu-527f
     "libfuse2"
+    "redshift"
+    "redshift-gtk"
 )
 
 cargos=("ripgrep")
