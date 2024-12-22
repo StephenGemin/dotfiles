@@ -1,8 +1,5 @@
 fontsDir = ".local/share/fonts"
 
 [terminalFont]
-  # https://github.com/ryanoasis/nerd-fonts/releases/latest
-  archive = "JetBrainsMono.tar.xz"
-  name = "JetBrainsMono Nerd Font"
+  name = "JetBrains Mono"
   size = 14
-

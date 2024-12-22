@@ -39,14 +39,17 @@ My personal dotfiles, managed with [chezmoi](https://www.chezmoi.io/)
     - Install dependencies for NVChad (use MSYS2)
       - `pacman -S --needed base-devel mingw-w64-ucrt-x86_64-toolchain`
       - `pacman -S make gcc zsh`
-  - Install fonts in `~\.local\share\fonts`; right-click and select **install**
+  - To install fonts go to `~\.local\share\fonts`; find tff files, right-click desired files, and select **install**
   - Install Whatsapp from MS store (unavailable from winget)
     - Ref microsoft/winget-pkgs issue 156231
   - Add to PATH (if not there):
     - %USERPROFILE%\.pyenv\pyenv-win\shims
     - C:\Program Files\Git\cmd
     - C:\Program Files\Neovim\bin
-  - Import PyCharm settings from `~\.config`
+
+### Tool specific 
+- PyCharm
+  - Import settings from `~\.config`
 
 ## Tooling
 ❓ <span>== May support or not tested</span> &nbsp; 🚫 <span>== Never support</span>

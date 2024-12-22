@@ -17,7 +17,8 @@
     refreshPeriod = "8766h"
 
 [{{ joinPath .fontsDir "JetBrainsMono" | quote }}]
-    type = "archive"
-    url = "https://github.com/ryanoasis/nerd-fonts/releases/latest/download/{{ .terminalFont.archive }}"
+    type = "git-repo"
+    url = "https://github.com/JetBrains/JetBrainsMono"
+    clone.args = ["--depth", "1"]
     refreshPeriod = "8766h"
 {{ end }}
