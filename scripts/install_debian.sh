@@ -10,11 +10,13 @@ source "$(dirname "${BASH_SOURCE[0]}")/logging.sh"
 apts=(
     "snapd"
     "doublecmd-gtk"
+    "exfat-fuse"
     "gpg"
     "nodejs"
     "npm"
     "zsh"
     "vim"
+    "xclip"
     # Alacritty
     # https://github.com/alacritty/alacritty/blob/master/INSTALL.md#debianubuntu
     "cmake"
@@ -70,7 +72,7 @@ command_exists() {
     return 1
 }
 
-install_brew(){
+install_brew() {
     if command_exists brew; then
         return
     fi
@@ -152,7 +154,7 @@ install_snaps() {
     sudo update-desktop-database /var/lib/snapd/desktop/applications
 }
 
-install_brews(){
+install_brews() {
     log_task "Installing Brew packages..."
     for pkg in "${brews[@]}"; do
         log_task "Installing: $pkg"
@@ -160,7 +162,7 @@ install_brews(){
     done
 }
 
-install_jetbrains_toolbox(){
+install_jetbrains_toolbox() {
     if ls /opt | grep -q "jetbrains-toolbox"; then
         return
     fi
