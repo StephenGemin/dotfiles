@@ -12,6 +12,7 @@
 				{"PackageIdentifier" : "Microsoft.VCRedist.2015+.x64"},
 				{"PackageIdentifier" : "Microsoft.VisualStudio.2022.BuildTools"},
 				{"PackageIdentifier" : "MSYS2.MSYS2"},
+				{"PackageIdentifier" : "wez.wezterm"},
 				{"PackageIdentifier" : "Microsoft.WindowsTerminal"},
 				{"PackageIdentifier" : "Alacritty.Alacritty"},
 				{"PackageIdentifier" : "Microsoft.PowerShell"},

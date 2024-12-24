@@ -58,11 +58,31 @@ chezmoi init --apply https://github.com/$GITHUB_USERNAME/dotfiles.git
   - C:\Program Files\Git\cmd
   - C:\Program Files\Neovim\bin
 
-### Tool specific 
+### Tool specific
+Manual setup steps for individual tools / apps
+
 - PyCharm
   - Import settings from `~\.config`
 - [NVChad](https://nvchad.com/docs/quickstart/install/)
+  - modify `~/.config/nvim/lua/plugins/init.lua`
+  ```lua
+    { "mrjones2014/smart-splits.nvim", lazy = false },
+    {
+      "neovim/nvim-lspconfig",
+      config = function()
+        require "configs.lspconfig"
+      end,
+    },
+    {
+      "nvim-treesitter/nvim-treesitter",
+      opts = {
+        ensure_installed = { "vim", "lua", "vimdoc", "html", "css" },
+      },
+    },
+  ```
+  - modify `~/.config/nvim/lua/mappings.lua` for smart-spits.nvim (refer to plugin docs)
   - Run `:MasonInstallAll` on first run
+
 
 ## Tooling
 <span>✅==Supported</span> &nbsp; <span>❓==May support, unused or not tested</span> &nbsp; 🚫 <span>==Never support</span>
@@ -70,10 +90,11 @@ chezmoi init --apply https://github.com/$GITHUB_USERNAME/dotfiles.git
 ### Terminals
 |  | **Debian** | **Windows** | **Mac** |
 |---|---|---|---|
-| Alacritty | ✅ | ✅ | ❓ |
-| GNOME Terminal | ✅ | 🚫 | 🚫 |
-| Mac Terminal | 🚫 | 🚫 | ✅ |
+| Wezterm | ✅ | ✅ | ❓ |
+| Alacritty* | ✅ | ✅ | ❓ |
 | Win Terminal | 🚫 | ✅ | 🚫 |
+
+*no tmux yet for Alacritty
 
 ### Shells
 |  | **Debian** | **Windows** | **Mac** | **Notes** |
@@ -150,3 +171,4 @@ db_env: windows
 - [felipecrs/dotfiles](https://github.com/felipecrs/dotfiles)
 - [dreamsofcode](https://www.youtube.com/@dreamsofcode)
 - [dreamsofautonomy](https://www.youtube.com/@dreamsofautonomy)
+- [KevinSilvester/wezterm-config](https://github.com/KevinSilvester/wezterm-config)

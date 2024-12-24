@@ -16,6 +16,7 @@ apts=(
     "npm"
     "zsh"
     "vim"
+    "wezterm"
     "xclip"
     # Alacritty
     # https://github.com/alacritty/alacritty/blob/master/INSTALL.md#debianubuntu
@@ -173,6 +174,15 @@ install_jetbrains_toolbox() {
     /opt/"$file"/jetbrains-toolbox
 }
 
+wezterm_prereqs() {
+    if command_exists "wezterm"; then
+        return
+    fi
+    curl -fsSL https://apt.fury.io/wez/gpg.key | sudo gpg --yes --dearmor -o /etc/apt/keyrings/wezterm-fury.gpg
+    echo 'deb [signed-by=/etc/apt/keyrings/wezterm-fury.gpg] https://apt.fury.io/wez/ * *' | sudo tee /etc/apt/sources.list.d/wezterm.list
+}
+
+wezterm_prereqs
 install_standalone_tools
 install_apts
 install_cargos
