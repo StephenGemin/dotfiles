@@ -85,7 +85,7 @@ bind.keys = {
   { key = 'l', mods = 'LEADER', action = act.SplitHorizontal { domain = 'CurrentPaneDomain' } },
 
   -- panes: naviation
-  -- move between split panes 
+  -- move between split panes
   split_nav('move', 'h'),
   split_nav('move', 'j'),
   split_nav('move', 'k'),
@@ -98,7 +98,7 @@ bind.keys = {
 
   {
     key = 'p',
-    mods = mod.SUPER,
+    mods = 'CTRL|ALT',
     action = act.PaneSelect({ alphabet = '1234567890', mode = 'SwapWithActiveKeepFocus' }),
   },
 
