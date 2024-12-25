@@ -59,6 +59,7 @@ snaps=(
     "opera"
     "keepassxc"
     "notion-snap-reborn"
+    "spotify"
     # "firefox"
 )
 
