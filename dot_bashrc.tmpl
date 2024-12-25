@@ -76,5 +76,5 @@ bind 'TAB:menu-complete'
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 {{ end -}}
 eval "$(fzf --bash)"
-eval "$(oh-my-posh init bash)"
+eval "$(oh-my-posh init bash --config $XDG_CONFIG_HOME/ohmyposh/zen.toml)"
 eval "$(zoxide init --cmd $ZOXIDE_KEY bash)"
