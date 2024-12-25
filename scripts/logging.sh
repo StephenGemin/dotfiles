@@ -1,4 +1,4 @@
-#/bin/bash
+#!/bin/bash
 
 log_color() {
   color_code="$1"
