@@ -1,5 +1,19 @@
 # -*-mode:bash-*- vim:ft=bash
 
+# If not running interactively, don't do anything
+case $- in
+    *i*) ;;
+      *) return;;
+esac
+
+# Set PATH so it includes user's private bins if they exist.
+if [ -d "$HOME/bin" ] ; then
+    PATH="$HOME/bin:$PATH"
+fi
+if [ -d "$HOME/.local/bin" ] ; then
+    PATH="$HOME/.local/bin:$PATH"
+fi
+export XDG_CONFIG_HOME="$HOME/.config"
 # Command-line shell completions
 # -----------------------------------------------------------------------------
 
@@ -31,7 +45,7 @@ local_plugins=(
     datetime
     file_management
     file_navigation
-    #git  need to fix syntax error: unexpected end of line
+    git
     tool_configs
     core
 )
@@ -42,11 +56,25 @@ for plugin in "${local_plugins[@]}"; do
 done
 
 # Load custom code from separate configuration file.
+# -----------------------------------------------------------------------------
 if [ -f "$HOME"/.bash_extras ]; then
     \. "$HOME"/.bash_extras
 fi
 
+# Aliases
+ZOXIDE_KEY="d"
+alias cd="$ZOXIDE_KEY" # map zoxide alias
+alias d-="$ZOXIDE_KEY -"
+
+# Keybindings
+bind 'set show-all-if-ambiguous on'
+bind 'TAB:menu-complete'
+
+# Shell integrations
+# -----------------------------------------------------------------------------
 {{ if includeTemplate "is-linux-debian" . -}}
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 {{ end -}}
-
+eval "$(fzf --bash)"
+eval "$(oh-my-posh init bash)"
+eval "$(zoxide init --cmd $ZOXIDE_KEY bash)"

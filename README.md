@@ -100,7 +100,7 @@ Manual setup steps for individual tools / apps
 |  | **Debian** | **Windows** | **Mac** | **Notes** |
 |---|---|---|---|---|
 | Zsh | ✅ | 🚫 | ❓ | slow on Windows see [Other Notes](#other-notes) |
-| Bash | ❓ | ✅ | ❓ | slow on Windows |
+| Bash | ✅  | ✅ | ❓ | slow on Windows |
 | PowerShell | ❓ | ✅ | ❓ |  |
 
 ### Package Managers

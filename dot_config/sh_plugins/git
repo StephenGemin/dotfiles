@@ -53,8 +53,8 @@ function git_main_branch() {
 # my most used commands
 alias gac='git add --all && git commit --verbose'
 alias gac!='git add --all && git commit --verbose --amend'
-function gacfx() { git add --all && git commit --verbose --fixup $1 }
-function grbo() { git rebase --interactive origin/"$1" }
+function gacfx() { git add --all && git commit --verbose --fixup $1; }
+function grbo() { git rebase --interactive origin/"$1"; }
 alias gacpo='git add --all && git commit --verbose && git push origin'
 alias gacpo!='git add --all && git commit --amend && git push --force-with-lease origin --set-upstream $(git_current_branch)'
 alias gacnvpo!='git add --all && git commit --amend --no-verify && git push origin --force-with-lease --set-upstream $(git_current_branch)'
@@ -114,7 +114,7 @@ alias grb='git rebase --interactive'
 alias grba='git rebase --abort'
 alias grbc='git rebase --continue'
 alias garbc='git add --all && git rebase --continue'
-function grbu() { git rebase --interactive upstream/"$1" }
+function grbu() { git rebase --interactive upstream/"$1"; }
 alias grbd='git rebase --interactive origin/$(git_develop_branch)'
 alias grbm='git rebase --interactive origin/$(git_main_branch)'
 alias grbum='git rebase --interactive upstream/$(git_main_branch)'
@@ -134,8 +134,8 @@ alias gstp='git stash pop'
 # nkf family -> checkout to branch, nuke previous local branch, then pull
 #function nkf() { CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD); git checkout $1 && git branch -D $CURRENT_BRANCH && git pull; }
 function gnkf() { CURRENT_BRANCH=$(git_current_branch); git checkout $1 && git branch -D $CURRENT_BRANCH && git pull; }
-function gnkfm() { CURRENT_BRANCH=$(git_current_branch); git checkout $(git_main_branch) && git branch -D $CURRENT_BRANCH && git pull }
-function gnkfd() { CURRENT_BRANCH=$(git_current_branch); git checkout $(git_develop_branch) && git branch -D $CURRENT_BRANCH && git pull }
+function gnkfm() { CURRENT_BRANCH=$(git_current_branch); git checkout $(git_main_branch) && git branch -D $CURRENT_BRANCH && git pull; }
+function gnkfd() { CURRENT_BRANCH=$(git_current_branch); git checkout $(git_develop_branch) && git branch -D $CURRENT_BRANCH && git pull; }
 
 
 # add-hoc aliases & functions
