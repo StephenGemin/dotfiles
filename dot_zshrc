@@ -1,0 +1,95 @@
+# -*-mode:zsh-*- vim:ft=zsh
+
+# If not running interactively, don't do anything
+case $- in
+    *i*) ;;
+      *) return;;
+esac
+
+# Zinit configuration
+ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
+[ ! -d $ZINIT_HOME ] && mkdir -p "$(dirname $ZINIT_HOME)"
+[ ! -d $ZINIT_HOME/.git ] && git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
+source "${ZINIT_HOME}/zinit.zsh"
+
+# Add in zsh plugins
+zinit light zsh-users/zsh-syntax-highlighting
+zinit light zsh-users/zsh-completions
+zinit light zsh-users/zsh-autosuggestions
+
+# Add in snippets
+zinit snippet OMZP::command-not-found
+zinit snippet OMZP::colored-man-pages
+
+# main completions or tool specific
+# built-in zsh completions loaded from completios.zsh
+zmodload zsh/complist
+autoload -Uz compinit; compinit
+zinit cdreplay -q
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
+zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
+
+# Include customized aliases, functions, etc
+local_plugins=(
+  clipboard
+  datetime
+  file_management
+  file_navigation
+  git
+  tool_configs
+  core
+  completions.zsh
+  override_standards
+)
+for plugin in "${local_plugins[@]}"; do
+    # would prefer to use zinit, but couldn't figure out syntax
+    # particulaly not cloning file, but using local source
+    source "$XDG_CONFIG_HOME/sh_plugins/$plugin"
+done
+
+# Keybindings
+bindkey -v
+bindkey '^['    history-search-backward
+bindkey '^]'    history-search-forward
+#bindkey '^[[1;5D' backward-word  # CTRL + Left Arrow
+#bindkey '^[[1;5C' forward-word  # CTRL + Right Arrow
+bindkey '^h' backward-word  # CTRL+ALT+h
+bindkey '^l' forward-word  # CTRL+ALT+l
+
+# History
+export ZSH_AUTOSUGGEST_USE_ASYNC=true
+HISTDUP=erase
+setopt appendhistory
+setopt sharehistory
+setopt hist_ignore_space # useful to stop sensitive information in zsh_history; prefix commands with a space!!
+setopt hist_ignore_all_dups
+setopt hist_save_no_dups
+setopt hist_ignore_dups
+setopt hist_find_no_dups
+setopt histignorealldups
+
+# Aliases
+alias cd="$ZOXIDE_KEY" # map zoxide alias
+alias d-="$ZOXIDE_KEY -"
+
+# Load custom code from separate configuration file.
+# -----------------------------------------------------------------------------
+if [ -f "$HOME"/.zsh_extras ]; then
+    source "$HOME"/.zsh_extras
+fi
+
+# Shell integrations
+if [ -f "/home/linuxbrew/.linuxbrew/bin/brew" ]; then
+    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+fi
+
+source <(fzf --zsh)
+
+if [ "$TERM_PROGRAM" != "Apple_Terminal" ]; then
+  eval "$(oh-my-posh init zsh --config $XDG_CONFIG_HOME/ohmyposh/zen.toml)"
+fi
+
+# alias/function conflict between zinit and zoxide
+# https://github.com/zdharma-continuum/zinit/discussions/312
+# https://github.com/orgs/z-shell/discussions/145
+eval "$(zoxide init --cmd $ZOXIDE_KEY zsh)"

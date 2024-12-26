@@ -1,6 +1,7 @@
+# -*-mode:sh-*- vim:ft=sh
+
 # Find directories
 alias fd='find . -type d -name'
 
 # Find files
 alias ff='find . -type f -name'
-

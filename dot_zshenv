@@ -1,0 +1,60 @@
+# -*-mode:zsh-*- vim:ft=zsh
+
+# PATH - include user's private bins if they exist.
+if [ -d "$HOME/bin" ] ; then
+    PATH="$HOME/bin:$PATH"
+fi
+if [ -d "$HOME/.local/bin" ] ; then
+    PATH="$HOME/.local/bin:$PATH"
+fi
+
+# XDG
+export XDG_CONFIG_HOME="$HOME/.config"
+export XDG_DATA_HOME="$HOME/.local/share"
+export XDG_CACHE_HOME="$HOME/.cache"
+export XDG_STATE_HOME="$HOME/.local/state"
+
+# editor
+if [[ -n $SSH_CONNECTION ]]; then
+    export EDITOR='vim'
+    export VISUAL='vim'
+elif command -v nvim > /dev/null; then
+    export EDITOR='nvim'
+    export VISUAL='nvim'
+else
+    export EDITOR='vim'
+    export VISUAL='vim'
+fi
+
+# shell / history
+export ZDOTDIR="$HOME"                   # location for zsh dot files
+export HISTFILE="$ZDOTDIR/.zsh_history"  # History filepath
+export HISTSIZE=10000                    # Maximum events for internal history
+export SAVEHIST=10000                    # Maximum events in history file
+
+# fzf
+FZF_COLORS="bg+:-1,\
+fg:gray,\
+fg+:white,\
+border:black,\
+spinner:0,\
+hl:yellow,\
+header:blue,\
+info:green,\
+pointer:red,\
+marker:blue,\
+prompt:gray,\
+hl+:red"
+
+export FZF_DEFAULT_OPTS="--height 60% \
+--border sharp \
+--layout reverse \
+--color '$FZF_COLORS' \
+--prompt '∷ ' \
+--pointer ▶ \
+--marker ⇒"
+export FZF_DEFAULT_COMMAND='rg --files --hidden --glob "!.git"'
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+
+# zoxide
+export ZOXIDE_KEY="d"

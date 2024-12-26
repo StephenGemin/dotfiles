@@ -1,3 +1,5 @@
+# -*-mode:sh-*- vim:ft=sh
+
 # Gets local/UTC date and time in ISO-8601 format `YYYY-MM-DDThh:mm:ss`.
 alias now='date +"%Y-%m-%dT%H:%M:%S"'
 alias unow='date -u +"%Y-%m-%dT%H:%M:%S"'

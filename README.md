@@ -172,3 +172,4 @@ db_env: windows
 - [dreamsofcode](https://www.youtube.com/@dreamsofcode)
 - [dreamsofautonomy](https://www.youtube.com/@dreamsofautonomy)
 - [KevinSilvester/wezterm-config](https://github.com/KevinSilvester/wezterm-config)
+- [Phantas0s/.dotfiles](https://github.com/Phantas0s/.dotfiles)
