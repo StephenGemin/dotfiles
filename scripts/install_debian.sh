@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # -e: exit on error
 # -u: exit on unset variables
@@ -12,6 +12,7 @@ apts=(
     "bash-completion"
     "doublecmd-gtk"
     "exfat-fuse"
+    "git-extras"
     "gpg"
     "nodejs"
     "npm"
@@ -121,13 +122,21 @@ install_oh_my_posh() {
     curl -s https://ohmyposh.dev/install.sh | bash -s
 }
 
-install_apts() {
-    log_task "Updating package list and installing APT packages..."
-    sudo apt update
-    for pkg in "${apts[@]}"; do
-        log_task "Installing: $pkg"
-        sudo apt install -y "$pkg"
-    done
+install_git_diff_highlight() {
+    if command_exists "diff-highlight"; then
+        return
+    fi
+    local diff_highlight_path
+    diff_highlight_path="$(find /usr -type f -name diff-highlight 2>/dev/null \
+    | grep '/contrib/diff-highlight/diff-highlight$')"
+
+    if [[ -n "$diff_highlight_path" ]]; then
+        sudo cp "$diff_highlight_path" /usr/local/bin/diff-highlight
+        sudo chmod +x /usr/local/bin/diff-highlight
+        echo "Installed diff-highlight to /usr/local/bin/"
+    else
+        echo "Could not find diff-highlight, verify Git's contrib scripts are installed."
+    fi
 }
 
 install_standalone_tools() {
@@ -138,6 +147,16 @@ install_standalone_tools() {
     install_oh_my_posh
     install_zoxide
     install_jetbrains_nerd_font
+    install_git_diff_highlight
+}
+
+install_apts() {
+    log_task "Updating package list and installing APT packages..."
+    sudo apt update
+    for pkg in "${apts[@]}"; do
+        log_task "Installing: $pkg"
+        sudo apt install -y "$pkg"
+    done
 }
 
 install_cargos() {
