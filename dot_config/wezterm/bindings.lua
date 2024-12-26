@@ -79,6 +79,8 @@ bind.keys = {
   -- panes
   { key = 'w', mods = 'CTRL|SHIFT', action = act.CloseCurrentPane({ confirm = false }) },
   { key = 'Enter', mods = mod.SUPER, action = act.TogglePaneZoomState },
+  { key = "PageUp", mods = '', action = act.ScrollByPage(-1) },
+  { key = "PageDown", mods = '', action = act.ScrollByPage(1) },
 
   -- panes: splitting
   { key = 'j', mods = 'LEADER', action = act.SplitVertical { domain = 'CurrentPaneDomain' } },
