@@ -6,18 +6,12 @@ case $- in
       *) return;;
 esac
 
-# Set PATH so it includes user's private bins if they exist.
-if [ -d "$HOME/bin" ] ; then
-    PATH="$HOME/bin:$PATH"
+if [ -f "$HOME/.bashenv" ]; then
+    . "$HOME/.bashenv"
 fi
-if [ -d "$HOME/.local/bin" ] ; then
-    PATH="$HOME/.local/bin:$PATH"
-fi
-export XDG_CONFIG_HOME="$HOME/.config"
+
 # Command-line shell completions
 # -----------------------------------------------------------------------------
-
-# Provide Chezmoi completions (if installed).
 # See https://github.com/twpayne/chezmoi/blob/master/docs/REFERENCE.md
 if command -v chezmoi > /dev/null; then
     eval "$(chezmoi completion bash)"
@@ -25,19 +19,19 @@ fi
 
 # Development environments
 # -----------------------------------------------------------------------------
-{{- /* Avoid on GitBash startup 'bash: pyenv:: command not found' */ -}}
-{{ if ne .osid "windows" }}
-export PYENV_ROOT="$HOME/.pyenv"
-[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init -)"
-eval "$(pyenv virtualenv-init -)"
 
-if [ -f "$HOME/.cargo/env" ]; then
-    . "$HOME/.cargo/env"
+if [ "$isWindows" = 0 ]; then
+    export PYENV_ROOT="$HOME/.pyenv"
+    [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+    eval "$(pyenv init -)"
+    eval "$(pyenv virtualenv-init -)"
+
+    if [ -f "$HOME/.cargo/env" ]; then
+        . "$HOME/.cargo/env"
+    fi
 fi
-{{ end }}
 
-# Includes
+# Include customized aliases, functions, etc
 # -----------------------------------------------------------------------------
 local_plugins=(
     override_standards
@@ -52,17 +46,16 @@ local_plugins=(
 for plugin in "${local_plugins[@]}"; do
     # would prefer to use zinit, but couldn't figure out syntax
     # particulaly not cloning file, but using local source
-    source "$HOME/.config/sh_plugins/$plugin"
+    source "$XDG_CONFIG_HOME/sh_plugins/$plugin"
 done
 
 # Load custom code from separate configuration file.
 # -----------------------------------------------------------------------------
 if [ -f "$HOME"/.bash_extras ]; then
-    \. "$HOME"/.bash_extras
+    . "$HOME"/.bash_extras
 fi
 
 # Aliases
-ZOXIDE_KEY="d"
 alias cd="$ZOXIDE_KEY" # map zoxide alias
 alias d-="$ZOXIDE_KEY -"
 
@@ -72,9 +65,9 @@ bind 'TAB:menu-complete'
 
 # Shell integrations
 # -----------------------------------------------------------------------------
-{{ if includeTemplate "is-linux-debian" . -}}
-eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-{{ end -}}
+if [ -f "/home/linuxbrew/.linuxbrew/bin/brew" ]; then
+    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+fi
 eval "$(fzf --bash)"
 eval "$(oh-my-posh init bash --config $XDG_CONFIG_HOME/ohmyposh/zen.toml)"
 eval "$(zoxide init --cmd $ZOXIDE_KEY bash)"
