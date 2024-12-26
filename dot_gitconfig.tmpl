@@ -40,11 +40,11 @@
 [column]
     ui = auto
 [commit]
-    template = ~/.gitmessage.txt
+    template = ~/.config/git/commit_message_template
 [core]
     autocrlf = {{ if eq .osid "windows" }}true{{ else }}input{{ end }}
     editor = nvim
-    excludesfile = ~/.gitignore_global
+    excludesfile = ~/.config/git/ignore_global
 
     # Speed up commands involving untracked files such as `git status`.
     # See https://git-scm.com/docs/git-update-index#_untracked_cache
@@ -64,7 +64,7 @@
     # Correct and execute mistyped commands.
     autocorrect = 1
 [include]
-    path = ".gitconfig_local"  # include local configuration (optional)
+    path = ~/.config/git/config_local  # include local configuration (optional)
 [init]
     defaultBranch = main
 [interactive]
