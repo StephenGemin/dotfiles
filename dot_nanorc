@@ -39,10 +39,6 @@ set preserve
 # beginning of the line.
 set smarthome
 
-# Enable smooth scrolling. Text will scroll line-by-line, instead of
-# the usual chunk-by-chunk behavior.
-set smooth
-
 # Allow nano to be suspended with `^Z`.
 set suspend
 
