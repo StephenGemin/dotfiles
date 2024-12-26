@@ -19,6 +19,8 @@
 [user]
     name = "{{- .name }}"
     email = "{{- .email }}"
+[branch]
+    sort = -committerdate
 [color]
     ui = true
 # colors taken from https://github.com/so-fancy/diff-so-fancy
@@ -35,6 +37,10 @@
     old = red bold
     new = green bold
     whitespace = red reverse
+[column]
+    ui = auto
+[commit]
+    template = ~/.gitmessage.txt
 [core]
     autocrlf = {{ if eq .osid "windows" }}true{{ else }}input{{ end }}
     editor = nvim
@@ -46,44 +52,37 @@
 
     # Set comment character to something that allows mentioning issue numbers.
     commentChar = ";"
-
-[commit]
-    template = ~/.gitmessage.txt
-[rebase]
-    autosquash = true
 [fetch]
     # Remove any remote-tracking references that no longer exist on the remote.
     prune = true
-[push]
-    autoSetupRemote = true
-    default = current
+[filter "lfs"]
+    clean = git-lfs clean -- %f
+    smudge = git-lfs smudge -- %f
+    process = git-lfs filter-process
+    required = true
 [help]
     # Correct and execute mistyped commands.
     autocorrect = 1
+[include]
+    path = ".gitconfig_local"  # include local configuration (optional)
+[init]
+    defaultBranch = main
+[interactive]
+	diffFilter = diff-highlight
 [merge]
     # Include summaries of merged commits in newly created merge commit messages.
     log = true
 [mergetool]
     # Avoid saving an `.orig` backup file after a merge.
     keepBackup = false
-[init]
-    defaultBranch = main
-[rerere]
-    enabled = true
-[column]
-    ui = auto
-[branch]
-    sort = -committerdate
-[filter "lfs"]
-    clean = git-lfs clean -- %f
-    smudge = git-lfs smudge -- %f
-    process = git-lfs filter-process
-    required = true
-[include]
-    path = ".gitconfig_local"  # include local configuration (optional)
-[interactive]
-	diffFilter = diff-highlight
 [pager]
 	log = diff-highlight | less
 	show = diff-highlight | less
 	diff = diff-highlight | less
+[push]
+    autoSetupRemote = true
+    default = current
+[rebase]
+    autosquash = true
+[rerere]
+    enabled = true
