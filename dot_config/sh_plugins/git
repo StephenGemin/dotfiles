@@ -57,11 +57,10 @@ alias gac='git add --all && git commit --verbose'
 alias gac!='git add --all && git commit --verbose --amend'
 function gacfx() { git add --all && git commit --verbose --fixup $1; }
 function grbo() { git rebase --interactive origin/"$1"; }
-alias gacpo='git add --all && git commit --verbose && git push origin'
 alias gacpo!='git add --all && git commit --amend && git push --force-with-lease origin --set-upstream $(git_current_branch)'
 alias gacnvpo!='git add --all && git commit --amend --no-verify && git push origin --force-with-lease --set-upstream $(git_current_branch)'
 alias gds='git diff --stat'
-function gl() { git log --oneline -"${1:-15}"; }
+function gl() { git log --oneline --graph -"${1:-15}"; }
 alias gwip='git add --all && git commit -v -m "[skip-ci] WIP"'
 
 alias g='git'
@@ -78,7 +77,6 @@ alias gcom='git checkout $(git_main_branch)'
 
 alias gcp='git cherry-pick'
 alias gcpa='git cherry-pick --abort'
-alias gcpc='git cherry-pick --continue'
 alias gacpc='git add --all && git cherry-pick --continue'
 
 alias gc='git commit --verbose'
@@ -91,21 +89,20 @@ alias gsh='git show'
 alias glastsha='git log -1 --pretty="%H"'  # output full sha of last commit
 
 alias gf='git fetch -v'
-alias gfo='git fetch origin'
-alias gfu='git fetch upstream'
+alias gfo='git fetch origin -v'
+alias gfu='git fetch upstream -v'
 alias gpl='git pull -v'
-alias gplr='git pull --rebase -v'
+alias gpl!='git pull --rebase -v'
 
 # aliases are set to gg because gp is a protected alias in powershell (Windows)
 alias gg='git push -v'
 alias ggo='git push -v origin'
-alias ggo!='git push origin --force'
-alias ggof='git push origin --force-with-lease'
+alias ggo!='git push -v origin --force'
+alias ggof='git push -v origin --force-with-lease'
 alias ggu='git push -v upstream'
 
 alias gm='git merge'
 alias gma='git merge --abort'
-alias gmc='git merge --continue'
 alias gms="git merge --squash"
 alias gmff="git merge --ff-only"
 alias gmom='git merge origin/$(git_main_branch)'
@@ -114,7 +111,6 @@ alias gmod='git merge origin/$(git_develop_branch)'
 
 alias grb='git rebase --interactive'
 alias grba='git rebase --abort'
-alias grbc='git rebase --continue'
 alias garbc='git add --all && git rebase --continue'
 function grbu() { git rebase --interactive upstream/"$1"; }
 alias grbd='git rebase --interactive origin/$(git_develop_branch)'
@@ -128,9 +124,23 @@ alias gclean!='git clean -fdx'
 alias gsts='git stash save'
 alias gsta='git stash apply'
 alias gstc='git stash clear'
-alias gstd='git stash drop'
+gstd() {
+    local ref=${1:-0}
+    if [[ "$ref" -gt 0 ]]; then
+        git stash drop "@{$ref}"
+    else
+        git stash drop
+    fi
+}
 alias gstl='git stash list'
-alias gstp='git stash pop'
+gstp() {
+    local ref=${1:-0}
+    if [[ "$ref" -gt 0 ]]; then
+        git stash pop "@{$ref}"
+    else
+        git stash pop
+    fi
+}
 
 # more personal aliases & functions
 # nkf family -> checkout to branch, nuke previous local branch, then pull

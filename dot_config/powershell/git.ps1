@@ -55,11 +55,10 @@ function gac { git add --all; git commit --verbose }
 function gac! { git add --all; git commit --verbose --amend }
 function gacfx { param([string]$1); git add --all; git commit --verbose --fixup $1 }
 function grbo { param([string]$1); git rebase --interactive origin/$1 }
-function gacpo { git add --all; git commit --verbose; git push origin }
 function gacpo! { $b = git rev-parse --abbrev-ref HEAD; git add --all; git commit --amend; git push --force-with-lease origin --set-upstream $b }
 function gacnvpo! { $b = git rev-parse --abbrev-ref HEAD; git add --all; git commit --amend --no-verify; git push origin --force-with-lease --set-upstream $b }
 function gds { git diff --stat }
-function gl { param([int]$1=15); git log --oneline -$1 }
+function gl { param([int]$1=15); git log --oneline --graph -$1 }
 function gwip { git add --all; git commit -v -m "[skip-ci] WIP" }
 
 function g { git @args }
@@ -76,10 +75,9 @@ function gcom { git checkout $(git_main_branch) }
 
 function gcp {git cherry-pick @args }
 function gcpa { git cherry-pick --abort }
-function gcpc { git cherry-pick --continue }
 function gacpc { git add --all; git cherry-pick --continue }
 
-function gc { git commit --verbose }
+function gc { git commit --verbose @args }
 function gc! { git commit --verbose --amend }
 function gcfx { param([string]$1); git commit --verbose --fixup $1 }
 
@@ -89,10 +87,10 @@ function gsh { git show }
 function glastsha { git log -1 --pretty="%H" }
 
 function gf { git fetch -v }
-function gfo { git fetch origin }
-function gfu { git fetch upstream }
+function gfo { git fetch origin -v }
+function gfu { git fetch upstream -v }
 function gpl { git pull -v }
-function gplr { git pull --rebase -v }
+function gpl! { git pull --rebase -v }
 
 # aliases are set to gg because gp is a protected alias in powershell (Windows)
 function gg { git push -v @args }
@@ -103,7 +101,6 @@ function ggu { git push -v upstream }
 
 function gm { git merge @args }
 function gma { git merge --abort }
-function gmc { git merge --continue }
 function gms { git merge --squash }
 function gmff { git merge --ff-only }
 function gmom { git merge origin/$(git_main_branch) }
@@ -112,7 +109,6 @@ function gmod { git merge origin/$(git_develop_branch) }
 
 function grb { git rebase --interactive @args }
 function grba { git rebase --abort }
-function grbc { git rebase --continue }
 function garbc { git add --all; git rebase --continue }
 function grbu { param([string]$1); git rebase --interactive upstream/$1 }
 function grbd { git rebase --interactive origin/$(git_develop_branch) }
