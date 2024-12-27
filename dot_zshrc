@@ -79,6 +79,13 @@ if [ -f "$HOME"/.zsh_extras ]; then
 fi
 
 # Shell integrations
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
+
+if [ -f "$HOME/.cargo/env" ]; then
+    . "$HOME/.cargo/env"
+fi
+
 if [ -f "/home/linuxbrew/.linuxbrew/bin/brew" ]; then
     eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 fi
@@ -93,3 +100,4 @@ fi
 # https://github.com/zdharma-continuum/zinit/discussions/312
 # https://github.com/orgs/z-shell/discussions/145
 eval "$(zoxide init --cmd $ZOXIDE_KEY zsh)"
+
