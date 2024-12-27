@@ -21,8 +21,6 @@ fi
 # -----------------------------------------------------------------------------
 
 if [ "$isWindows" = 0 ]; then
-    export PYENV_ROOT="$HOME/.pyenv"
-    [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
     eval "$(pyenv init -)"
     eval "$(pyenv virtualenv-init -)"
 
@@ -65,9 +63,20 @@ bind 'TAB:menu-complete'
 
 # Shell integrations
 # -----------------------------------------------------------------------------
+if [ "$isWindows" = 0 ]; then
+    eval "$(pyenv init -)"
+    eval "$(pyenv virtualenv-init -)"
+
+    if [ -f "$HOME/.cargo/env" ]; then
+        . "$HOME/.cargo/env"
+    fi
+fi
+
 if [ -f "/home/linuxbrew/.linuxbrew/bin/brew" ]; then
     eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 fi
+
 eval "$(fzf --bash)"
 eval "$(oh-my-posh init bash --config $XDG_CONFIG_HOME/ohmyposh/zen.toml)"
 eval "$(zoxide init --cmd $ZOXIDE_KEY bash)"
+
