@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 log_color() {
   color_code="$1"
@@ -20,7 +20,7 @@ log_green() {
 }
 
 log_info() {
-    log_blue "ℹ️" "$@"
+    log_blue "ℹ️ " "$@"
 }
 
 log_task() {

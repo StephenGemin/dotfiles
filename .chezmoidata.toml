@@ -3,3 +3,7 @@ fontsDir = ".local/share/fonts"
 [terminalFont]
   name = "JetBrains Mono"
   size = 14
+
+[user.software]
+  python_version = "3.12"
+  default_shell = "zsh"

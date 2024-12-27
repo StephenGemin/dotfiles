@@ -1,9 +1,37 @@
 #!/usr/bin/env bash
 
-# -e: exit on error
-# -u: exit on unset variables
-set -eu
-set +x
+#
+# Usage:
+#   ./install_debian.sh <shell_name> <python_version>
+#
+# Examples:
+#   ./install_debian.sh zsh 3.10
+#   ./install_debian.sh bash 3.8
+#
+
+set -eu  # -e: exit on error; -u exit on unset variables
+set +x   # disable debug mode
+
+usage() {
+  cat <<EOF
+Usage: $0 <shell_name>
+
+Examples:
+  $0 zsh 3.10
+  $0 bash 3.8
+
+Options:
+  -h, --help    Show this help message and exit
+EOF
+}
+
+if [[ "$1" == "-h" || "$1" == "--help" ]]; then
+  usage
+  exit 0
+fi
+
+DEFAULT_USER_SHELL="$1"
+INSTALL_PYTHON_VERSION="$2"
 
 source "$(dirname "${BASH_SOURCE[0]}")/logging.sh"
 
@@ -69,6 +97,7 @@ snaps=(
 )
 
 brews=("fzf" "pipx" "ruff" "uv")
+pipxs=("virtualenv" "poetry" "pip-tools")
 
 command_exists() {
     if type "$1" >/dev/null 2>&1; then
@@ -91,8 +120,8 @@ install_pyenv() {
     fi
     curl -sSf https://pyenv.run | bash
     if command_exists pyenv; then
-        pyenv install 3.12
-        pyenv global 3.12
+        pyenv install $INSTALL_PYTHON_VERSION
+        pyenv global $INSTALL_PYTHON_VERSION
     fi
 }
 
@@ -156,7 +185,7 @@ install_apts() {
     log_task "Updating package list and installing APT packages..."
     sudo apt update
     for pkg in "${apts[@]}"; do
-        log_task "Installing: $pkg"
+        log_task "Install apt package: $pkg"
         sudo apt install -y "$pkg"
     done
 }
@@ -164,7 +193,7 @@ install_apts() {
 install_cargos() {
     log_task "Installing tools using Cargo..."
     for pkg in "${cargos[@]}"; do
-        log_task "Installing: $pkg"
+        log_task "Install cargo package: $pkg"
         cargo install "$pkg"
     done
 }
@@ -172,7 +201,7 @@ install_cargos() {
 install_snaps() {
     log_task "Installing Snap packages..."
     for pkg in "${snaps[@]}"; do
-        log_task "Installing: $pkg"
+        log_task "Install snap package: $pkg"
         sudo snap install $pkg
     done
     sudo update-desktop-database /var/lib/snapd/desktop/applications
@@ -181,7 +210,7 @@ install_snaps() {
 install_brews() {
     log_task "Installing Brew packages..."
     for pkg in "${brews[@]}"; do
-        log_task "Installing: $pkg"
+        log_task "Install brew package: $pkg"
         brew install $pkg
     done
 }
@@ -204,12 +233,40 @@ wezterm_prereqs() {
     echo 'deb [signed-by=/etc/apt/keyrings/wezterm-fury.gpg] https://apt.fury.io/wez/ * *' | sudo tee /etc/apt/sources.list.d/wezterm.list
 }
 
+set_system_key_bindings() {
+    gsettings set org.gnome.settings-daemon.plugins.media-keys terminal "['<Super>t']"
+    gsettings set org.gnome.desktop.default-applications.terminal exec-arg ''
+    gsettings set org.gnome.desktop.default-applications.terminal exec 'wezterm'
+    gsettings set org.gnome.desktop.wm.keybindings minimize "['<Super>Down']"
+    gsettings set org.gnome.desktop.wm.keybindings maximize "['<Super>Up']"
+    gsettings set org.gnome.desktop.wm.keybindings switch-applications "['<Super>Tab']"
+    gsettings set org.gnome.desktop.wm.keybindings switch-applications-backward "['<Shift><Super>Tab']"
+    gsettings set org.gnome.desktop.wm.keybindings switch-windows "['<Alt>Tab']"
+    gsettings set org.gnome.desktop.wm.keybindings switch-windows-backward "['<Shift><Alt>Tab']"
+}
+
+set_default_shell() {
+    set_shell="$(which $DEFAULT_USER_SHELL)"
+    chsh -s $set_shell
+    log_info "Set default shell to $set_shell"
+}
+
+install_pipxs() {
+    for pkg in "${pipxs[@]}"; do
+        log_task "Install pipx package: $pkg"
+        pipx install $pkg
+    done
+}
+
 wezterm_prereqs
 install_standalone_tools
 install_apts
 install_cargos
 install_snaps
 install_brews
+install_pipxs
 install_jetbrains_toolbox
+set_default_shell
+set_system_key_bindings
 
 success "All installations completed successfully!"

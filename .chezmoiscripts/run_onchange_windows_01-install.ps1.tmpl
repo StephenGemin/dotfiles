@@ -13,7 +13,7 @@
 # change system properties.
 #Disabled Requires -RunAsAdministrator
 
-# Note to future self, chezmoi runs this script on Powershell 5 even if a 
+# Note to future self, chezmoi runs this script on Powershell 5 even if a
 # higher level version is installed!
 
 # Create missing $IsWindows if running Powershell 5 or below.
@@ -41,7 +41,7 @@ function eos {
     }
     else {
         Write-Host "No modifications performed." -ForegroundColor $ColorInfo
-    } 
+    }
     Remove-Variable -Name count -Scope Script
 }
 
@@ -51,7 +51,7 @@ $hereString = "
         - Install missing or update existing Powershell modules"
 if ($IsWindows) {
     $hereString += "
-        - Install packages with winget, scoop and/or chocolately"    
+        - Install packages with winget, scoop and/or chocolately"
     $hereString += "
         - Enable LongPaths support for file paths above 260 characters"
 }
@@ -137,8 +137,8 @@ if (-not (Get-Command pyenv -ErrorAction SilentlyContinue)) {
 }
 
 if (-not (Get-Command python -ErrorAction SilentlyContinue)) {
-    pyenv install 3.12
-    pyenv global 3.12
+    pyenv install {{ .user.software.python_version }}
+    pyenv global {{ .user.software.python_version }}
     $count++
 }
 
