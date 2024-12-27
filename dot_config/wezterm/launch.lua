@@ -13,8 +13,8 @@ if wezterm.target_triple:find("windows") then
 else
     default_prog = { '/usr/bin/zsh' }
     launch_menu = {
-        { label = 'Zsh', args = { 'zsh', '-l' } },
-        { label = 'Bash', args = { 'bash', '-l' } },
+        { label = 'Zsh', args = { 'zsh' } },
+        { label = 'Bash', args = { 'bash' } },
     }
 end
 
