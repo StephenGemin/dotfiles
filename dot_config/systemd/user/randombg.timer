@@ -1,0 +1,9 @@
+[Unit]
+Description=Random wallpaper changer for GNOME
+
+[Timer]
+OnUnitActiveSec=1h
+Unit=randombg.service
+
+[Install]
+WantedBy=timers.target

@@ -1,0 +1,5 @@
+[Unit]
+Description=Change GNOME wallpaper
+
+[Service]
+ExecStart=bash /home/gemz/.config/systemd/user/randombg_gnome.sh "/home/gemz/Pictures/wallpapers/"
