@@ -1,4 +1,3 @@
-## About
 My computer setup and dotfiles, managed with [chezmoi](https://www.chezmoi.io/)
 
 ## Project goals
@@ -7,8 +6,8 @@ My computer setup and dotfiles, managed with [chezmoi](https://www.chezmoi.io/)
 - Personal and work
 
 ## TOC
-- [Project State | Decisions](#project-state--decisions)
-- [Setup Notes](#setup-notes)
+- [Project State](#project-state)
+- [Install](#install)
   - [Debian-based](#debian)
   - [Windows](#windows-semi-automated)
 - [Tooling](#tooling)
@@ -19,7 +18,7 @@ My computer setup and dotfiles, managed with [chezmoi](https://www.chezmoi.io/)
   - [Other Notes](#other-notes)
 - [💡 Inspirations](#-inspirations)
 
-## Project State | Decisions
+## Project State
 - Debian-based
   - tested on Pop!_OS 22.04 LTS, Ubuntu 22.04 LTS
 - MacOS
@@ -40,16 +39,28 @@ chezmoi init --apply https://github.com/$GITHUB_USERNAME/dotfiles.git
 ```
 
 ### Windows (semi-automated)
-- Recommend init commands in PowerShell (not pwsh)
-- **Must have `winget`**
-- `winget install twpayne.chezmoi`
-- `winget install -e --id Git.Git`
+- Recommend running in PowerShell (not pwsh)
+- install prereq dependencies
+  ```pwsh
+  get-Command winget  # check winget installed
+  # if missing:
+  # 1. download winget from MS store
+  # 2. If MS store is blocked (typically work env) then install from .msixbundle
+  #    - https://github.com/microsoft/winget-cli/releases/latest
+  #    - double click downloaded file to install
+  #    - if this is also blocked, can install from powershell command `Add-AppxPackage -Path "PATH_TO_FILE"`
+  
+  winget install -e --id Git.Git
+  winget install twpayne.chezmoi
+  $env:GITHUB_USERNAME = "StephenGemin"
+  chezmoi init --apply https://github.com/$GITHUB_USERNAME/dotfiles.git
+  ```
 - May need to install MSYS2 manually
 - NeoVim with NVChad
   - ***Do not start Neovim until NVChad reqs are installed!***
   - Install dependencies for NVChad (use MSYS2)
     - `pacman -S --needed base-devel mingw-w64-ucrt-x86_64-toolchain`
-    - `pacman -S make gcc zsh`
+    - `pacman -S make gcc`
 - To install fonts go to `~\.local\share\fonts`; find tff files, right-click desired files, and select**install**
 - Install Whatsapp from MS store (unavailable from winget)
   - Ref microsoft/winget-pkgs issue 156231
@@ -61,9 +72,9 @@ chezmoi init --apply https://github.com/$GITHUB_USERNAME/dotfiles.git
 ### Tool specific
 Manual setup steps for individual tools / apps
 
-- PyCharm
+- [PyCharm](https://www.jetbrains.com/pycharm/)
   - Import settings from `~\.config`
-- [NVChad](https://nvchad.com/docs/quickstart/install/)
+- [neovim](https://neovim.io/)
   - modify `~/.config/nvim/lua/plugins/init.lua`
   ```lua
     { "mrjones2014/smart-splits.nvim", lazy = false },
@@ -88,52 +99,52 @@ Manual setup steps for individual tools / apps
 <span>✅==Supported</span> &nbsp; <span>❓==May support, unused or not tested</span> &nbsp; 🚫 <span>==Never support</span>
 
 ### Terminals
-|  | **Debian** | **Windows** | **Mac** |
+|  | **Deb** | **Win** | **Mac** |
 |---|---|---|---|
-| Wezterm | ✅ | ✅ | ❓ |
-| Alacritty* | ✅ | ✅ | ❓ |
-| Win Terminal | 🚫 | ✅ | 🚫 |
+| [WezTerm](https://wezfurlong.org/wezterm/) | ✅ | ✅ | ❓ |
+| [Alacritty](https://github.com/alacritty/alacritty)* | ✅ | ✅ | ❓ |
+| [Windows Terminal](https://github.com/microsoft/terminal) | 🚫 | ✅ | 🚫 |
 
-*no tmux yet for Alacritty
+*No tmux yet for Alacritty
 
 ### Shells
-|  | **Debian** | **Windows** | **Mac** | **Notes** |
+|  | **Deb** | **Win** | **Mac** | **Notes** |
 |---|---|---|---|---|
-| Zsh | ✅ | 🚫 | ❓ | slow on Windows see [Other Notes](#other-notes) |
-| Bash | ✅  | ✅ | ❓ | slow on Windows |
-| PowerShell | ❓ | ✅ | ❓ |  |
+| [Zsh](https://www.zsh.org/) | ✅ | 🚫 | ❓ | Slow on Windows, see [Other Notes](#other-notes) |
+| [Bash](https://www.gnu.org/software/bash/) | ✅ | ✅ | ❓ | Slow on Windows |
+| [PowerShell](https://github.com/PowerShell/PowerShell) | ❓ | ✅ | ❓ |  |
 
 ### Package Managers
-- Debian: apt/snap/brew/cargo
-- Windows: winget
-- Mac: brew
+- **Debian:** [apt](https://wiki.debian.org/Apt) / [snap](https://snapcraft.io/docs) / [flatpak](https://flatpak.org/) / [linuxbrew](https://docs.brew.sh/Homebrew-on-Linux/) / [cargo](https://doc.rust-lang.org/cargo/)
+- **Windows:** [winget](https://github.com/microsoft/winget-cli)
+- **Mac:** [brew](https://brew.sh/)
 
 ### Apps / Tools
-|  | **Debian** | **Windows** | **Mac** | **Notes** |
+|  | **Deb** | **Win** | **Mac** | **Notes** |
 |---|---|---|---|---|
-| Chezmoi | ✅ | ✅ | ✅ |  |
-| Git | ✅ | ✅ | ✅ |  |
-| Double Commander | ✅ | ✅ | ❓ |  |
-| KeePassXC | ✅ | ✅ | ❓ | no integration with chezmoi yet  |
-| Neovim | ✅ | ✅ | ❓ | with NVChad |
-| Vim | ✅ | ✅ | ❓ |  |
-| Nano | ✅ | ❓ | ✅ |  |
-| Oh-My-Posh | ✅ | ✅ | ❓ |  |
-| Zinit | ✅ | ✅ | ❓ |  |
-| Oh-My-Zsh | ✅ | ✅ | ❓ | via Zinit |
-| Ripgrep | ✅ | ✅ | ❓ |  |
-| zoxide | ✅ | ✅ | ❓ |  |
-| fzf | ✅ | ✅ | ❓ |  |
-| pyenv | ✅ | ✅ | ❓ | Windows uses pyenv-win |
-| VLC | ✅ | ✅ | ❓ |  |
-| Firefox | ✅ | ✅ | ❓ |  |
-| Opera | ✅ | ✅ | ❓ |  |
-| Notion | ✅ | ✅ | ❓ |  |
-| JetBrains IDEs | ✅ | ✅ | ❓ |  |
-| VSC | ✅ | ✅ | ❓ |  |
-| F.lux | ✅ | ✅ | ❓ | Linux uses Redshift |
-| NotePad ++ | 🚫 | ✅ | 🚫 |  |
-| MSYS2 | 🚫 | ✅ | 🚫 |  |
+| [Chezmoi](https://www.chezmoi.io/) | ✅ | ✅ | ✅ |  |
+| [Git](https://git-scm.com/) | ✅ | ✅ | ✅ |  |
+| [Double Commander](https://doublecmd.sourceforge.io/) | ✅ | ✅ | ❓ |  |
+| [KeePassXC](https://keepassxc.org/) | ✅ | ✅ | ❓ | No Chezmoi integration yet |
+| [Neovim](https://neovim.io/) | ✅ | ✅ | ❓ | With [NVChad](https://github.com/NvChad/NvChad) |
+| [Vim](https://www.vim.org/) | ✅ | ✅ | ❓ |  |
+| [Nano](https://www.nano-editor.org/) | ✅ | ❓ | ✅ |  |
+| [Oh-My-Posh](https://ohmyposh.dev/) | ✅ | ✅ | ❓ |  |
+| [Zinit](https://zdharma.github.io/zinit/wiki/Home/) | ✅ | ✅ | ❓ |  |
+| [Oh-My-Zsh](https://ohmyz.sh/) | ✅ | ✅ | ❓ | Via Zinit |
+| [Ripgrep](https://github.com/BurntSushi/ripgrep) | ✅ | ✅ | ❓ |  |
+| [zoxide](https://github.com/ajeetdsouza/zoxide) | ✅ | ✅ | ❓ |  |
+| [fzf](https://github.com/junegunn/fzf) | ✅ | ✅ | ❓ |  |
+| [pyenv](https://github.com/pyenv/pyenv) | ✅ | ✅ | ❓ | Windows uses [pyenv-win](https://github.com/pyenv-win) |
+| [VLC](https://www.videolan.org/vlc/) | ✅ | ✅ | ❓ |  |
+| [Firefox](https://www.mozilla.org/firefox/) | ✅ | ✅ | ❓ |  |
+| [Opera](https://www.opera.com/) | ✅ | ✅ | ❓ |  |
+| [Notion](https://www.notion.so/) | ✅ | ✅ | ❓ |  |
+| [JetBrains IDEs](https://www.jetbrains.com/toolbox-app/) | ✅ | ✅ | ❓ |  |
+| [Visual Studio Code](https://code.visualstudio.com/) | ✅ | ✅ | ❓ |  |
+| [F.lux](https://justgetflux.com/) | ✅ | ✅ | ❓ | Linux uses [Redshift](https://github.com/jonls/redshift) |
+| [Notepad++](https://notepad-plus-plus.org/) | 🚫 | ✅ | 🚫 |  |
+| [MSYS2](https://www.msys2.org/) | 🚫 | ✅ | 🚫 |  |
 
 ## Other Notes
 
