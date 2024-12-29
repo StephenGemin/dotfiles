@@ -261,9 +261,15 @@ install_pipxs() {
     done
 }
 
+add_flathub_repo() {
+    log_task "Add flathub repo"
+    flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+}
+
 wezterm_prereqs
 install_standalone_tools
 install_apts
+add_flathub_repo
 install_cargos
 install_snaps
 install_brews
