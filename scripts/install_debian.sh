@@ -41,6 +41,7 @@ apts=(
     "doublecmd-gtk"
     "exfat-fuse"
     "feh"
+    "flatpak"
     "git-extras"
     "gpg"
     "htop"
