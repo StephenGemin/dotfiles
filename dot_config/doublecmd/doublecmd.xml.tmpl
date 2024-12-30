@@ -1,0 +1,7 @@
+{{- if eq .osid "windows" -}}
+  {{- template "doublecmd_win.xml.tmpl" . -}}
+{{- else if includeTemplate "is-linux-debian" . -}}
+  {{- template "doublecmd_deb.xml.tmpl" -}}
+{{- else -}}
+  {{/* Do nothing */}}
+{{- end -}}
