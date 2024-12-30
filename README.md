@@ -90,6 +90,14 @@ Manual setup steps for individual tools / apps
         ensure_installed = { "vim", "lua", "vimdoc", "html", "css" },
       },
     },
+    {
+      "nvim-tree/nvim-tree.lua",
+      opts = {
+        git = { ignore = false },
+        filters = { dotfiles = false },
+      },
+    }
+
   ```
   - modify `~/.config/nvim/lua/mappings.lua` for smart-spits.nvim (refer to plugin docs)
   - Run `:MasonInstallAll` on first run
