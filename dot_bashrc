@@ -17,18 +17,6 @@ if command -v chezmoi > /dev/null; then
     eval "$(chezmoi completion bash)"
 fi
 
-# Development environments
-# -----------------------------------------------------------------------------
-
-if [ "$isWindows" = 0 ]; then
-    eval "$(pyenv init -)"
-    eval "$(pyenv virtualenv-init -)"
-
-    if [ -f "$HOME/.cargo/env" ]; then
-        . "$HOME/.cargo/env"
-    fi
-fi
-
 # Include customized aliases, functions, etc
 # -----------------------------------------------------------------------------
 local_plugins=(
@@ -47,12 +35,6 @@ for plugin in "${local_plugins[@]}"; do
     source "$XDG_CONFIG_HOME/sh_plugins/$plugin"
 done
 
-# Load custom code from separate configuration file.
-# -----------------------------------------------------------------------------
-if [ -f "$HOME"/.bash_extras ]; then
-    . "$HOME"/.bash_extras
-fi
-
 # Aliases
 alias cd="$ZOXIDE_KEY" # map zoxide alias
 alias d-="$ZOXIDE_KEY -"
@@ -61,22 +43,26 @@ alias d-="$ZOXIDE_KEY -"
 bind 'set show-all-if-ambiguous on'
 bind 'TAB:menu-complete'
 
+# Load custom code from separate configuration file.
+# -----------------------------------------------------------------------------
+if [ -f "$HOME"/.bash_extras ]; then
+    . "$HOME"/.bash_extras
+fi
+
 # Shell integrations
 # -----------------------------------------------------------------------------
+# Note to future self: order is important here as some commands in this section modify PATH
+if [ -f "/home/linuxbrew/.linuxbrew/bin/brew" ]; then
+    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+fi
 if [ "$isWindows" = 0 ]; then
-    eval "$(pyenv init -)"
-    eval "$(pyenv virtualenv-init -)"
-
     if [ -f "$HOME/.cargo/env" ]; then
         . "$HOME/.cargo/env"
     fi
-fi
-
-if [ -f "/home/linuxbrew/.linuxbrew/bin/brew" ]; then
-    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+    eval "$(pyenv init -)"
+    eval "$(pyenv virtualenv-init -)"
 fi
 
 eval "$(fzf --bash)"
 eval "$(oh-my-posh init bash --config $XDG_CONFIG_HOME/ohmyposh/zen.toml)"
 eval "$(zoxide init --cmd $ZOXIDE_KEY bash)"
-

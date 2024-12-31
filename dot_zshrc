@@ -79,9 +79,7 @@ if [ -f "$HOME"/.zsh_extras ]; then
 fi
 
 # Shell integrations
-eval "$(pyenv init -)"
-eval "$(pyenv virtualenv-init -)"
-
+# Note to future self: order is important here as some commands in this section modify PATH
 if [ -f "$HOME/.cargo/env" ]; then
     . "$HOME/.cargo/env"
 fi
@@ -89,6 +87,9 @@ fi
 if [ -f "/home/linuxbrew/.linuxbrew/bin/brew" ]; then
     eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 fi
+
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
 
 source <(fzf --zsh)
 
