@@ -165,17 +165,18 @@ if (-not (Get-Command scoop -ErrorAction SilentlyContinue)) {
     $count++
 }
 
-if (-not (Get-Command diff-highlight -ErrorAction SilentlyContinue)) {
-    $gitExtrasDir = Join-Path $HOME ".local" "share" "git-extras"
-    if (-not (Test-Path $gitExtrasDir)) {
-        New-Item -ItemType Directory -Path $gitExtrasDir -Force | Out-Null
-    }
-    git clone https://github.com/tj/git-extras.git $gitExtrasDir
-    Push-Location $gitExtrasDir
-    git checkout $(git describe --tags $(git rev-list --tags --max-count=1))
-    install.cmd {{ .wingit_install_dir | quote }}
-    Pop-Location
-}
+# TODO: fix for Windows
+#if (-not (Get-Command diff-highlight -ErrorAction SilentlyContinue)) {
+#    $gitExtrasDir = Join-Path $HOME ".local" "share" "git-extras"
+#    if (-not (Test-Path $gitExtrasDir)) {
+#        New-Item -ItemType Directory -Path $gitExtrasDir -Force | Out-Null
+#    }
+#    git clone https://github.com/tj/git-extras.git $gitExtrasDir
+#    Push-Location $gitExtrasDir
+#    git checkout $(git describe --tags $(git rev-list --tags --max-count=1))
+#    install.cmd {{ .wingit_install_dir | quote }}
+#    Pop-Location
+#}
 
 #
 # System tweaks
