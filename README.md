@@ -75,31 +75,6 @@ Manual setup steps for individual tools / apps
 - [PyCharm](https://www.jetbrains.com/pycharm/)
   - Import settings from `~\.config`
 - [neovim](https://neovim.io/)
-  - modify `~/.config/nvim/lua/plugins/init.lua`
-  ```lua
-    { "mrjones2014/smart-splits.nvim", lazy = false },
-    {
-      "neovim/nvim-lspconfig",
-      config = function()
-        require "configs.lspconfig"
-      end,
-    },
-    {
-      "nvim-treesitter/nvim-treesitter",
-      opts = {
-        ensure_installed = { "vim", "lua", "vimdoc", "html", "css" },
-      },
-    },
-    {
-      "nvim-tree/nvim-tree.lua",
-      opts = {
-        git = { ignore = false },
-        filters = { dotfiles = false },
-      },
-    }
-
-  ```
-  - modify `~/.config/nvim/lua/mappings.lua` for smart-spits.nvim (refer to plugin docs)
   - Run `:MasonInstallAll` on first run
 
 
@@ -134,7 +109,7 @@ Manual setup steps for individual tools / apps
 | [Git](https://git-scm.com/) | ✅ | ✅ | ✅ |  |
 | [Double Commander](https://doublecmd.sourceforge.io/) | ✅ | ✅ | ❓ |  |
 | [KeePassXC](https://keepassxc.org/) | ✅ | ✅ | ❓ | No Chezmoi integration yet |
-| [Neovim](https://neovim.io/) | ✅ | ✅ | ❓ | With [NVChad](https://github.com/NvChad/NvChad) |
+| [Neovim](https://neovim.io/) | ✅ | ✅ | ❓ | [NVChad](https://github.com/NvChad/NvChad) and [nvimconf](https://github.com/StephenGemin/nvim-starter) |
 | [Vim](https://www.vim.org/) | ✅ | ✅ | ❓ |  |
 | [Nano](https://www.nano-editor.org/) | ✅ | ❓ | ✅ |  |
 | [Oh-My-Posh](https://ohmyposh.dev/) | ✅ | ✅ | ❓ |  |

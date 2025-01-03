@@ -70,7 +70,7 @@ setopt histignorealldups
 
 # Aliases
 alias cd="$ZOXIDE_KEY" # map zoxide alias
-alias d-="$ZOXIDE_KEY -"
+eval "alias ${ZOXIDE_KEY}-='${ZOXIDE_KEY} -'"
 
 # Load custom code from separate configuration file.
 # -----------------------------------------------------------------------------

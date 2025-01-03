@@ -7,7 +7,7 @@
 [".config/nvim"]
 {{ end }}
     type = "git-repo"
-    url = "https://github.com/NvChad/starter"
+    url = "https://github.com/StephenGemin/nvim-starter"
     refreshPeriod = "720h"
 
 {{ if eq .osid "windows" }}

@@ -66,7 +66,7 @@ export FZF_DEFAULT_COMMAND='rg --files --hidden --glob "!.git"'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
 # zoxide
-export ZOXIDE_KEY="d"
+export ZOXIDE_KEY="s"
 
 if [ "$isWindows" = 0 ]; then
     export PYENV_ROOT="$HOME/.pyenv"

@@ -7,9 +7,9 @@ local mod = {}
 local bind = {}
 
 if target_triple:find("darwin") then
-   mod.SUPER = 'SUPER'
+  mod.SUPER = 'SUPER'
 else
-   mod.SUPER = 'CTRL' -- to not conflict with Windows key shortcuts
+  mod.SUPER = 'CTRL' -- to not conflict with Windows key shortcuts
 end
 
 -- https://github.com/mrjones2014/smart-splits.nvim
@@ -19,11 +19,28 @@ local function is_vim(pane)
   return pane:get_user_vars().IS_NVIM == 'true'
 end
 
+-- QWERTY
+--LEFT = 'h'
+--DOWN = 'j'
+--UP = 'k'
+--RIGHT = 'l'
+--local direction_keys = {
+--  h = 'Left',
+--  j = 'Down',
+--  k = 'Up',
+--  l = 'Right',
+--}
+
+-- Colemak
+LEFT = 'n'
+DOWN = 'e'
+UP = 'i'
+RIGHT = 'o'
 local direction_keys = {
-  h = 'Left',
-  j = 'Down',
-  k = 'Up',
-  l = 'Right',
+  n = 'Left',
+  e = 'Down',
+  i = 'Up',
+  o = 'Right',
 }
 
 local function split_nav(resize_or_move, key)
@@ -83,20 +100,20 @@ bind.keys = {
   { key = "PageDown", mods = '', action = act.ScrollByPage(1) },
 
   -- panes: splitting
-  { key = 'j', mods = 'LEADER', action = act.SplitVertical { domain = 'CurrentPaneDomain' } },
-  { key = 'l', mods = 'LEADER', action = act.SplitHorizontal { domain = 'CurrentPaneDomain' } },
+  { key = DOWN, mods = 'LEADER', action = act.SplitVertical { domain = 'CurrentPaneDomain' } },
+  { key = RIGHT, mods = 'LEADER', action = act.SplitHorizontal { domain = 'CurrentPaneDomain' } },
 
   -- panes: naviation
   -- move between split panes
-  split_nav('move', 'h'),
-  split_nav('move', 'j'),
-  split_nav('move', 'k'),
-  split_nav('move', 'l'),
+  split_nav('move', LEFT),
+  split_nav('move', DOWN),
+  split_nav('move', UP),
+  split_nav('move', RIGHT),
   -- panes: resize
-  split_nav('resize', 'h'),
-  split_nav('resize', 'j'),
-  split_nav('resize', 'k'),
-  split_nav('resize', 'l'),
+  split_nav('resize', LEFT),
+  split_nav('resize', DOWN),
+  split_nav('resize', UP),
+  split_nav('resize', RIGHT),
 
   {
     key = 'p',

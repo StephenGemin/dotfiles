@@ -37,7 +37,7 @@ done
 
 # Aliases
 alias cd="$ZOXIDE_KEY" # map zoxide alias
-alias d-="$ZOXIDE_KEY -"
+eval "alias ${ZOXIDE_KEY}-='${ZOXIDE_KEY} -'"
 
 # Keybindings
 bind 'set show-all-if-ambiguous on'
