@@ -100,7 +100,7 @@ snaps=(
 )
 
 brews=("fzf" "pipx" "ruff" "uv")
-pipxs=("virtualenv" "poetry" "pip-tools", "'glances[all]'")
+pipxs=("virtualenv" "poetry" "pip-tools" "glances[all]")
 
 command_exists() {
     if type "$1" >/dev/null 2>&1; then
@@ -257,7 +257,7 @@ set_default_shell() {
 install_pipxs() {
     for pkg in "${pipxs[@]}"; do
         log_task "Install pipx package: $pkg"
-        pipx install --python=$(which python) $pkg
+        pipx install --python=$(which python) "$pkg"
     done
 }
 
