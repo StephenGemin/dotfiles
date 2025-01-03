@@ -22,7 +22,6 @@
 [branch]
     sort = -committerdate
 {{ if ne .osid "windows" -}}
-{{- /* TODO: fix for Windows */ -}}
 [color]
     ui = true
 # colors taken from https://github.com/so-fancy/diff-so-fancy
@@ -39,7 +38,7 @@
     old = red bold
     new = green bold
     whitespace = red reverse
-{{- end -}}
+{{- end }}
 [column]
     ui = auto
 [commit]
@@ -79,12 +78,11 @@
     # Avoid saving an `.orig` backup file after a merge.
     keepBackup = false
 {{ if ne .osid "windows" -}}
-{{- /* TODO: fix for Windows */ -}}
 [pager]
 	log = diff-highlight | less
 	show = diff-highlight | less
 	diff = diff-highlight | less
-{{- end -}}
+{{- end }}
 [push]
     autoSetupRemote = true
     default = current
