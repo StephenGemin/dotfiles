@@ -2,3 +2,12 @@
 
 alias cl='printf "\033c"'
 alias vim='nvim'
+alias sudoe='sudo -E'
+
+# Colorizes the `grep` output.
+alias grep='grep --color=auto'
+alias egrep='egrep --color=auto'
+alias fgrep='fgrep --color=auto'
+
+# Reloas the shell.
+alias reload='exec $SHELL'

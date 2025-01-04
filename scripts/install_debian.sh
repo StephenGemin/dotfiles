@@ -87,15 +87,16 @@ cargos=("ripgrep")
 snaps=(
     "alacritty"
     # nvim version through apt-get is ~2 years old, so use snap
-    "--beta nvim --classic"
-    "vlc"
+    "chromium"
     # https://stackoverflow.com/questions/78585138/visual-studio-code-crashes-on-ubuntu-22-04-4-lts-errorprocess-memory-range-cc7
     # TODO: upgrade at a later date if crashing stops; tried 170, 175 179(latest)
     "--revision 159 --classic code"
     "opera"
     "keepassxc"
     "notion-snap-reborn"
+    "nvim --beta --classic"
     "spotify"
+    "vlc"
     # "firefox"
 )
 

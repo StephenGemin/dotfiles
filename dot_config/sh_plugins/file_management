@@ -5,3 +5,7 @@ alias fd='find . -type d -name'
 
 # Find files
 alias ff='find . -type f -name'
+
+# Makes file commands verbose.
+alias cp='cp -v';
+alias mv='mv -v';
