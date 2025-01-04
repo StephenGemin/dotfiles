@@ -1,0 +1,39 @@
+{
+	// Place your snippets for c here. Each snippet is defined under a snippet name and has a prefix, body and
+	// description. The prefix is what is used to trigger the snippet and the body will be expanded and inserted. Possible variables are:
+	// $1, $2 for tab stops, $0 for the final cursor position, and ${1:label}, ${2:another} for placeholders. Placeholders with the
+	// same ids are connected.
+	// Example:
+	// "Print to console": {
+	// 	"prefix": "log",
+	// 	"body": [
+	// 		"console.log('$1');",
+	// 		"$2"
+	// 	],
+	// 	"description": "Log output to console"
+	// }
+  "New Function": {
+    "prefix": "func",
+    "body": [
+      "${1:void} ${2:function_name}(${3:void}) {",
+      "    ${4:/* code here */}",
+      "    ${5:return;}",
+      "}"
+    ],
+    "description": "Create a new function"
+	},
+  "printf": {
+    "prefix": "printf",
+    "body": [
+      "printf(\"${1:printhere}${2:\\n}\");"
+    ],
+    "description": "Create new printf"
+	},
+  "printv": {
+    "prefix": "printv",
+    "body": [
+      "printf(\"${1:printhere}${2:\\n}\", ${3:vars});"
+    ],
+    "description": "Create new printf with variables"
+	}
+}
