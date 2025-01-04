@@ -21,7 +21,10 @@
 # i.e. make, gcc, mingw64, etc for neovim and it's plugins
 $env:Path += ";C:\msys64\usr\bin;C:\msys64\mingw64"
 
-# Aliases 
+# Environment vars
+$env:ZOXIDE_KEY = "s"
+
+# Aliases
 # -----------------------------------------------------------------------------
 # Remove built-in powershell aliases that conflict with my aliases
 Remove-Item alias:\gc -Force
@@ -32,7 +35,7 @@ Remove-Item alias:\gl -Force
 # I also find it easier to hit d vs. z
 function cd {param ([string]$Path = ''); d $Path}
 # cd- alias set in dot sourced modules
-Set-Alias -Name "d-" -Value 'cd-'
+Set-Alias -Name ("$($env:ZOXIDE_KEY)-") -Value 'cd-'
 
 # Terminal Styling
 # -----------------------------------------------------------------------------
@@ -62,7 +65,7 @@ foreach ($plugin in $LocalPlugins) {
     if (Test-Path $PluginPath) {
       . $PluginPath
     } else {
-      Write-Warning "Plugin not found: $PluginPath"        
+      Write-Warning "Plugin not found: $PluginPath"
     }
 }
 
@@ -76,4 +79,4 @@ try {
 }
 
 # keep this at the end of file per zoxide docs
-Invoke-Expression (& { (zoxide init --cmd d powershell | Out-String) })
+Invoke-Expression (& { (zoxide init --cmd $env:ZOXIDE_KEY powershell | Out-String) })
