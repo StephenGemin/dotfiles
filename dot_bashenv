@@ -1,7 +1,8 @@
 # -*-mode:bash-*- vim:ft=bash
 
+export WindowsOS="^(win32|mingw.*|msys|cygwin.*)$"
 export isWindows=0
-if [[ "$OSTYPE" == "cygwin"* || "$OSTYPE" == "msys"* || "$OSTYPE" == "win32" || "$OSTYPE" == "mingw"* ]]; then
+if [[ "$OSTYPE" =~ $WindowsOS ]]; then
     isWindows=1
 fi
 

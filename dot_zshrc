@@ -31,14 +31,15 @@ zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 
 # Include customized aliases, functions, etc
 local_plugins=(
+  completions.zsh
   clipboard
   datetime
   file_management
   file_navigation
   git
+  power_management
   tool_configs
   core
-  completions.zsh
   override_standards
 )
 for plugin in "${local_plugins[@]}"; do
