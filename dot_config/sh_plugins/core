@@ -11,3 +11,7 @@ alias fgrep='fgrep --color=auto'
 
 # Reloas the shell.
 alias reload='exec $SHELL'
+
+alias path='echo -e ${PATH//:/\\n}'
+
+alias wget='wget -c'
