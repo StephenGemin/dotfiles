@@ -15,3 +15,16 @@ alias reload='exec $SHELL'
 alias path='echo -e ${PATH//:/\\n}'
 
 alias wget='wget -c'
+
+#Start calculator with math support
+alias bc='bc -l'
+
+# Gets local IP address.
+if [[ "$OSTYPE" =~ ^darwin ]]; then
+    alias localip='ipconfig getifaddr en0'
+elif [[ "$isWindows" = 1 ]]; then
+    # shellcheck disable=SC2142
+    alias localip="netstat -rn | grep -w '0.0.0.0' | awk '{ print \$4 }'"
+else
+    alias localip="ip route get 1 | awk '{print \$NF;exit}'"
+fi

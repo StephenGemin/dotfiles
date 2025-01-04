@@ -20,14 +20,15 @@ fi
 # Include customized aliases, functions, etc
 # -----------------------------------------------------------------------------
 local_plugins=(
-    override_standards
     clipboard
     datetime
     file_management
     file_navigation
     git
+    power_management
     tool_configs
     core
+    override_standards
 )
 for plugin in "${local_plugins[@]}"; do
     # would prefer to use zinit, but couldn't figure out syntax

@@ -1,0 +1,39 @@
+# -*-mode:bash-*- vim:ft=bash
+
+# Locks the session.
+if [[ "$OSTYPE" =~ ^darwin ]]; then
+    alias lock='pmset displaysleepnow'
+elif [[ "$isWindows" = 1 ]]; then
+    alias lock='rundll32.exe user32.dll,LockWorkStation'
+elif command -v vlock &> /dev/null; then
+    alias lock='vlock --all'
+elif command -v gnome-screensaver-command &> /dev/null; then
+    alias lock='gnome-screensaver-command --lock'
+fi
+
+# Hibernates the system.
+if [[ "$OSTYPE" =~ ^darwin ]]; then
+    alias hibernate='pmset sleep now'
+elif [[ "$isWindows" = 1 ]]; then
+    alias hibernate='shutdown.exe /h'
+else
+    alias hibernate='systemctl suspend'
+fi
+
+# Restarts the system.
+if [[ "$OSTYPE" =~ ^darwin ]]; then
+    alias reboot='osascript -e "tell application \"System Events\" to restart"'
+elif [[ "$isWindows" = 1 ]]; then
+    alias reboot='shutdown.exe /r'
+else
+    alias reboot='sudo /sbin/reboot'
+fi
+
+# Shuts down the system.
+if [[ "$OSTYPE" =~ ^darwin ]]; then
+    alias poweroff='osascript -e "tell application \"System Events\" to shut down"'
+elif [[ "$isWindows" = 1 ]]; then
+    alias poweroff='shutdown.exe /s'
+else
+    alias poweroff='sudo /sbin/poweroff'
+fi
