@@ -48,18 +48,18 @@ config.switch_to_last_active_tab_when_closing_tab = true
 config.exit_behavior = 'CloseOnCleanExit'  -- if the shell program exited with a successful status
 config.exit_behavior_messaging = 'Verbose'
 
--- do not use for unix systems refer to https://github.com/wez/wezterm/issues/2933
-if wezterm.target_triple:find("windows") then
-  -- multiplexing
-  config.unix_domains =  {
-    { name = 'unix' },
-  }
-
-  -- This causes `wezterm` to act as though it was started as
-  -- `wezterm connect unix` by default, connecting to the unix
-  -- domain on startup.
-  -- If you prefer to connect manually, leave out this line.
-  config.default_gui_startup_args = { 'connect', 'unix' }
-end
+-- -- do not use for unix systems refer to https://github.com/wez/wezterm/issues/2933
+-- if wezterm.target_triple:find("windows") then
+--  -- multiplexing
+--  config.unix_domains =  {
+--    { name = 'unix' },
+--  }
+--
+--  -- This causes `wezterm` to act as though it was started as
+--  -- `wezterm connect unix` by default, connecting to the unix
+--  -- domain on startup.
+--  -- If you prefer to connect manually, leave out this line.
+--  config.default_gui_startup_args = { 'connect', 'unix' }
+-- end
 
 return config
