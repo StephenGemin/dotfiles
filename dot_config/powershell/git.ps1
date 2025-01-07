@@ -52,6 +52,7 @@ function git_main_branch {
 
 # my most used commands
 function gac { git add --all; git commit --verbose }
+function gacnv { git add --all; git commit --verbose --no-verify }
 function gac! { git add --all; git commit --verbose --amend }
 function gacfx { param([string]$1); git add --all; git commit --verbose --fixup $1 }
 function grbo { param([string]$1); git rebase --interactive origin/$1 }
@@ -60,6 +61,7 @@ function gacnvpo! { $b = git rev-parse --abbrev-ref HEAD; git add --all; git com
 function gds { git diff --stat }
 function gl { param([int]$1=15); git log --oneline --graph -$1 }
 function gwip { git add --all; git commit -v -m "[skip-ci] WIP" }
+function gwipnv { git add --all; git commit -v --no-verify -m "[skip-ci] WIP" }
 
 function g { git @args }
 function ga { git add --all }
