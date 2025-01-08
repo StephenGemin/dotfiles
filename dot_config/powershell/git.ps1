@@ -56,12 +56,18 @@ function gacnv { git add --all; git commit --verbose --no-verify }
 function gac! { git add --all; git commit --verbose --amend }
 function gacfx { param([string]$1); git add --all; git commit --verbose --fixup $1 }
 function grbo { param([string]$1); git rebase --interactive origin/$1 }
-function gacpo! { $b = git rev-parse --abbrev-ref HEAD; git add --all; git commit --amend; git push --force-with-lease origin --set-upstream $b }
-function gacnvpo! { $b = git rev-parse --abbrev-ref HEAD; git add --all; git commit --amend --no-verify; git push origin --force-with-lease --set-upstream $b }
+function gacpo! {
+    git add --all; git commit --amend
+    if ($?) {
+        git push origin --force-with-lease --set-upstream $(git_current_branch)
+    } else {
+        Write-Host "git commit failed" -ForegroundColor Red
+    }
+}
+function gacnvpo! { git add --all; git commit --amend --no-verify; git push origin --force-with-lease --set-upstream $(git_current_branch) }
 function gds { git diff --stat }
 function gl { param([int]$1=15); git log --oneline --graph -$1 }
-function gwip { git add --all; git commit -v -m "[skip-ci] WIP" }
-function gwipnv { git add --all; git commit -v --no-verify -m "[skip-ci] WIP" }
+function gwip { git add --all; git commit -v --no-verify -m "[skip-ci] WIP" }
 
 function g { git @args }
 function ga { git add --all }
