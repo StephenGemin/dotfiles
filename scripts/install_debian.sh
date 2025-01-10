@@ -96,6 +96,7 @@ snaps=(
     "notion-snap-reborn"
     "nvim --beta --classic"
     "spotify"
+    "whatsapp-app"
     "vlc"
     # "firefox"
 )
