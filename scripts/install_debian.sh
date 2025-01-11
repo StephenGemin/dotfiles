@@ -80,6 +80,10 @@ apts=(
     "libfuse2"
     "redshift"
     "redshift-gtk"
+    # flashing ZSA voyager
+    "libwebkit2gtk-4.1-0"
+    "libgtk-3-0"
+    "libusb-1.0-0"
 )
 
 cargos=("ripgrep")
