@@ -246,12 +246,20 @@ set_system_key_bindings() {
     gsettings set org.gnome.settings-daemon.plugins.media-keys terminal "['<Super>t']"
     gsettings set org.gnome.desktop.default-applications.terminal exec-arg ''
     gsettings set org.gnome.desktop.default-applications.terminal exec 'wezterm'
-    gsettings set org.gnome.desktop.wm.keybindings minimize "['<Super>Down']"
-    gsettings set org.gnome.desktop.wm.keybindings maximize "['<Super>Up']"
+    gsettings set org.gnome.desktop.wm.keybindings minimize "['<Super>Down', '<Super>e']"
+    gsettings set org.gnome.desktop.wm.keybindings maximize "['<Super>Up', '<Super>i']"
     gsettings set org.gnome.desktop.wm.keybindings switch-applications "['<Super>Tab']"
     gsettings set org.gnome.desktop.wm.keybindings switch-applications-backward "['<Shift><Super>Tab']"
+    gsettings set org.gnome.desktop.wm.keybindings switch-group "['<Super>comma']"
+    gsettings set org.gnome.mutter.keybindings toggle-tiled-left "['<Primary><Super>Left', '<Primary><Super>n']"
+    gsettings set org.gnome.mutter.keybindings toggle-tiled-right "['<Primary><Super>Right', '<Primary><Super>o']"
+    gsettings set org.gnome.shell.extensions.pop-shell pop-monitor-left "['<Super><Shift>Left', '<Super><Shift>n']"
+    gsettings set org.gnome.shell.extensions.pop-shell pop-monitor-right "['<Super><Shift>Right', '<Super><Shift>o']"
+    gsettings set org.gnome.shell.extensions.pop-shell focus-left "['<Super>Left', '<Super>n']"
+    gsettings set org.gnome.shell.extensions.pop-shell focus-right "['<Super>Right', '<Super>o']"
     gsettings set org.gnome.desktop.wm.keybindings switch-windows "['<Alt>Tab']"
     gsettings set org.gnome.desktop.wm.keybindings switch-windows-backward "['<Shift><Alt>Tab']"
+    gsettings set org.gnome.shell.keybindings focus-active-notification "['']"
 }
 
 set_default_shell() {
