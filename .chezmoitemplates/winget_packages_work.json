@@ -6,18 +6,16 @@
 		{
 			"Packages" :
 			[
-				{"PackageIdentifier" : "Microsoft.AppInstaller"},
-				{"PackageIdentifier" : "Git.Git"},
 				{"PackageIdentifier" : "flux.flux"},
 				{"PackageIdentifier" : "Microsoft.VCRedist.2015+.x64"},
 				{"PackageIdentifier" : "Microsoft.VisualStudio.2022.BuildTools"},
 				{"PackageIdentifier" : "MSYS2.MSYS2"},
 				{"PackageIdentifier" : "wez.wezterm"},
 				{"PackageIdentifier" : "Microsoft.WindowsTerminal"},
-				{"PackageIdentifier" : "Alacritty.Alacritty"},
 				{"PackageIdentifier" : "Microsoft.PowerShell"},
 				{"PackageIdentifier" : "ShareX.ShareX"},
-				{"PackageIdentifier" : "Vitzo.ClipClip"},				{"PackageIdentifier" : "Mozilla.Firefox"},
+				{"PackageIdentifier" : "Vitzo.ClipClip"},				
+				{"PackageIdentifier" : "Mozilla.Firefox"},
 				{"PackageIdentifier" : "7zip.7zip"},
 				{"PackageIdentifier" : "Notepad++.Notepad++"},
 				{"PackageIdentifier" : "alexx2000.DoubleCommander"},

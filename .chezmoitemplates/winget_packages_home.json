@@ -6,8 +6,6 @@
 		{
 			"Packages" :
 			[
-				{"PackageIdentifier" : "Microsoft.AppInstaller"},
-				{"PackageIdentifier" : "Git.Git"},
 				{"PackageIdentifier" : "GitHub.cli"},
 				{"PackageIdentifier" : "flux.flux"},
 				{"PackageIdentifier" : "Microsoft.VCRedist.2015+.x64"},

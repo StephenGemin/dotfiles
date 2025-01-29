@@ -38,8 +38,10 @@ foreach ($key in $CopyFilesInDirMap.Keys) {
         Write-Host "Created destination: $dest_dir"
     }
     
-    Copy-Item -Path (Join-Path $src_dir "*") -Destination $dest_dir -Recurse -Force
-    Write-Host "Copied all files from $src_dir -> $dest_dir"
+    if ((Test-Path -Path $src_dir) -and (Test-Path -Path $dest_dir)) {	
+        Copy-Item -Path (Join-Path $src_dir "*") -Destination $dest_dir -Recurse -Force
+        Write-Host "Copied all files from $src_dir -> $dest_dir"
+    }
 }
 
 # https://github.com/catppuccin/notepad-plus-plus

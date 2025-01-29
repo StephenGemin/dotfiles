@@ -7,8 +7,10 @@
 # https://www.chezmoi.io/user-guide/use-scripts-to-perform-actions/#run-a-script-when-the-contents-of-another-file-changes
 # The idea here is that changes to the winget_packages.json allows this onchange script to run since it's contents have changed.
 # Refer to dot_config/winget_packages.json.tmpl
-# {{ include (joinPath .chezmoi.homeDir ".config" "winget_packages.json") | sha256sum }}
-
+# {{ $winget_import := (joinPath .chezmoi.homeDir ".config" "winget_packages.json") }}
+# {{ if stat $winget_import }}
+# {{ include $winget_import | sha256sum }}
+# {{ end }}
 # Requires that PowerShell be running with elevated privileges to be able to
 # change system properties.
 #Disabled Requires -RunAsAdministrator
@@ -136,7 +138,8 @@ if (-not (Get-Command pyenv -ErrorAction SilentlyContinue)) {
     $count++
 }
 
-if (-not (Get-Command python -ErrorAction SilentlyContinue)) {
+$installed_python_version = python --version 2>$null
+if (-not $installed_python_version) {
     pyenv install {{ .user.software.python_version }}
     pyenv global {{ .user.software.python_version }}
     $count++

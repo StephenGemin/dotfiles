@@ -24,8 +24,8 @@ My computer setup and dotfiles, managed with [chezmoi](https://www.chezmoi.io/)
 - MacOS
   - support TBD; when need arises
 - Windows
-  - tested on Windows10
-  - decided to support Windows vs WSL. There are times where Windows cannot be avoided.
+  - tested on Windows 10, 11
+  - No WSL support
 
 ## Install
 
@@ -40,6 +40,10 @@ chezmoi init --apply https://github.com/$GITHUB_USERNAME/dotfiles.git
 
 ### Windows (semi-automated)
 - Recommend running in PowerShell (not pwsh)
+	- run as non-admin (for scoop)
+	- may need to change the execution policy(ies)
+	- `Set-ExecutionPolicy -ExecutionPolicy Unrestricted -Scope CurrentUser`
+	- `Set-ExecutionPolicy -ExecutionPolicy Unrestricted -Scope LocalMachine`
 - install prereq dependencies
   ```pwsh
   get-Command winget  # check winget installed
@@ -49,10 +53,12 @@ chezmoi init --apply https://github.com/$GITHUB_USERNAME/dotfiles.git
   #    - https://github.com/microsoft/winget-cli/releases/latest
   #    - double click downloaded file to install
   #    - if this is also blocked, can install from powershell command `Add-AppxPackage -Path "PATH_TO_FILE"`
+  #    - may need to install missing deps for winget based on errors. 
+  #      - i.e. Github microsoft/winget-cli issue 4916
   
   winget install -e --id Git.Git
   winget install twpayne.chezmoi
-  $env:GITHUB_USERNAME = "StephenGemin"
+  $GITHUB_USERNAME = "StephenGemin"
   chezmoi init --apply https://github.com/$GITHUB_USERNAME/dotfiles.git
   ```
 - May need to install MSYS2 manually
