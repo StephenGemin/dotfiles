@@ -67,7 +67,7 @@ function gacpo! {
 function gacnvpo! { git add --all; git commit --amend --no-verify; git push origin --force-with-lease --set-upstream $(git_current_branch) }
 function gds { git diff --stat }
 function gl { param([int]$1=15); git log --oneline --graph -$1 }
-function gwip { git add --all; git commit -v --no-verify -m "[skip-ci] WIP" }
+function gwip { git add --all; git commit -v --no-verify -m "[skip ci] WIP" }
 
 function g { git @args }
 function ga { git add --all }
