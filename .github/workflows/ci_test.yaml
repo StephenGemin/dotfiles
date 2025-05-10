@@ -1,0 +1,41 @@
+name: Test Dotfiles
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+env:
+  GITHUB_USERNAME: StephenGemin
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test-dotfiles:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [windows-latest]
+
+    steps:
+      - name: Install pre-req tools
+        if: runner.os == 'Windows'
+        shell: powershell
+        run: |
+          # windows-latest does not have winget pre-installed, so use choco for now
+          #winget install twpayne.chezmoi
+          choco install chezmoi  
+      - name: Install dotfiles
+        if: runner.os == 'Windows'
+        shell: powershell
+        run: |
+          echo $env:GITHUB_USERNAME
+          chezmoi init https://github.com/$env:GITHUB_USERNAME/dotfiles.git --debug --no-tty
+          chezmoi apply -v --debug
+      
