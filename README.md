@@ -35,7 +35,17 @@ cd ~
 curl -sfL https://git.io/chezmoi | sh
 export PATH="$PATH:$HOME/bin"
 export GITHUB_USERNAME="StephenGemin"
-chezmoi init --apply https://github.com/$GITHUB_USERNAME/dotfiles.git
+chezmoi init --apply -v https://github.com/$GITHUB_USERNAME/dotfiles.git
+```
+
+### MacOS
+**For newer MacOS check `brew config` shows arm64 AND NOT x86_64**
+`/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`
+
+```shell
+brew install chezmoi
+export GITHUB_USERNAME="StephenGemin"
+chezmoi init --apply -v https://github.com/$GITHUB_USERNAME/dotfiles.git
 ```
 
 ### Windows (semi-automated)
@@ -90,7 +100,7 @@ Manual setup steps for individual tools / apps
 ### Terminals
 |  | **Deb** | **Win** | **Mac** |
 |---|---|---|---|
-| [WezTerm](https://wezfurlong.org/wezterm/) | ✅ | ✅ | ❓ |
+| [WezTerm](https://wezfurlong.org/wezterm/) | ✅ | ✅ | ✅ |
 | [Alacritty](https://github.com/alacritty/alacritty)* | ✅ | ✅ | ❓ |
 | [Windows Terminal](https://github.com/microsoft/terminal) | 🚫 | ✅ | 🚫 |
 
@@ -99,9 +109,9 @@ Manual setup steps for individual tools / apps
 ### Shells
 |  | **Deb** | **Win** | **Mac** | **Notes** |
 |---|---|---|---|---|
-| [Zsh](https://www.zsh.org/) | ✅ | 🚫 | ❓ | Slow on Windows, see [Other Notes](#other-notes) |
+| [Zsh](https://www.zsh.org/) | ✅ | 🚫 | ✅ | Slow on Windows, see [Other Notes](#other-notes) |
 | [Bash](https://www.gnu.org/software/bash/) | ✅ | ✅ | ❓ | Slow on Windows |
-| [PowerShell](https://github.com/PowerShell/PowerShell) | ❓ | ✅ | ❓ |  |
+| [PowerShell](https://github.com/PowerShell/PowerShell) | 🚫 | ✅ | 🚫 |  |
 
 ### Package Managers
 - **Debian:** [apt](https://wiki.debian.org/Apt) / [snap](https://snapcraft.io/docs) / [flatpak](https://flatpak.org/) / [linuxbrew](https://docs.brew.sh/Homebrew-on-Linux/) / [cargo](https://doc.rust-lang.org/cargo/)
@@ -113,25 +123,25 @@ Manual setup steps for individual tools / apps
 |---|---|---|---|---|
 | [Chezmoi](https://www.chezmoi.io/) | ✅ | ✅ | ✅ |  |
 | [Git](https://git-scm.com/) | ✅ | ✅ | ✅ |  |
-| [Double Commander](https://doublecmd.sourceforge.io/) | ✅ | ✅ | ❓ |  |
-| [KeePassXC](https://keepassxc.org/) | ✅ | ✅ | ❓ | No Chezmoi integration yet |
-| [Neovim](https://neovim.io/) | ✅ | ✅ | ❓ | [NVChad](https://github.com/NvChad/NvChad) and [nvimconf](https://github.com/StephenGemin/nvim-starter) |
-| [Vim](https://www.vim.org/) | ✅ | ✅ | ❓ |  |
-| [Nano](https://www.nano-editor.org/) | ✅ | ❓ | ✅ |  |
-| [Oh-My-Posh](https://ohmyposh.dev/) | ✅ | ✅ | ❓ |  |
-| [Zinit](https://zdharma.github.io/zinit/wiki/Home/) | ✅ | ✅ | ❓ |  |
-| [Oh-My-Zsh](https://ohmyz.sh/) | ✅ | ✅ | ❓ | Via Zinit |
-| [Ripgrep](https://github.com/BurntSushi/ripgrep) | ✅ | ✅ | ❓ |  |
-| [zoxide](https://github.com/ajeetdsouza/zoxide) | ✅ | ✅ | ❓ |  |
-| [fzf](https://github.com/junegunn/fzf) | ✅ | ✅ | ❓ |  |
-| [pyenv](https://github.com/pyenv/pyenv) | ✅ | ✅ | ❓ | Windows uses [pyenv-win](https://github.com/pyenv-win) |
-| [VLC](https://www.videolan.org/vlc/) | ✅ | ✅ | ❓ |  |
-| [Firefox](https://www.mozilla.org/firefox/) | ✅ | ✅ | ❓ |  |
-| [Opera](https://www.opera.com/) | ✅ | ✅ | ❓ |  |
-| [Notion](https://www.notion.so/) | ✅ | ✅ | ❓ |  |
-| [JetBrains IDEs](https://www.jetbrains.com/toolbox-app/) | ✅ | ✅ | ❓ |  |
-| [Visual Studio Code](https://code.visualstudio.com/) | ✅ | ✅ | ❓ |  |
-| [F.lux](https://justgetflux.com/) | ✅ | ✅ | ❓ | Linux uses [Redshift](https://github.com/jonls/redshift) |
+| [Double Commander](https://doublecmd.sourceforge.io/) | ✅ | ✅ | ✅ |  |
+| [KeePassXC](https://keepassxc.org/) | ✅ | ✅ | ✅ | No Chezmoi integration yet |
+| [Neovim](https://neovim.io/) | ✅ | ✅ | ✅ | [NVChad](https://github.com/NvChad/NvChad) and [nvimconf](https://github.com/StephenGemin/nvim-starter) |
+| [Vim](https://www.vim.org/) | ✅ | ✅ | ✅ |  |
+| [Nano](https://www.nano-editor.org/) | ✅ | 🚫 | ✅ |  |
+| [Oh-My-Posh](https://ohmyposh.dev/) | ✅ | ✅ | ✅ |  |
+| [Zinit](https://zdharma.github.io/zinit/wiki/Home/) | ✅ | ✅ | ✅ |  |
+| [Oh-My-Zsh](https://ohmyz.sh/) | ✅ | ✅ | ✅ | Via Zinit |
+| [Ripgrep](https://github.com/BurntSushi/ripgrep) | ✅ | ✅ | ✅ |  |
+| [zoxide](https://github.com/ajeetdsouza/zoxide) | ✅ | ✅ | ✅ |  |
+| [fzf](https://github.com/junegunn/fzf) | ✅ | ✅ | ✅ |  |
+| [pyenv](https://github.com/pyenv/pyenv) | ✅ | ✅ | ✅ | Windows uses [pyenv-win](https://github.com/pyenv-win) |
+| [VLC](https://www.videolan.org/vlc/) | ✅ | ✅ | ✅ |  |
+| [Firefox](https://www.mozilla.org/firefox/) | ✅ | ✅ | ✅ |  |
+| [Opera](https://www.opera.com/) | ✅ | ✅ | ✅ |  |
+| [Notion](https://www.notion.so/) | ✅ | ✅ | ✅ |  |
+| [JetBrains IDEs](https://www.jetbrains.com/toolbox-app/) | ✅ | ✅ | ✅ |  |
+| [Visual Studio Code](https://code.visualstudio.com/) | ✅ | ✅ | ✅ |  |
+| [F.lux](https://justgetflux.com/) | ✅ | ✅ | ✅ooo | Linux uses [Redshift](https://github.com/jonls/redshift) |
 | [Notepad++](https://notepad-plus-plus.org/) | 🚫 | ✅ | 🚫 |  |
 | [MSYS2](https://www.msys2.org/) | 🚫 | ✅ | 🚫 |  |
 

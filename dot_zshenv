@@ -8,6 +8,11 @@ if [ -d "$HOME/.local/bin" ] ; then
     PATH="$HOME/.local/bin:$PATH"
 fi
 
+if [ "$(uname)" = "Darwin" ]; then
+    export PATH=/bin:/usr/bin:/sbin:/usr/sbin:$PATH
+    export PATH="/usr/local/sbin:$PATH"
+fi
+
 # XDG
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_DATA_HOME="$HOME/.local/share"

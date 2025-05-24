@@ -1,0 +1,89 @@
+{{ if eq .osid "darwin" -}}
+#!/bin/bash
+
+# https://www.chezmoi.io/user-guide/use-scripts-to-perform-actions/#run-a-script-when-the-contents-of-another-file-changes
+# The idea here is that changes to the winget_packages.json allows this onchange script to run since it's contents have changed.
+# Refer to dot_config/winget_packages.json.tmpl
+# {{ $install_brews := (joinPath .chezmoi.homeDir ".local" "share" ".chezmoidata" "brew.yaml") }}
+# {{ if stat $install_brews }}
+# {{ include $install_brews | sha256sum }}
+# {{ end }}
+
+set -eu  # -e: exit on error; -u exit on unset variables
+set +x   # disable debug mode
+
+pipxs=("virtualenv" "poetry" "pip-tools")
+
+
+command_exists() {
+    if type "$1" >/dev/null 2>&1; then
+        echo "$1 already installed"
+        return 0
+    fi
+    return 1
+}
+
+install_pipxs() {
+    pipx ensurepath
+    for pkg in "${pipxs[@]}"; do
+        echo "Install pipx package: $pkg"
+        pipx install --python=$(which python) "$pkg"
+    done
+}
+
+
+show_hidden_files_in_finder() {
+    # Show hidden files in Finder application
+    defaults write com.apple.Finder AppleShowAllFiles true
+    killall Finder
+}
+
+# Install git diff-highlight
+install_git_diff_highlight() {
+    if command_exists "diff-highlight"; then
+        return
+    fi
+    local diff_highlight_path
+    diff_highlight_path="$(find "$(realpath "$(brew --prefix git)")" -type f -name diff-highlight 2>/dev/null \
+    | grep '/contrib/diff-highlight/diff-highlight$')"
+    if [[ -n "$diff_highlight_path" ]]; then
+        ln -sf "$diff_highlight_path" ~/.local/bin/diff-highlight
+        echo "Installed diff-highlight"
+    else
+        echo "Could not find diff-highlight, verify Git's contrib scripts are installed."
+    fi
+}
+
+install_python(){
+    if command_exists pyenv; then
+        if ! command_exists python; then
+            pyenv install {{ .user.software.python_version }}
+            pyenv global {{ .user.software.python_version }}
+        fi
+    fi
+}
+install_xcode_select(){
+    if ! command_exists xcode-select; then
+      xcode-select --install
+    fi
+}
+
+# run program
+install_xcode_select
+
+brew bundle --file=/dev/stdin <<EOF
+{{ range .packages.darwin.brews -}}
+brew {{ . | quote }}
+{{ end -}}
+{{ range .packages.darwin.casks -}}
+cask {{ . | quote }}
+{{ end -}}
+EOF
+{{ end -}}
+
+show_hidden_files_in_finder
+install_pipxs
+install_git_diff_highlight
+install_python
+
+echo "All installations completed successfully!"

@@ -7,7 +7,7 @@ local mod = {}
 local bind = {}
 
 if target_triple:find("darwin") then
-  mod.SUPER = 'SUPER'
+  mod.SUPER = 'CTRL'
 else
   mod.SUPER = 'CTRL' -- to not conflict with Windows key shortcuts
 end

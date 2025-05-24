@@ -1,0 +1,38 @@
+packages:
+  darwin:
+    brews:
+    - 'git'
+    - 'git-lfs'
+    - 'neovim'
+    - "jandedobbeleer/oh-my-posh/oh-my-posh"
+    - 'ripgrep'
+    - 'zoxide'
+    - 'fzf'
+    - 'pyenv'
+    - 'pyenv-virtualenv'
+    - 'pipx'
+    - 'openssl'
+    - 'readline' 
+    - 'sqlite3' 
+    - 'xz' 
+    - 'zlib' 
+    - 'jq' 
+    - 'gh'
+    - 'jupyterlab'
+    - 'scrcpy'
+    - 'uv'
+
+    casks:
+    - 'font-jetbrains-mono'
+    - 'firefox'
+    - 'wezterm'
+    - 'alacritty'
+    - 'double-commander'
+    - 'keepassxc'
+    - 'opera'
+    - 'vlc'
+    - 'notion'
+    - 'jetbrains-toolbox'
+    - 'visual-studio-code'
+    - 'flux'
+    - 'wireshark'

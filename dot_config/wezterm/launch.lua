@@ -10,6 +10,11 @@ if wezterm.target_triple:find("windows") then
         { label = 'PowerShell', args = { 'powershell' } },
         { label = 'Command Prompt', args = { 'cmd' } },
     }
+elseif wezterm.target_triple:find("darwin") then
+    default_prog = { '/bin/zsh' , '-l' }
+    launch_menu = {
+        { label = 'Zsh', args = { 'zsh', '-l' } },
+    }
 else
     default_prog = { '/usr/bin/zsh' }
     launch_menu = {
