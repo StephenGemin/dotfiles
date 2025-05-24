@@ -4,6 +4,7 @@ My computer setup and dotfiles, managed with [chezmoi](https://www.chezmoi.io/)
 - Cross-platform == Windows, Mac, Debian-based
 - Unified set of apps, tools, commands and aliases
 - Personal and work
+- keymaps for Colemak-DH 
 
 ## TOC
 - [Project State](#project-state)
@@ -125,7 +126,7 @@ Manual setup steps for individual tools / apps
 | [Git](https://git-scm.com/) | ✅ | ✅ | ✅ |  |
 | [Double Commander](https://doublecmd.sourceforge.io/) | ✅ | ✅ | ✅ |  |
 | [KeePassXC](https://keepassxc.org/) | ✅ | ✅ | ✅ | No Chezmoi integration yet |
-| [Neovim](https://neovim.io/) | ✅ | ✅ | ✅ | [NVChad](https://github.com/NvChad/NvChad) and [nvimconf](https://github.com/StephenGemin/nvim-starter) |
+| [Neovim](https://neovim.io/) | ✅ | ✅ | ✅ | [NVChad](https://github.com/NvChad/NvChad) and [nvim-starter](https://github.com/StephenGemin/nvim-starter) |
 | [Vim](https://www.vim.org/) | ✅ | ✅ | ✅ |  |
 | [Nano](https://www.nano-editor.org/) | ✅ | 🚫 | ✅ |  |
 | [Oh-My-Posh](https://ohmyposh.dev/) | ✅ | ✅ | ✅ |  |
