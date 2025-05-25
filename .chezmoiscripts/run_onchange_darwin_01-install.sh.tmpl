@@ -68,6 +68,13 @@ install_xcode_select(){
     fi
 }
 
+install_rustup() {
+    if command_exists rustup; then
+        return
+    fi
+    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+}
+
 # run program
 install_xcode_select
 
@@ -85,5 +92,6 @@ show_hidden_files_in_finder
 install_pipxs
 install_git_diff_highlight
 install_python
+install_rustup
 
 echo "All installations completed successfully!"
