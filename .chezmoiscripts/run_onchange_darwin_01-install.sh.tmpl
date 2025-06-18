@@ -86,7 +86,6 @@ brew {{ . | quote }}
 cask {{ . | quote }}
 {{ end -}}
 EOF
-{{ end -}}
 
 show_hidden_files_in_finder
 install_pipxs
@@ -95,3 +94,5 @@ install_python
 install_rustup
 
 echo "All installations completed successfully!"
+{{ end -}}
+

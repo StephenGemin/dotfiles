@@ -69,6 +69,13 @@ foreach ($plugin in $LocalPlugins) {
     }
 }
 
+# Load custom code from separate configuration file
+# -----------------------------------------------------------------------------
+$LocalExtras = $(Join-Path -Path $ProfilePath -ChildPath ".pwsh_extras.ps1")
+if (Test-Path $LocalExtras) {
+    . $LocalExtras
+}
+
 # configure fzf wrapper for powershell
 try {
     Set-PsFzfOption -PSReadlineChordProvider 'Ctrl+t' -PSReadlineChordReverseHistory 'Ctrl+r'
