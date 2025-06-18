@@ -142,7 +142,7 @@ Manual setup steps for individual tools / apps
 | [Notion](https://www.notion.so/) | ✅ | ✅ | ✅ |  |
 | [JetBrains IDEs](https://www.jetbrains.com/toolbox-app/) | ✅ | ✅ | ✅ |  |
 | [Visual Studio Code](https://code.visualstudio.com/) | ✅ | ✅ | ✅ |  |
-| [F.lux](https://justgetflux.com/) | ✅ | ✅ | ✅ooo | Linux uses [Redshift](https://github.com/jonls/redshift) |
+| [F.lux](https://justgetflux.com/) | ✅ | ✅ | ✅ | Linux uses [Redshift](https://github.com/jonls/redshift) |
 | [Notepad++](https://notepad-plus-plus.org/) | 🚫 | ✅ | 🚫 |  |
 | [MSYS2](https://www.msys2.org/) | 🚫 | ✅ | 🚫 |  |
 
