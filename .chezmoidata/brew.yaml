@@ -21,6 +21,7 @@ packages:
     - 'jupyterlab'
     - 'scrcpy'
     - 'uv'
+    - 'graphviz'
 
     casks:
     - 'font-jetbrains-mono'
@@ -37,4 +38,4 @@ packages:
     - 'flux'
     - 'wireshark'
     - 'libreoffice'
-
+    - 'temurin@21'
