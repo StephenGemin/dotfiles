@@ -17,8 +17,8 @@ usage() {
 Usage: $0 <shell_name>
 
 Examples:
-  $0 zsh 3.10
-  $0 bash 3.8
+  $0 zsh 3.10 "brew1 brew2"
+  $0 bash 3.8 "brew1 brew2 brew3"
 
 Options:
   -h, --help    Show this help message and exit
@@ -32,6 +32,7 @@ fi
 
 DEFAULT_USER_SHELL="$1"
 INSTALL_PYTHON_VERSION="$2"
+BREWS="$3"   # space-separated list passed in quotes
 
 source "$(dirname "${BASH_SOURCE[0]}")/logging.sh"
 
@@ -105,7 +106,6 @@ snaps=(
     # "firefox"
 )
 
-brews=("fzf" "pipx" "ruff" "uv")
 pipxs=("virtualenv" "poetry" "pip-tools" "glances[all]")
 
 command_exists() {
@@ -218,7 +218,7 @@ install_snaps() {
 
 install_brews() {
     log_task "Installing Brew packages..."
-    for pkg in "${brews[@]}"; do
+    for pkg in "${BREWS[@]}"; do
         log_task "Install brew package: $pkg"
         brew install $pkg
     done

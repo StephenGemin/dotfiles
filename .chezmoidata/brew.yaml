@@ -22,7 +22,6 @@ packages:
     - 'scrcpy'
     - 'uv'
     - 'graphviz'
-
     casks:
     - 'font-jetbrains-mono'
     - 'firefox'
@@ -39,3 +38,10 @@ packages:
     - 'wireshark'
     - 'libreoffice'
     - 'temurin@21'
+  debian:
+    brews:
+    - 'fzf'
+    - 'pipx'
+    - 'ruff'
+    - 'uv'
+    - 'graphviz'

@@ -3,5 +3,7 @@
 
 {{ $install_script:= joinPath .chezmoi.sourceDir "scripts" "install_debian.sh" -}}
 # {{ include $install_script | sha256sum }}
-source {{ $install_script }} {{ .user.software.default_shell }} {{ .user.software.python_version }}
+
+brews="{{ join " " .packages.debian.brews }}"
+source {{ $install_script }} {{ .user.software.default_shell }} {{ .user.software.python_version }} "$brews"
 {{ end -}}
