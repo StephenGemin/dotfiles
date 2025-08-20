@@ -23,7 +23,7 @@ My computer setup and dotfiles, managed with [chezmoi](https://www.chezmoi.io/)
 - Debian-based
   - tested on Pop!_OS 22.04 LTS, Ubuntu 22.04 LTS
 - MacOS
-  - support TBD; when need arises
+  - macOS 15 Sequoia
 - Windows
   - tested on Windows 10, 11
   - No WSL support
