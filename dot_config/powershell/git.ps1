@@ -52,6 +52,7 @@ function git_main_branch {
 
 # my most used commands
 function gac { git add --all; git commit --verbose }
+function gacp { git add -p; git commit --verbose }
 function gacnv { git add --all; git commit --verbose --no-verify }
 function gac! { git add --all; git commit --verbose --amend }
 function gacfx { param([string]$1); git add --all; git commit --verbose --fixup $1 }
@@ -72,6 +73,7 @@ function gwip { git add --all; git commit -v --no-verify -m "[skip ci] WIP" }
 function g { git @args }
 function ga { git add --all }
 function gaa { git add @args }  # git add any
+function gap { git add -p }  # interactive add
 
 function gb { git branch @args }
 function gbr { git branch -r }
@@ -88,11 +90,13 @@ function gacpc { git add --all; git cherry-pick --continue }
 function gc { git commit --verbose @args }
 function gc! { git commit --verbose --amend }
 function gcfx { param([string]$1); git commit --verbose --fixup $1 }
+function gcnvfx { param([string]$1); git commit --verbose --no-verify --fixup $1 }
 
 function gd { git diff }
 function gs { git status }
 function gsh { git show }
 function glastsha { git log -1 --pretty="%H" }
+function grl { git reflog }
 
 function gf { git fetch -v }
 function gfo { git fetch origin -v }
@@ -127,9 +131,11 @@ function grs { git reset @args }
 function grsh { param ([int]$num = 1); git reset HEAD~$num @args }
 function gclean! { git clean -fdx }
 
-function gsts { git stash save @args }
+function gsts { git stash push -u @args }
+function gstsp { git stash push -p }
 function gsta { git stash apply @args }
 function gstc { git stash clear }
+function gstl { git stash list }
 function gstd {
     param ([int]$Ref = 0)
     if ($Ref -gt 0) {
@@ -138,7 +144,6 @@ function gstd {
         git stash drop
     }
 }
-function gstl { git stash list }
 function gstp {
     param ([int]$Ref = 0)
     if ($Ref -gt 0) {

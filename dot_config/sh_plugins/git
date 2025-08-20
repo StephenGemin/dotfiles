@@ -54,6 +54,7 @@ function git_main_branch() {
 
 # my most used commands
 alias gac='git add --all && git commit --verbose'
+alias gacp='git add -p && git commit --verbose'
 alias gacnv='git add --all && git commit --verbose --no-verify'
 alias gac!='git add --all && git commit --verbose --amend'
 function gacfx() { git add --all && git commit --verbose --fixup $1; }
@@ -67,6 +68,7 @@ alias gwip='git add --all && git commit -v --no-verify -m "[skip ci] WIP"'
 alias g='git'
 alias ga='git add --all'
 alias gaa='git add'  # git add any
+alias gap='git add -p'  # interactive add
 
 alias gb='git branch'
 alias gbr='git branch -r'
@@ -83,11 +85,13 @@ alias gacpc='git add --all && git cherry-pick --continue'
 alias gc='git commit --verbose'
 alias gc!='git commit --verbose --amend'
 alias gcfx='git commit --verbose --fixup'
+alias gcnvfx='git commit --verbose --no-verify --fixup'
 
 alias gd='git diff'
 alias gs='git status'
 alias gsh='git show'
 alias glastsha='git log -1 --pretty="%H"'  # output full sha of last commit
+alias grl='git reflog'
 
 alias gf='git fetch -v'
 alias gfo='git fetch origin -v'
@@ -122,9 +126,11 @@ alias grs='git reset'
 function grsh() { if [ -z "$1" ]; then git reset HEAD~1; else git reset HEAD~"$1"; fi; }
 alias gclean!='git clean -fdx'
 
-alias gsts='git stash save'
+alias gsts='git stash push -u'
+alias gstsp='git stash push -p'
 alias gsta='git stash apply'
 alias gstc='git stash clear'
+alias gstl='git stash list'
 gstd() {
     local ref=${1:-0}
     if [[ "$ref" -gt 0 ]]; then
@@ -133,7 +139,6 @@ gstd() {
         git stash drop
     fi
 }
-alias gstl='git stash list'
 gstp() {
     local ref=${1:-0}
     if [[ "$ref" -gt 0 ]]; then
