@@ -100,12 +100,13 @@ jobs:
 
       - name: Install chezmoi
         shell: pwsh
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           $installDir = "$env:LOCALAPPDATA\Programs\chezmoi"
           New-Item -ItemType Directory -Force -Path $installDir | Out-Null
-          $release = Invoke-RestMethod -Uri "https://api.github.com/repos/twpayne/chezmoi/releases/latest" -UseBasicParsing
-          $asset = $release.assets | Where-Object { $_.name -like "chezmoi_*_windows_amd64.exe" } | Select-Object -First 1
-          Invoke-WebRequest -Uri $asset.browser_download_url -OutFile "$installDir\chezmoi.exe" -UseBasicParsing
+          gh release download --repo twpayne/chezmoi --latest --pattern "chezmoi_*_windows_amd64.exe" --dir $installDir
+          Get-ChildItem $installDir -Filter "chezmoi_*_windows_amd64.exe" | Rename-Item -NewName "chezmoi.exe"
           "$installDir" | Out-File -Append -Encoding utf8 -FilePath $env:GITHUB_PATH
 
       - name: Configure chezmoi
