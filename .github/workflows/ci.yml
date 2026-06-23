@@ -103,7 +103,9 @@ jobs:
         run: |
           $installDir = "$env:LOCALAPPDATA\Programs\chezmoi"
           New-Item -ItemType Directory -Force -Path $installDir | Out-Null
-          & ([scriptblock]::Create((Invoke-WebRequest -UseBasicParsing 'https://get.chezmoi.io/ps1').Content)) -b $installDir
+          $tempScript = Join-Path $env:TEMP 'install_chezmoi.ps1'
+          Invoke-WebRequest -UseBasicParsing 'https://get.chezmoi.io/ps1' -OutFile $tempScript
+          & $tempScript -b $installDir
           "$installDir" | Out-File -Append -Encoding utf8 -FilePath $env:GITHUB_PATH
 
       - name: Configure chezmoi
