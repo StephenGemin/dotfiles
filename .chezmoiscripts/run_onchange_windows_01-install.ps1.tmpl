@@ -124,48 +124,54 @@ if (-not $wingetPath) {
     $count++
 }
 
-# Install packages with winget
-$wingetImportPath = Join-Path -Path $XDGPath -ChildPath "winget_packages.json"
-Invoke-Command -ScriptBlock {
-    winget import -i $wingetImportPath --ignore-unavailable --accept-package-agreements --accept-source-agreements --disable-interactivity
-    $count++
-}
-
-# https://github.com/pyenv-win/pyenv-win
-if (-not (Get-Command pyenv -ErrorAction SilentlyContinue)) {
-    Write-Host "Installing pyenv-win"
-    Invoke-WebRequest -UseBasicParsing -Uri "https://raw.githubusercontent.com/pyenv-win/pyenv-win/master/pyenv-win/install-pyenv-win.ps1" -OutFile "./install-pyenv-win.ps1"; &"./install-pyenv-win.ps1"
-    $count++
-}
-
-$installed_python_version = python --version 2>$null
-if (-not $installed_python_version) {
-    pyenv install {{ .user.software.python_version }}
-    pyenv global {{ .user.software.python_version }}
-    $count++
-}
-
-if (-not (Get-Command scoop -ErrorAction SilentlyContinue)) {
-    Write-Host "Installing scoop"
-    Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
-    Invoke-RestMethod -Uri https://get.scoop.sh | Invoke-Expression
-    $count++
-}
-
-if (-not (Get-Command scoop -ErrorAction SilentlyContinue)) {
-    Write-Host "Installing pipx"
-    scoop install pipx
-    pipx ensurepath
-
-    if ($PSVersionTable.PSEdition -eq 'Desktop') {
-        powershell.exe
-    } else {
-        pwsh
+if ($env:CI) {
+    Write-Host "[CI] Would import winget packages from winget_packages.json" -ForegroundColor $ColorInfo
+    Write-Host "[CI] Would install pyenv-win and Python {{ .user.software.python_version }}" -ForegroundColor $ColorInfo
+    Write-Host "[CI] Would install scoop and pipx packages: virtualenv, poetry, pip-tools, black" -ForegroundColor $ColorInfo
+} else {
+    # Install packages with winget
+    $wingetImportPath = Join-Path -Path $XDGPath -ChildPath "winget_packages.json"
+    Invoke-Command -ScriptBlock {
+        winget import -i $wingetImportPath --ignore-unavailable --accept-package-agreements --accept-source-agreements --disable-interactivity
+        $count++
     }
 
-    Write-Host "Install packages with pipx"
-    pipx install virtualenv poetry pip-tools black
-    $count++
+    # https://github.com/pyenv-win/pyenv-win
+    if (-not (Get-Command pyenv -ErrorAction SilentlyContinue)) {
+        Write-Host "Installing pyenv-win"
+        Invoke-WebRequest -UseBasicParsing -Uri "https://raw.githubusercontent.com/pyenv-win/pyenv-win/master/pyenv-win/install-pyenv-win.ps1" -OutFile "./install-pyenv-win.ps1"; &"./install-pyenv-win.ps1"
+        $count++
+    }
+
+    $installed_python_version = python --version 2>$null
+    if (-not $installed_python_version) {
+        pyenv install {{ .user.software.python_version }}
+        pyenv global {{ .user.software.python_version }}
+        $count++
+    }
+
+    if (-not (Get-Command scoop -ErrorAction SilentlyContinue)) {
+        Write-Host "Installing scoop"
+        Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+        Invoke-RestMethod -Uri https://get.scoop.sh | Invoke-Expression
+        $count++
+    }
+
+    if (-not (Get-Command scoop -ErrorAction SilentlyContinue)) {
+        Write-Host "Installing pipx"
+        scoop install pipx
+        pipx ensurepath
+
+        if ($PSVersionTable.PSEdition -eq 'Desktop') {
+            powershell.exe
+        } else {
+            pwsh
+        }
+
+        Write-Host "Install packages with pipx"
+        pipx install virtualenv poetry pip-tools black
+        $count++
+    }
 }
 
 # TODO: fix for Windows
@@ -188,15 +194,19 @@ if (-not (Get-Command scoop -ErrorAction SilentlyContinue)) {
 # Enable LongPaths support for file paths above 260 characters.
 # See https://social.msdn.microsoft.com/Forums/en-US/fc85630e-5684-4df6-ad2f-5a128de3deef
 if ($IsWindows) {
-    $property = 'HKLM:\SYSTEM\CurrentControlSet\Control\FileSystem'
-    $name = 'LongPathsEnabled'
-    if ((Get-ItemPropertyValue $property -Name $name) -ne 0) {
-        Write-Host "LongPaths support already enabled, skipping." -ForegroundColor $ColorInfo
-    }
-    else {
-        Write-Host "Enabling LongPaths support for file paths above 260 characters." -ForegroundColor $ColorInfo
-        Set-ItemProperty $property -Name $name -Value 1
-        $count++
+    if ($env:CI) {
+        Write-Host "[CI] Would enable LongPaths registry key" -ForegroundColor $ColorInfo
+    } else {
+        $property = 'HKLM:\SYSTEM\CurrentControlSet\Control\FileSystem'
+        $name = 'LongPathsEnabled'
+        if ((Get-ItemPropertyValue $property -Name $name) -ne 0) {
+            Write-Host "LongPaths support already enabled, skipping." -ForegroundColor $ColorInfo
+        }
+        else {
+            Write-Host "Enabling LongPaths support for file paths above 260 characters." -ForegroundColor $ColorInfo
+            Set-ItemProperty $property -Name $name -Value 1
+            $count++
+        }
     }
 }
 

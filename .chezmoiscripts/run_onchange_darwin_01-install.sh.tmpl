@@ -78,7 +78,13 @@ install_rustup() {
 # run program
 install_xcode_select
 
-brew bundle --file=/dev/stdin <<EOF
+if [ "${CI:-}" = "true" ]; then
+    echo "[CI] Would brew bundle: {{ len .packages.darwin.brews }} brews, {{ len .packages.darwin.casks }} casks"
+    echo "[CI] Would install pipx packages: ${pipxs[*]}"
+    echo "[CI] Would install diff-highlight, python {{ .user.software.python_version }}, rustup"
+    echo "[CI] Would show hidden files in Finder"
+else
+    brew bundle --file=/dev/stdin <<EOF
 {{ range .packages.darwin.brews -}}
 brew {{ . | quote }}
 {{ end -}}
@@ -87,11 +93,12 @@ cask {{ . | quote }}
 {{ end -}}
 EOF
 
-show_hidden_files_in_finder
-install_pipxs
-install_git_diff_highlight
-install_python
-install_rustup
+    show_hidden_files_in_finder
+    install_pipxs
+    install_git_diff_highlight
+    install_python
+    install_rustup
+fi
 
 echo "All installations completed successfully!"
 {{ end -}}

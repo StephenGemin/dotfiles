@@ -1,9 +1,15 @@
 {{ if includeTemplate "is-linux-debian" . -}}
 #!/bin/bash
 
-{{ $install_script:= joinPath .chezmoi.sourceDir "scripts" "install_debian.sh" -}}
+{{ $install_script := joinPath .chezmoi.sourceDir "scripts" "install_debian.sh" -}}
+{{ $ci_script := joinPath .chezmoi.sourceDir "scripts" "install_debian_ci.sh" -}}
 # {{ include $install_script | sha256sum }}
 
 brews="{{ join " " .packages.debian.brews }}"
-source {{ $install_script }} {{ .user.software.default_shell }} {{ .user.software.python_version }} "$brews"
+
+if [ "${CI:-}" = "true" ]; then
+    source {{ $ci_script }} {{ .user.software.default_shell }} {{ .user.software.python_version }} "$brews"
+else
+    source {{ $install_script }} {{ .user.software.default_shell }} {{ .user.software.python_version }} "$brews"
+fi
 {{ end -}}

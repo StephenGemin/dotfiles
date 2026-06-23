@@ -3,7 +3,6 @@ name: CI
 on:
   pull_request:
   push:
-    branches: [main, master]
 
 jobs:
   lint:
@@ -16,11 +15,12 @@ jobs:
         run: sudo apt-get install -y shellcheck
 
       - name: Lint shell scripts
-        run: shellcheck scripts/install_debian.sh scripts/logging.sh
+        run: shellcheck scripts/install_debian.sh scripts/install_debian_ci.sh scripts/logging.sh
 
       - name: Check bash script syntax
         run: |
           bash -n scripts/install_debian.sh
+          bash -n scripts/install_debian_ci.sh
           bash -n scripts/logging.sh
 
   install-linux:
@@ -47,16 +47,16 @@ jobs:
           EOF
 
       - name: "[Fresh install] Apply dotfiles"
-        run: chezmoi apply --source "$GITHUB_WORKSPACE" --exclude run --exclude externals --verbose
+        run: chezmoi apply --source "$GITHUB_WORKSPACE" --exclude externals --verbose
 
       - name: "[Fresh install] Verify no drift"
-        run: chezmoi verify --source "$GITHUB_WORKSPACE" --exclude run --exclude externals
+        run: chezmoi verify --source "$GITHUB_WORKSPACE" --exclude externals
 
       - name: "[Upgrade] Re-apply dotfiles"
-        run: chezmoi apply --source "$GITHUB_WORKSPACE" --exclude run --exclude externals
+        run: chezmoi apply --source "$GITHUB_WORKSPACE" --exclude externals
 
       - name: "[Upgrade] Verify no drift after re-apply"
-        run: chezmoi verify --source "$GITHUB_WORKSPACE" --exclude run --exclude externals
+        run: chezmoi verify --source "$GITHUB_WORKSPACE" --exclude externals
 
   install-macos:
     name: Install check / macOS
@@ -82,16 +82,16 @@ jobs:
           EOF
 
       - name: "[Fresh install] Apply dotfiles"
-        run: chezmoi apply --source "$GITHUB_WORKSPACE" --exclude run --exclude externals --verbose
+        run: chezmoi apply --source "$GITHUB_WORKSPACE" --exclude externals --verbose
 
       - name: "[Fresh install] Verify no drift"
-        run: chezmoi verify --source "$GITHUB_WORKSPACE" --exclude run --exclude externals
+        run: chezmoi verify --source "$GITHUB_WORKSPACE" --exclude externals
 
       - name: "[Upgrade] Re-apply dotfiles"
-        run: chezmoi apply --source "$GITHUB_WORKSPACE" --exclude run --exclude externals
+        run: chezmoi apply --source "$GITHUB_WORKSPACE" --exclude externals
 
       - name: "[Upgrade] Verify no drift after re-apply"
-        run: chezmoi verify --source "$GITHUB_WORKSPACE" --exclude run --exclude externals
+        run: chezmoi verify --source "$GITHUB_WORKSPACE" --exclude externals
 
   install-windows:
     name: Install check / Windows
@@ -125,16 +125,16 @@ osid = "windows"
 
       - name: "[Fresh install] Apply dotfiles"
         shell: pwsh
-        run: chezmoi apply --source "$env:GITHUB_WORKSPACE" --exclude run --exclude externals --verbose
+        run: chezmoi apply --source "$env:GITHUB_WORKSPACE" --exclude externals --verbose
 
       - name: "[Fresh install] Verify no drift"
         shell: pwsh
-        run: chezmoi verify --source "$env:GITHUB_WORKSPACE" --exclude run --exclude externals
+        run: chezmoi verify --source "$env:GITHUB_WORKSPACE" --exclude externals
 
       - name: "[Upgrade] Re-apply dotfiles"
         shell: pwsh
-        run: chezmoi apply --source "$env:GITHUB_WORKSPACE" --exclude run --exclude externals
+        run: chezmoi apply --source "$env:GITHUB_WORKSPACE" --exclude externals
 
       - name: "[Upgrade] Verify no drift after re-apply"
         shell: pwsh
-        run: chezmoi verify --source "$env:GITHUB_WORKSPACE" --exclude run --exclude externals
+        run: chezmoi verify --source "$env:GITHUB_WORKSPACE" --exclude externals
