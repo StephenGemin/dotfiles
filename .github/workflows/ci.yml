@@ -100,13 +100,10 @@ jobs:
 
       - name: Install chezmoi
         shell: pwsh
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           $installDir = "$env:LOCALAPPDATA\Programs\chezmoi"
           New-Item -ItemType Directory -Force -Path $installDir | Out-Null
-          gh release download --repo twpayne/chezmoi --latest --pattern "chezmoi_*_windows_amd64.exe" --dir $installDir
-          Get-ChildItem $installDir -Filter "chezmoi_*_windows_amd64.exe" | Rename-Item -NewName "chezmoi.exe"
+          (& ([scriptblock]::Create((Invoke-WebRequest -UseBasicParsing 'https://get.chezmoi.io/ps1').Content))) -b $installDir
           "$installDir" | Out-File -Append -Encoding utf8 -FilePath $env:GITHUB_PATH
 
       - name: Configure chezmoi
