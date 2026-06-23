@@ -113,14 +113,15 @@ jobs:
         run: |
           $configDir = "$env:USERPROFILE\.config\chezmoi"
           New-Item -ItemType Directory -Force -Path $configDir | Out-Null
-          @"
-[data]
-email = "ci@example.com"
-name = "CI Test"
-install_host = "home"
-wingit_install_dir = "C:/Program Files/Git"
-osid = "windows"
-"@ | Out-File -FilePath "$configDir\chezmoi.toml" -Encoding utf8
+          $lines = @(
+            '[data]',
+            'email = "ci@example.com"',
+            'name = "CI Test"',
+            'install_host = "home"',
+            'wingit_install_dir = "C:/Program Files/Git"',
+            'osid = "windows"'
+          )
+          $lines | Set-Content -Path "$configDir\chezmoi.toml" -Encoding utf8
 
       - name: "[Fresh install] Apply dotfiles"
         shell: pwsh
