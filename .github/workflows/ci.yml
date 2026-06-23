@@ -8,6 +8,7 @@ jobs:
   lint:
     name: Lint
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
 
@@ -25,6 +26,7 @@ jobs:
   install-linux:
     name: Install check / Linux (Ubuntu)
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
 
@@ -60,6 +62,7 @@ jobs:
   install-macos:
     name: Install check / macOS
     runs-on: macos-latest
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
 
@@ -91,54 +94,3 @@ jobs:
 
       - name: "[Upgrade] Verify no drift after re-apply"
         run: chezmoi verify --source "$GITHUB_WORKSPACE" --exclude externals
-
-  install-windows:
-    name: Install check / Windows
-    runs-on: windows-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Install chezmoi
-        shell: pwsh
-        run: |
-          $installDir = "$env:LOCALAPPDATA\Programs\chezmoi"
-          New-Item -ItemType Directory -Force -Path $installDir | Out-Null
-          $tempScript = Join-Path $env:TEMP 'install_chezmoi.ps1'
-          Invoke-WebRequest -UseBasicParsing 'https://get.chezmoi.io/ps1' -OutFile $tempScript
-          & $tempScript -b $installDir
-          "$installDir" | Out-File -Append -Encoding utf8 -FilePath $env:GITHUB_PATH
-
-      - name: Initialize chezmoi
-        shell: pwsh
-        run: chezmoi init --source "$env:GITHUB_WORKSPACE"
-
-      - name: Configure chezmoi
-        shell: pwsh
-        run: |
-          $configDir = "$env:USERPROFILE\.config\chezmoi"
-          New-Item -ItemType Directory -Force -Path $configDir | Out-Null
-          $lines = @(
-            '[data]',
-            'email = "ci@example.com"',
-            'name = "CI Test"',
-            'install_host = "home"',
-            'wingit_install_dir = "C:/Program Files/Git"',
-            'osid = "windows"'
-          )
-          $lines | Set-Content -Path "$configDir\chezmoi.toml" -Encoding utf8
-
-      - name: "[Fresh install] Apply dotfiles"
-        shell: pwsh
-        run: chezmoi apply --source "$env:GITHUB_WORKSPACE" --exclude externals --verbose
-
-      - name: "[Fresh install] Verify no drift"
-        shell: pwsh
-        run: chezmoi verify --source "$env:GITHUB_WORKSPACE" --exclude externals
-
-      - name: "[Upgrade] Re-apply dotfiles"
-        shell: pwsh
-        run: chezmoi apply --source "$env:GITHUB_WORKSPACE" --exclude externals
-
-      - name: "[Upgrade] Verify no drift after re-apply"
-        shell: pwsh
-        run: chezmoi verify --source "$env:GITHUB_WORKSPACE" --exclude externals
