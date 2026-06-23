@@ -15,12 +15,11 @@ jobs:
         run: sudo apt-get install -y shellcheck
 
       - name: Lint shell scripts
-        run: shellcheck scripts/install_debian.sh scripts/install_debian_ci.sh scripts/logging.sh
+        run: shellcheck scripts/install_debian.sh scripts/logging.sh
 
       - name: Check bash script syntax
         run: |
           bash -n scripts/install_debian.sh
-          bash -n scripts/install_debian_ci.sh
           bash -n scripts/logging.sh
 
   install-linux:
