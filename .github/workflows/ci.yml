@@ -108,6 +108,10 @@ jobs:
           & $tempScript -b $installDir
           "$installDir" | Out-File -Append -Encoding utf8 -FilePath $env:GITHUB_PATH
 
+      - name: Initialize chezmoi
+        shell: pwsh
+        run: chezmoi init --source "$env:GITHUB_WORKSPACE"
+
       - name: Configure chezmoi
         shell: pwsh
         run: |
