@@ -36,6 +36,7 @@ DEFAULT_USER_SHELL="$1"
 INSTALL_PYTHON_VERSION="$2"
 BREWS="$3"   # space-separated list passed in quotes
 
+# shellcheck source=scripts/logging.sh
 source "$(dirname "${BASH_SOURCE[0]}")/logging.sh"
 
 apts=(
@@ -139,8 +140,8 @@ install_pyenv() {
     fi
     curl -sSf https://pyenv.run | bash
     if command_exists pyenv; then
-        pyenv install $INSTALL_PYTHON_VERSION
-        pyenv global $INSTALL_PYTHON_VERSION
+        pyenv install "$INSTALL_PYTHON_VERSION"
+        pyenv global "$INSTALL_PYTHON_VERSION"
     fi
 }
 
@@ -194,7 +195,7 @@ install_git_diff_highlight() {
     fi
     local diff_highlight_path
     diff_highlight_path="$(find /usr -type f -name diff-highlight 2>/dev/null \
-    | grep '/contrib/diff-highlight/diff-highlight$')"
+    | grep '/contrib/diff-highlight/diff-highlight$' || true)"
 
     if [[ -n "$diff_highlight_path" ]]; then
         if [[ "$CI" == "true" ]]; then
@@ -253,6 +254,7 @@ install_snaps() {
     fi
     for pkg in "${snaps[@]}"; do
         log_task "Install snap package: $pkg"
+        # shellcheck disable=SC2086  # intentional: $pkg contains flags (e.g. "nvim --beta --classic")
         sudo snap install $pkg
     done
     sudo update-desktop-database /var/lib/snapd/desktop/applications
@@ -266,12 +268,13 @@ install_brews() {
     fi
     for pkg in "${BREWS[@]}"; do
         log_task "Install brew package: $pkg"
+        # shellcheck disable=SC2086  # intentional: $pkg may contain extra args
         brew install $pkg
     done
 }
 
 install_jetbrains_toolbox() {
-    if ls /opt | grep -q "jetbrains-toolbox"; then
+    if compgen -G "/opt/jetbrains-toolbox*" > /dev/null 2>&1; then
         return
     fi
     if [[ "$CI" == "true" ]]; then
@@ -325,8 +328,8 @@ set_default_shell() {
         log_info "[CI] Would set default shell to: $DEFAULT_USER_SHELL"
         return
     fi
-    set_shell="$(which $DEFAULT_USER_SHELL)"
-    chsh -s $set_shell
+    set_shell="$(which "$DEFAULT_USER_SHELL")"
+    chsh -s "$set_shell"
     log_info "Set default shell to $set_shell"
 }
 
@@ -337,7 +340,7 @@ install_pipxs() {
     fi
     for pkg in "${pipxs[@]}"; do
         log_task "Install pipx package: $pkg"
-        pipx install --python=$(which python) "$pkg"
+        pipx install --python="$(which python)" "$pkg"
     done
 }
 

@@ -104,7 +104,7 @@ jobs:
           $installDir = "$env:LOCALAPPDATA\Programs\chezmoi"
           New-Item -ItemType Directory -Force -Path $installDir | Out-Null
           $release = Invoke-RestMethod -Uri "https://api.github.com/repos/twpayne/chezmoi/releases/latest" -UseBasicParsing
-          $asset = $release.assets | Where-Object { $_.name -eq "chezmoi_windows_amd64.exe" } | Select-Object -First 1
+          $asset = $release.assets | Where-Object { $_.name -like "chezmoi_*_windows_amd64.exe" } | Select-Object -First 1
           Invoke-WebRequest -Uri $asset.browser_download_url -OutFile "$installDir\chezmoi.exe" -UseBasicParsing
           "$installDir" | Out-File -Append -Encoding utf8 -FilePath $env:GITHUB_PATH
 
