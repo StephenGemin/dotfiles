@@ -16,20 +16,19 @@ touch, so a fresh laptop is one command away from feeling like home.
 
 ## ✨ Highlights
 
-- **One tree, three OSes.** The same source renders into `$HOME` on Windows, macOS, and
-  Debian-based Linux — no WSL, no per-machine forks.
+- **One source tree → three OSes.** Windows, macOS, and Debian-based Linux render from the same
+  repo — no WSL, no per-machine forks — giving one unified set of apps, tools, and aliases everywhere.
 - **Idempotent & convention-driven.** Built on chezmoi templates, `.chezmoidata`, and
-  `run_onchange_` scripts. `chezmoi apply` is safe to run twice — CI verifies there's no drift.
-- **One toolbelt everywhere.** WezTerm/Alacritty, oh-my-posh, Neovim (NVChad), fzf, ripgrep,
-  zoxide, and a `pyenv` + `uv` + `ruff` Python stack — the same muscle memory on every box.
-- **Colemak-DH first.** Keymaps tuned for the [Colemak-DH](https://colemakmods.github.io/mod-dh/) layout.
+  `run_onchange_` scripts; `chezmoi apply` is safe to run twice and CI verifies there's no drift.
+- **A stack you'll recognize.** WezTerm/Alacritty, oh-my-posh, Neovim (NVChad), fzf, ripgrep,
+  zoxide, and a `pyenv` + `uv` + `ruff` Python toolchain.
 - **Home *and* work aware.** An `install_host = home | work` prompt at init time switches package
-  sets and config so the same repo behaves on both.
+  sets and config from the same source.
+- **Colemak-DH first.** Keymaps tuned for the [Colemak-DH](https://colemakmods.github.io/mod-dh/) layout.
 
 ## Table of contents
 
 - [Highlights](#-highlights)
-- [Project goals](#project-goals)
 - [Project state](#project-state)
 - [Install](#install)
   - [Debian-based Linux](#debian-based-linux)
@@ -45,14 +44,9 @@ touch, so a fresh laptop is one command away from feeling like home.
 - [License](#license)
 - [💡 Inspirations](#-inspirations)
 
-## Project goals
-
-- **Cross-platform** — Windows, macOS, and Debian-based Linux from one source tree. No WSL.
-- A **unified** set of apps, tools, commands, and aliases across all three.
-- Works for both **personal and work** machines (`install_host` = `home` / `work`).
-- **Colemak-DH** keymaps.
-
 ## Project state
+
+_The platforms I've actually verified `chezmoi apply` on:_
 
 | OS | Tested on |
 |---|---|
