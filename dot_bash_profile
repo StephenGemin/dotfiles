@@ -14,7 +14,7 @@ if [ -f "$HOME/.bashenv" ]; then
     . "$HOME/.bashenv"
 fi
 
-if [ "$isWindows" = 0 ]; then
+if [[ "$isWindows" = 0 ]]; then
     eval "$(pyenv init -)"
     eval "$(pyenv virtualenv-init -)"
 
