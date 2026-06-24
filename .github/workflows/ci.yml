@@ -119,11 +119,18 @@ jobs:
           osid = "windows"
           '@ | Set-Content -Path "$HOME/.config/chezmoi/chezmoi.toml"
 
-      # Files only: the PowerShell install/copy scripts are not CI-guarded and
-      # would try to install real packages, so exclude scripts and externals.
-      - name: "[Fresh install] Apply dotfiles (files only)"
+      # apply runs the PowerShell scripts too, not just file rendering. GitHub
+      # Actions sets CI=true, and the install script guards its real installs and
+      # registry writes behind that flag (see run_onchange_windows_01-install),
+      # so apply exercises the script logic without mutating the runner.
+      # verify excludes scripts: run_windows_01-copy-files is an always-run
+      # ("run_") script, which verify always reports as a pending change, so
+      # including it would make verify fail by design. Idempotency that matters
+      # here is that the rendered files do not drift on re-apply. Externals are
+      # excluded everywhere (network fetches, covered by validate-externals).
+      - name: "[Fresh install] Apply dotfiles"
         shell: pwsh
-        run: chezmoi apply --source "$env:GITHUB_WORKSPACE" --exclude externals,scripts --verbose
+        run: chezmoi apply --source "$env:GITHUB_WORKSPACE" --exclude externals --verbose
 
       - name: "[Fresh install] Verify no drift"
         shell: pwsh
@@ -131,7 +138,7 @@ jobs:
 
       - name: "[Upgrade] Re-apply dotfiles"
         shell: pwsh
-        run: chezmoi apply --source "$env:GITHUB_WORKSPACE" --exclude externals,scripts
+        run: chezmoi apply --source "$env:GITHUB_WORKSPACE" --exclude externals
 
       - name: "[Upgrade] Verify no drift after re-apply"
         shell: pwsh
