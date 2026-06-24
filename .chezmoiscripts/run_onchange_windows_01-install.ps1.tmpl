@@ -5,12 +5,18 @@
 # Idempotent manual setup script to install or update Windows dependencies.
 
 # https://www.chezmoi.io/user-guide/use-scripts-to-perform-actions/#run-a-script-when-the-contents-of-another-file-changes
-# The idea here is that changes to the winget_packages.json allows this onchange script to run since it's contents have changed.
-# Refer to dot_config/winget_packages.json.tmpl
-# {{ $winget_import := (joinPath .chezmoi.homeDir ".config" "winget_packages.json") }}
-# {{ if stat $winget_import }}
-# {{ include $winget_import | sha256sum }}
-# {{ end }}
+# Re-run this script whenever the winget package list changes. Hash the *source*
+# package templates rather than the rendered ~/.config/winget_packages.json: this
+# script runs before that destination file is applied, so the rendered file does
+# not exist on the first apply. Hashing it would make the embedded hash flip
+# between applies (empty -> populated), re-running the script unnecessarily and
+# making `chezmoi verify` report drift. The source templates are stable, mirroring
+# the darwin script which hashes .chezmoidata/brew.yaml.
+{{ if eq .install_host "home" -}}
+# {{ include (joinPath .chezmoi.sourceDir ".chezmoitemplates" "winget_packages_home.json") | sha256sum }}
+{{ else if eq .install_host "work" -}}
+# {{ include (joinPath .chezmoi.sourceDir ".chezmoitemplates" "winget_packages_work.json") | sha256sum }}
+{{ end -}}
 # Requires that PowerShell be running with elevated privileges to be able to
 # change system properties.
 #Disabled Requires -RunAsAdministrator
@@ -26,6 +32,12 @@ if (!(Test-Path variable:global:IsWindows)) {
 if ($null -eq (Get-Variable "ColorInfo" -ErrorAction "Ignore")) {
     Set-Variable -Name ColorInfo -Value "DarkYellow"
 }
+
+# In CI (GitHub Actions sets CI=true) run through the script's logic but skip
+# the real package installs and system changes, mirroring the "[CI] Would ..."
+# guards in scripts/install_debian.sh. This lets CI exercise the control flow
+# without mutating the runner.
+$CI = "$env:CI" -eq "true"
 
 Set-Variable -Name count -Value 0 -Scope Script
 
@@ -100,18 +112,28 @@ $modules = @{
     if (Get-Module -ListAvailable -Name $_.Name -ErrorAction "Ignore") {
         if ($Update) {
             Write-Host "Checking for $($_.Name) updates ($($_.Value.Info))..." -ForegroundColor $ColorInfo
-            Install-Module $_.Name -Scope CurrentUser
+            if ($CI) {
+                Write-Host "[CI] Would update module $($_.Name)" -ForegroundColor $ColorInfo
+            }
+            else {
+                Install-Module $_.Name -Scope CurrentUser
+            }
         }
     }
     else {
         Write-Host "Installing $($_.Name) ($($_.Value.Info))..." -ForegroundColor $ColorInfo
-        if ($AllowPrerelease -and $_.Value.Prerelease) {
+        if ($CI) {
+            Write-Host "[CI] Would install module $($_.Name)" -ForegroundColor $ColorInfo
+        }
+        elseif ($AllowPrerelease -and $_.Value.Prerelease) {
             Install-Module $_.Name -Scope CurrentUser -Force:$_.Value.Force -SkipPublisherCheck:$_.Value.SkipPublisherCheck -AllowClobber:$_.Value.AllowClobber -AllowPrerelease:$_.Value.Prerelease
         }
         else {
             Install-Module $_.Name -Scope CurrentUser -Force:$_.Value.Force -SkipPublisherCheck:$_.Value.SkipPublisherCheck -AllowClobber:$_.Value.AllowClobber
         }
-        Get-Module -ListAvailable -Name $_.Name
+        if (-not $CI) {
+            Get-Module -ListAvailable -Name $_.Name
+        }
         $count++
     }
 }
@@ -120,47 +142,82 @@ $modules = @{
 $wingetPath = Get-Command winget -ErrorAction SilentlyContinue
 if (-not $wingetPath) {
     Write-Host "Installing winget" -ForegroundColor Yellow
-    Install-Module -Name Microsoft.WinGet.Client -Force -Repository PSGallery | Out-Null
+    if ($CI) {
+        Write-Host "[CI] Would install winget (Microsoft.WinGet.Client)" -ForegroundColor $ColorInfo
+    }
+    else {
+        Install-Module -Name Microsoft.WinGet.Client -Force -Repository PSGallery | Out-Null
+    }
     $count++
 }
 
 # Install packages with winget
 $wingetImportPath = Join-Path -Path $XDGPath -ChildPath "winget_packages.json"
-Invoke-Command -ScriptBlock {
-    winget import -i $wingetImportPath --ignore-unavailable --accept-package-agreements --accept-source-agreements --disable-interactivity
-    $count++
+if ($CI) {
+    Write-Host "[CI] Would winget import from $wingetImportPath" -ForegroundColor $ColorInfo
+}
+else {
+    Invoke-Command -ScriptBlock {
+        winget import -i $wingetImportPath --ignore-unavailable --accept-package-agreements --accept-source-agreements --disable-interactivity
+        $count++
+    }
 }
 
 # https://github.com/pyenv-win/pyenv-win
 if (-not (Get-Command pyenv -ErrorAction SilentlyContinue)) {
     Write-Host "Installing pyenv-win"
-    Invoke-WebRequest -UseBasicParsing -Uri "https://raw.githubusercontent.com/pyenv-win/pyenv-win/master/pyenv-win/install-pyenv-win.ps1" -OutFile "./install-pyenv-win.ps1"; &"./install-pyenv-win.ps1"
+    if ($CI) {
+        Write-Host "[CI] Would install pyenv-win" -ForegroundColor $ColorInfo
+    }
+    else {
+        Invoke-WebRequest -UseBasicParsing -Uri "https://raw.githubusercontent.com/pyenv-win/pyenv-win/master/pyenv-win/install-pyenv-win.ps1" -OutFile "./install-pyenv-win.ps1"; &"./install-pyenv-win.ps1"
+    }
     $count++
 }
 
 $installed_python_version = python --version 2>$null
 if (-not $installed_python_version) {
-    pyenv install {{ .user.software.python_version }}
-    pyenv global {{ .user.software.python_version }}
+    if ($CI) {
+        Write-Host "[CI] Would install Python {{ .user.software.python_version }} via pyenv" -ForegroundColor $ColorInfo
+    }
+    else {
+        pyenv install {{ .user.software.python_version }}
+        pyenv global {{ .user.software.python_version }}
+    }
     $count++
 }
 
 if (-not (Get-Command scoop -ErrorAction SilentlyContinue)) {
     Write-Host "Installing scoop"
-    Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
-    Invoke-RestMethod -Uri https://get.scoop.sh | Invoke-Expression
+    if ($CI) {
+        Write-Host "[CI] Would install scoop" -ForegroundColor $ColorInfo
+    }
+    else {
+        Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+        Invoke-RestMethod -Uri https://get.scoop.sh | Invoke-Expression
+    }
     $count++
 }
 
 if (Get-Command scoop -ErrorAction SilentlyContinue) {
     if (-not (Get-Command pipx -ErrorAction SilentlyContinue)) {
         Write-Host "Installing pipx"
-        scoop install pipx
-        pipx ensurepath
+        if ($CI) {
+            Write-Host "[CI] Would install pipx via scoop" -ForegroundColor $ColorInfo
+        }
+        else {
+            scoop install pipx
+            pipx ensurepath
+        }
     }
 
     Write-Host "Install packages with pipx"
-    pipx install virtualenv poetry pip-tools black
+    if ($CI) {
+        Write-Host "[CI] Would install pipx packages: virtualenv poetry pip-tools black" -ForegroundColor $ColorInfo
+    }
+    else {
+        pipx install virtualenv poetry pip-tools black
+    }
     $count++
 }
 
@@ -191,7 +248,12 @@ if ($IsWindows) {
     }
     else {
         Write-Host "Enabling LongPaths support for file paths above 260 characters." -ForegroundColor $ColorInfo
-        Set-ItemProperty $property -Name $name -Value 1
+        if ($CI) {
+            Write-Host "[CI] Would enable LongPaths support (registry HKLM:$name)" -ForegroundColor $ColorInfo
+        }
+        else {
+            Set-ItemProperty $property -Name $name -Value 1
+        }
         $count++
     }
 }
