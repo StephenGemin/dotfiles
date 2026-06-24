@@ -1,0 +1,16 @@
+# pipx packages, single source of truth for every platform's install script.
+# `common` is installed everywhere; each per-OS key adds platform-specific extras.
+# Consumed by the run_onchange install scripts (debian/darwin/windows) as `.pipx.<key>`.
+pipx:
+  common:
+  - 'virtualenv'
+  - 'poetry'
+  - 'pip-tools'
+  darwin:
+  - 'black'
+  - 'ruff'
+  - 'csvkit'
+  debian:
+  - 'glances[all]'
+  windows:
+  - 'black'

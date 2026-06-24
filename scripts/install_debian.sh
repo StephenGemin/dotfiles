@@ -2,11 +2,11 @@
 
 #
 # Usage:
-#   ./install_debian.sh <shell_name> <python_version>
+#   ./install_debian.sh <shell_name> <python_version> <brews> [pipx_package ...]
 #
 # Examples:
-#   ./install_debian.sh zsh 3.10
-#   ./install_debian.sh bash 3.8
+#   ./install_debian.sh zsh 3.10 "fzf ripgrep" virtualenv poetry
+#   ./install_debian.sh bash 3.8 "fzf"
 #
 
 set -eu  # -e: exit on error; -u exit on unset variables
@@ -16,10 +16,10 @@ CI="${CI:-false}"
 
 usage() {
   cat <<EOF
-Usage: $0 <shell_name>
+Usage: $0 <shell_name> <python_version> <brews> [pipx_package ...]
 
 Examples:
-  $0 zsh 3.10 "brew1 brew2"
+  $0 zsh 3.10 "brew1 brew2" virtualenv poetry
   $0 bash 3.8 "brew1 brew2 brew3"
 
 Options:
@@ -35,6 +35,8 @@ fi
 DEFAULT_USER_SHELL="$1"
 INSTALL_PYTHON_VERSION="$2"
 BREWS="$3"   # space-separated list passed in quotes
+shift 3
+PIPX_PACKAGES=("$@")   # remaining args, one pipx package each
 
 # shellcheck source=scripts/logging.sh
 source "$(dirname "${BASH_SOURCE[0]}")/logging.sh"
@@ -108,8 +110,6 @@ snaps=(
     "vlc"
     # "firefox"
 )
-
-pipxs=("virtualenv" "poetry" "pip-tools" "glances[all]")
 
 command_exists() {
     if type "$1" >/dev/null 2>&1; then
@@ -335,10 +335,10 @@ set_default_shell() {
 
 install_pipxs() {
     if [[ "$CI" == "true" ]]; then
-        log_info "[CI] Would pipx install: ${pipxs[*]}"
+        log_info "[CI] Would pipx install: ${PIPX_PACKAGES[*]}"
         return
     fi
-    for pkg in "${pipxs[@]}"; do
+    for pkg in "${PIPX_PACKAGES[@]}"; do
         log_task "Install pipx package: $pkg"
         pipx install --python="$(which python)" "$pkg"
     done

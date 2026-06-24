@@ -5,5 +5,5 @@
 # {{ include $install_script | sha256sum }}
 
 brews="{{ join " " .packages.debian.brews }}"
-source {{ $install_script }} {{ .user.software.default_shell }} {{ .user.software.python_version }} "$brews"
+source {{ $install_script }} {{ .user.software.default_shell }} {{ .user.software.python_version }} "$brews"{{ range (concat .pipx.common .pipx.debian) }} {{ . | quote }}{{ end }}
 {{ end -}}

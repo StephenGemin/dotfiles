@@ -216,7 +216,7 @@ if (Get-Command scoop -ErrorAction SilentlyContinue) {
         Write-Host "[CI] Would install pipx packages: virtualenv poetry pip-tools black" -ForegroundColor $ColorInfo
     }
     else {
-        pipx install virtualenv poetry pip-tools black
+        pipx install {{ concat .pipx.common .pipx.windows | join " " }}
     }
     $count++
 }
