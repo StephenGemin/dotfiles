@@ -12,6 +12,8 @@
 set -eu  # -e: exit on error; -u exit on unset variables
 set +x   # disable debug mode
 
+CI="${CI:-false}"
+
 usage() {
   cat <<EOF
 Usage: $0 <shell_name>
@@ -34,6 +36,7 @@ DEFAULT_USER_SHELL="$1"
 INSTALL_PYTHON_VERSION="$2"
 BREWS="$3"   # space-separated list passed in quotes
 
+# shellcheck source=scripts/logging.sh
 source "$(dirname "${BASH_SOURCE[0]}")/logging.sh"
 
 apts=(
@@ -120,6 +123,10 @@ install_brew() {
     if command_exists brew; then
         return
     fi
+    if [[ "$CI" == "true" ]]; then
+        log_info "[CI] Would install Homebrew"
+        return
+    fi
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 }
 
@@ -127,15 +134,23 @@ install_pyenv() {
     if command_exists pyenv; then
         return
     fi
+    if [[ "$CI" == "true" ]]; then
+        log_info "[CI] Would install pyenv and Python $INSTALL_PYTHON_VERSION"
+        return
+    fi
     curl -sSf https://pyenv.run | bash
     if command_exists pyenv; then
-        pyenv install $INSTALL_PYTHON_VERSION
-        pyenv global $INSTALL_PYTHON_VERSION
+        pyenv install "$INSTALL_PYTHON_VERSION"
+        pyenv global "$INSTALL_PYTHON_VERSION"
     fi
 }
 
 install_rustup() {
     if command_exists rustup; then
+        return
+    fi
+    if [[ "$CI" == "true" ]]; then
+        log_info "[CI] Would install rustup"
         return
     fi
     curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
@@ -145,6 +160,10 @@ install_zoxide() {
     if command_exists zoxide; then
         return
     fi
+    if [[ "$CI" == "true" ]]; then
+        log_info "[CI] Would install zoxide"
+        return
+    fi
     curl -sSf https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | sh
 }
 
@@ -152,11 +171,19 @@ install_jetbrains_nerd_font() {
     if fc-list | grep -q JetBrains; then
         return
     fi
+    if [[ "$CI" == "true" ]]; then
+        log_info "[CI] Would install JetBrains NerdFont"
+        return
+    fi
     curl -fsSL https://raw.githubusercontent.com/JetBrains/JetBrainsMono/master/install_manual.sh | bash
 }
 
 install_oh_my_posh() {
     if command_exists "oh-my-posh"; then
+        return
+    fi
+    if [[ "$CI" == "true" ]]; then
+        log_info "[CI] Would install oh-my-posh"
         return
     fi
     curl -s https://ohmyposh.dev/install.sh | bash -s
@@ -168,9 +195,13 @@ install_git_diff_highlight() {
     fi
     local diff_highlight_path
     diff_highlight_path="$(find /usr -type f -name diff-highlight 2>/dev/null \
-    | grep '/contrib/diff-highlight/diff-highlight$')"
+    | grep '/contrib/diff-highlight/diff-highlight$' || true)"
 
     if [[ -n "$diff_highlight_path" ]]; then
+        if [[ "$CI" == "true" ]]; then
+            log_info "[CI] Would install diff-highlight from $diff_highlight_path"
+            return
+        fi
         sudo cp "$diff_highlight_path" /usr/local/bin/diff-highlight
         sudo chmod +x /usr/local/bin/diff-highlight
         echo "Installed diff-highlight to /usr/local/bin/"
@@ -192,6 +223,10 @@ install_standalone_tools() {
 
 install_apts() {
     log_task "Updating package list and installing APT packages..."
+    if [[ "$CI" == "true" ]]; then
+        log_info "[CI] Would apt install: ${apts[*]}"
+        return
+    fi
     sudo apt update
     for pkg in "${apts[@]}"; do
         log_task "Install apt package: $pkg"
@@ -201,6 +236,10 @@ install_apts() {
 
 install_cargos() {
     log_task "Installing tools using Cargo..."
+    if [[ "$CI" == "true" ]]; then
+        log_info "[CI] Would cargo install: ${cargos[*]}"
+        return
+    fi
     for pkg in "${cargos[@]}"; do
         log_task "Install cargo package: $pkg"
         cargo install "$pkg"
@@ -209,8 +248,13 @@ install_cargos() {
 
 install_snaps() {
     log_task "Installing Snap packages..."
+    if [[ "$CI" == "true" ]]; then
+        log_info "[CI] Would snap install: ${snaps[*]}"
+        return
+    fi
     for pkg in "${snaps[@]}"; do
         log_task "Install snap package: $pkg"
+        # shellcheck disable=SC2086  # intentional: $pkg contains flags (e.g. "nvim --beta --classic")
         sudo snap install $pkg
     done
     sudo update-desktop-database /var/lib/snapd/desktop/applications
@@ -218,14 +262,23 @@ install_snaps() {
 
 install_brews() {
     log_task "Installing Brew packages..."
+    if [[ "$CI" == "true" ]]; then
+        log_info "[CI] Would brew install: ${BREWS:-<none>}"
+        return
+    fi
     for pkg in "${BREWS[@]}"; do
         log_task "Install brew package: $pkg"
+        # shellcheck disable=SC2086  # intentional: $pkg may contain extra args
         brew install $pkg
     done
 }
 
 install_jetbrains_toolbox() {
-    if ls /opt | grep -q "jetbrains-toolbox"; then
+    if compgen -G "/opt/jetbrains-toolbox*" > /dev/null 2>&1; then
+        return
+    fi
+    if [[ "$CI" == "true" ]]; then
+        log_info "[CI] Would install JetBrains Toolbox"
         return
     fi
     file="jetbrains-toolbox-2.5.2.35332"
@@ -238,11 +291,19 @@ wezterm_prereqs() {
     if command_exists "wezterm"; then
         return
     fi
+    if [[ "$CI" == "true" ]]; then
+        log_info "[CI] Would configure WezTerm apt source"
+        return
+    fi
     curl -fsSL https://apt.fury.io/wez/gpg.key | sudo gpg --yes --dearmor -o /etc/apt/keyrings/wezterm-fury.gpg
     echo 'deb [signed-by=/etc/apt/keyrings/wezterm-fury.gpg] https://apt.fury.io/wez/ * *' | sudo tee /etc/apt/sources.list.d/wezterm.list
 }
 
 set_system_key_bindings() {
+    if [[ "$CI" == "true" ]]; then
+        log_info "[CI] Would configure GNOME key bindings"
+        return
+    fi
     gsettings set org.gnome.settings-daemon.plugins.media-keys terminal "['<Super>t']"
     gsettings set org.gnome.desktop.default-applications.terminal exec-arg ''
     gsettings set org.gnome.desktop.default-applications.terminal exec 'wezterm'
@@ -263,20 +324,32 @@ set_system_key_bindings() {
 }
 
 set_default_shell() {
-    set_shell="$(which $DEFAULT_USER_SHELL)"
-    chsh -s $set_shell
+    if [[ "$CI" == "true" ]]; then
+        log_info "[CI] Would set default shell to: $DEFAULT_USER_SHELL"
+        return
+    fi
+    set_shell="$(which "$DEFAULT_USER_SHELL")"
+    chsh -s "$set_shell"
     log_info "Set default shell to $set_shell"
 }
 
 install_pipxs() {
+    if [[ "$CI" == "true" ]]; then
+        log_info "[CI] Would pipx install: ${pipxs[*]}"
+        return
+    fi
     for pkg in "${pipxs[@]}"; do
         log_task "Install pipx package: $pkg"
-        pipx install --python=$(which python) "$pkg"
+        pipx install --python="$(which python)" "$pkg"
     done
 }
 
 add_flathub_repo() {
     log_task "Add flathub repo"
+    if [[ "$CI" == "true" ]]; then
+        log_info "[CI] Would add Flathub remote"
+        return
+    fi
     flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 }
 
