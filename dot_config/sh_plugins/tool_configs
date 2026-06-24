@@ -17,7 +17,7 @@ else
 fi
 
 # Navigates to neovim's profile location.
-if [ "$isWindows" = 1 ]; then
+if [[ "$isWindows" = 1 ]]; then
     alias nvimconf='cd $env:APPDATA/nvim'
 else
     alias nvimconf='cd $HOME/.config/nvim'
