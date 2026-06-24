@@ -335,7 +335,7 @@ set_default_shell() {
 
 install_pipxs() {
     if [[ "$CI" == "true" ]]; then
-        log_info "[CI] Would pipx install: ${pipxs[*]}"
+        log_info "[CI] Would pipx install: ${PIPX_PACKAGES[*]}"
         return
     fi
     for pkg in "${PIPX_PACKAGES[@]}"; do
