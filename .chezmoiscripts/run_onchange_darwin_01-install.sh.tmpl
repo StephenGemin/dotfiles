@@ -2,12 +2,11 @@
 #!/bin/bash
 
 # https://www.chezmoi.io/user-guide/use-scripts-to-perform-actions/#run-a-script-when-the-contents-of-another-file-changes
-# The idea here is that changes to the winget_packages.json allows this onchange script to run since it's contents have changed.
-# Refer to dot_config/winget_packages.json.tmpl
-# {{ $install_brews := (joinPath .chezmoi.homeDir ".local" "share" ".chezmoidata" "brew.yaml") }}
-# {{ if stat $install_brews }}
-# {{ include $install_brews | sha256sum }}
-# {{ end }}
+# Re-run this script whenever the Homebrew package list changes. The brews and
+# casks below are rendered from .chezmoidata/brew.yaml, so embedding that file's
+# hash here triggers a re-run when it is edited.
+{{ $brew_data := joinPath .chezmoi.sourceDir ".chezmoidata" "brew.yaml" -}}
+# {{ include $brew_data | sha256sum }}
 
 set -eu  # -e: exit on error; -u exit on unset variables
 set +x   # disable debug mode
