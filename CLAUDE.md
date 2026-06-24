@@ -16,7 +16,7 @@ propose a short summary of the edits and wait for confirmation before touching a
 
 Files to keep in sync when behavior changes:
 - `README.md` — update install steps, the per-OS support tables (✅/❓/🚫), and the
-  "Project State" / "Project goals" sections when supported platforms, tools, or the
+  "Project State" / "Highlights" sections when supported platforms, tools, or the
   install flow change.
 - `AGENTS.md` `## Project structure` — update when the directory layout changes.
 - `AGENTS.md` template-data and naming sections — update if the `.chezmoidata` keys,
