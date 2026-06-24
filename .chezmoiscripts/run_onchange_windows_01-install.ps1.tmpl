@@ -152,15 +152,11 @@ if (-not (Get-Command scoop -ErrorAction SilentlyContinue)) {
     $count++
 }
 
-if (-not (Get-Command scoop -ErrorAction SilentlyContinue)) {
-    Write-Host "Installing pipx"
-    scoop install pipx
-    pipx ensurepath
-
-    if ($PSVersionTable.PSEdition -eq 'Desktop') {
-        powershell.exe
-    } else {
-        pwsh
+if (Get-Command scoop -ErrorAction SilentlyContinue) {
+    if (-not (Get-Command pipx -ErrorAction SilentlyContinue)) {
+        Write-Host "Installing pipx"
+        scoop install pipx
+        pipx ensurepath
     }
 
     Write-Host "Install packages with pipx"

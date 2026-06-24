@@ -33,7 +33,7 @@ My computer setup and dotfiles, managed with [chezmoi](https://www.chezmoi.io/)
 ### Debian
 ```shell
 cd ~
-curl -sfL https://git.io/chezmoi | sh
+sh -c "$(curl -fsLS get.chezmoi.io)"
 export PATH="$PATH:$HOME/bin"
 export GITHUB_USERNAME="StephenGemin"
 chezmoi init --apply -v https://github.com/$GITHUB_USERNAME/dotfiles.git
