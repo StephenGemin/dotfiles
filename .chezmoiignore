@@ -10,6 +10,8 @@
 *.gz
 LICENSE
 README.md
+AGENTS.md
+CLAUDE.md
 .editorconfig
 .gitattributes
 scripts/
