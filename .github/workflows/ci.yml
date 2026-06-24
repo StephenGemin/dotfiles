@@ -94,3 +94,127 @@ jobs:
 
       - name: "[Upgrade] Verify no drift after re-apply"
         run: chezmoi verify --source "$GITHUB_WORKSPACE" --exclude externals
+
+  install-windows:
+    name: Install check / Windows
+    runs-on: windows-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install chezmoi
+        shell: pwsh
+        run: choco install chezmoi -y --no-progress
+
+      - name: Configure chezmoi
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force -Path "$HOME/.config/chezmoi" | Out-Null
+          @'
+          [data]
+          email = "ci@example.com"
+          name = "CI Test"
+          install_host = "home"
+          wingit_install_dir = "C:/Program Files/Git"
+          osid = "windows"
+          '@ | Set-Content -Path "$HOME/.config/chezmoi/chezmoi.toml"
+
+      # Files only: the PowerShell install/copy scripts are not CI-guarded and
+      # would try to install real packages, so exclude scripts and externals.
+      - name: "[Fresh install] Apply dotfiles (files only)"
+        shell: pwsh
+        run: chezmoi apply --source "$env:GITHUB_WORKSPACE" --exclude externals,scripts --verbose
+
+      - name: "[Fresh install] Verify no drift"
+        shell: pwsh
+        run: chezmoi verify --source "$env:GITHUB_WORKSPACE" --exclude externals,scripts
+
+      - name: "[Upgrade] Re-apply dotfiles"
+        shell: pwsh
+        run: chezmoi apply --source "$env:GITHUB_WORKSPACE" --exclude externals,scripts
+
+      - name: "[Upgrade] Verify no drift after re-apply"
+        shell: pwsh
+        run: chezmoi verify --source "$env:GITHUB_WORKSPACE" --exclude externals,scripts
+
+  lint-powershell:
+    name: Lint / PowerShell
+    runs-on: windows-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install chezmoi
+        shell: pwsh
+        run: choco install chezmoi -y --no-progress
+
+      - name: Install PSScriptAnalyzer
+        shell: pwsh
+        run: Install-Module -Name PSScriptAnalyzer -Force -Scope CurrentUser -Repository PSGallery
+
+      - name: Configure chezmoi
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force -Path "$HOME/.config/chezmoi" | Out-Null
+          @'
+          [data]
+          email = "ci@example.com"
+          name = "CI Test"
+          install_host = "home"
+          wingit_install_dir = "C:/Program Files/Git"
+          osid = "windows"
+          '@ | Set-Content -Path "$HOME/.config/chezmoi/chezmoi.toml"
+
+      # The *.ps1.tmpl scripts contain Go template syntax, so render them with
+      # chezmoi first, then analyze the resulting PowerShell.
+      - name: Render PowerShell script templates
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force -Path rendered | Out-Null
+          Get-ChildItem -Path .chezmoiscripts -Filter *.ps1.tmpl | ForEach-Object {
+            $out = Join-Path 'rendered' $_.BaseName  # strips trailing .tmpl
+            Get-Content -Raw $_.FullName |
+              chezmoi execute-template --source "$env:GITHUB_WORKSPACE" |
+              Set-Content -Path $out
+            Write-Host "Rendered $($_.Name) -> $out"
+          }
+
+      - name: Run PSScriptAnalyzer
+        shell: pwsh
+        run: |
+          $results = Invoke-ScriptAnalyzer -Path rendered -Recurse -Severity Error,Warning
+          $results | Format-Table -AutoSize
+          if ($results | Where-Object { $_.Severity -eq 'ParseError' -or $_.Severity -eq 'Error' }) {
+            Write-Error "PSScriptAnalyzer reported errors"
+            exit 1
+          }
+
+  validate-externals:
+    name: Validate externals
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install chezmoi
+        run: |
+          sh -c "$(curl -fsLS get.chezmoi.io)" -- -b "$HOME/.local/bin"
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+
+      - name: Configure chezmoi
+        run: |
+          mkdir -p "$HOME/.config/chezmoi"
+          cat > "$HOME/.config/chezmoi/chezmoi.toml" << 'EOF'
+          [data]
+          email = "ci@example.com"
+          name = "CI Test"
+          install_host = "home"
+          wingit_install_dir = ""
+          osid = "linux-ubuntu"
+          EOF
+
+      # Unlike the install jobs above, this does NOT exclude externals: it
+      # actually fetches them so a dead URL or a malformed .chezmoiexternal.toml
+      # fails loudly instead of staying invisible.
+      - name: Fetch externals (surfaces dead URLs)
+        run: chezmoi apply --dry-run --source "$GITHUB_WORKSPACE" --include externals --verbose
