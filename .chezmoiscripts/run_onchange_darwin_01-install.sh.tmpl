@@ -11,7 +11,11 @@
 set -eu  # -e: exit on error; -u exit on unset variables
 set +x   # disable debug mode
 
-pipxs=("virtualenv" "poetry" "pip-tools" "black" "ruff")
+pipxs=(
+{{- range (concat .pipx.common .pipx.darwin) }}
+    {{ . | quote }}
+{{- end }}
+)
 
 
 command_exists() {
