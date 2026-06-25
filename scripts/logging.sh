@@ -4,7 +4,7 @@ log_color() {
   color_code="$1"
   shift
 
-  printf "\033[${color_code}m%s\033[0m\n" "$*" >&2
+  printf '\033[%sm%s\033[0m\n' "$color_code" "$*" >&2
 }
 
 log_red() {

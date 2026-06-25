@@ -27,14 +27,14 @@ Options:
 EOF
 }
 
-if [[ "$1" == "-h" || "$1" == "--help" ]]; then
+if [[ "${1:-}" == "-h" || "${1:-}" == "--help" ]]; then
   usage
   exit 0
 fi
 
 DEFAULT_USER_SHELL="$1"
 INSTALL_PYTHON_VERSION="$2"
-BREWS="$3"   # space-separated list passed in quotes
+read -ra BREWS <<< "$3"   # space-separated list passed in quotes -> array
 shift 3
 PIPX_PACKAGES=("$@")   # remaining args, one pipx package each
 
@@ -263,7 +263,7 @@ install_snaps() {
 install_brews() {
     log_task "Installing Brew packages..."
     if [[ "$CI" == "true" ]]; then
-        log_info "[CI] Would brew install: ${BREWS:-<none>}"
+        log_info "[CI] Would brew install: ${BREWS[*]:-<none>}"
         return
     fi
     for pkg in "${BREWS[@]}"; do
