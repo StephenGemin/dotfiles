@@ -51,10 +51,10 @@ function git_main_branch {
 }
 
 # my most used commands
-function gac { git add --all; git commit --verbose }
-function gacp { git add -p; git commit --verbose }
-function gacnv { git add --all; git commit --verbose --no-verify }
-function gac! { git add --all; git commit --verbose --amend }
+function gac { git add --all; git commit --verbose @args }
+function gacp { git add -p; git commit --verbose @args }
+function gacnv { git add --all; git commit --verbose --no-verify @args }
+function gac! { git add --all; git commit --verbose --amend @args }
 function gacfx { param([string]$1); git add --all; git commit --verbose --fixup $1 }
 function grbo { param([string]$1); git rebase --interactive origin/$1 }
 function gacpo! {
@@ -66,17 +66,17 @@ function gacpo! {
     }
 }
 function gacnvpo! { git add --all; git commit --amend --no-verify; git push origin --force-with-lease --set-upstream $(git_current_branch) }
-function gds { git diff --stat }
+function gds { git diff --stat @args }
 function gl { param([int]$1=15); git log --oneline --graph -$1 }
 function gwip { git add --all; git commit -v --no-verify -m "[skip ci] WIP" }
 
 function g { git @args }
-function ga { git add --all }
+function ga { git add --all @args }
 function gaa { git add @args }  # git add any
-function gap { git add -p }  # interactive add
+function gap { git add -p @args }  # interactive add
 
 function gb { git branch @args }
-function gbr { git branch -r }
+function gbr { git branch -r @args }
 function gco {git checkout @args }
 function gcob { git checkout -b @args }
 function gcoB {git checkout -B @args }
@@ -88,33 +88,33 @@ function gcpa { git cherry-pick --abort }
 function gacpc { git add --all; git cherry-pick --continue }
 
 function gc { git commit --verbose @args }
-function gc! { git commit --verbose --amend }
+function gc! { git commit --verbose --amend @args }
 function gcfx { param([string]$1); git commit --verbose --fixup $1 }
 function gcnvfx { param([string]$1); git commit --verbose --no-verify --fixup $1 }
 
-function gd { git diff }
-function gs { git status }
-function gsh { git show }
+function gd { git diff @args }
+function gs { git status @args }
+function gsh { git show @args }
 function glastsha { git log -1 --pretty="%H" }
-function grl { git reflog }
+function grl { git reflog @args }
 
-function gf { git fetch -v }
-function gfo { git fetch origin -v }
-function gfu { git fetch upstream -v }
-function gpl { git pull -v }
-function gpl! { git pull --rebase -v }
+function gf { git fetch -v @args }
+function gfo { git fetch origin -v @args }
+function gfu { git fetch upstream -v @args }
+function gpl { git pull -v @args }
+function gpl! { git pull --rebase -v @args }
 
 # aliases are set to gg because gp is a protected alias in powershell (Windows)
 function gg { git push -v @args }
 function ggo { git push -v origin @args }
-function ggo! { git push -v origin --force }
-function ggof { git push -v origin --force-with-lease }
-function ggu { git push -v upstream }
+function ggo! { git push -v origin --force @args }
+function ggof { git push -v origin --force-with-lease @args }
+function ggu { git push -v upstream @args }
 
 function gm { git merge @args }
 function gma { git merge --abort }
-function gms { git merge --squash }
-function gmff { git merge --ff-only }
+function gms { git merge --squash @args }
+function gmff { git merge --ff-only @args }
 function gmom { git merge origin/$(git_main_branch) }
 function gmum { git merge upstream/$(git_main_branch) }
 function gmod { git merge origin/$(git_develop_branch) }
@@ -132,7 +132,7 @@ function grsh { param ([int]$num = 1); git reset HEAD~$num @args }
 function gclean! { git clean -fdx }
 
 function gsts { git stash push -u @args }
-function gstsp { git stash push -p }
+function gstsp { git stash push -p @args }
 function gsta { git stash apply @args }
 function gstc { git stash clear }
 function gstl { git stash list }
