@@ -93,6 +93,10 @@ bind.keys = {
   { key = 'Tab', mods = 'CTRL', action = act.ActivateTabRelative(1) },
   { key = 'Tab', mods = 'CTRL|SHIFT', action = act.ActivateTabRelative(-1) },
 
+  -- tabs: move/reorder the current tab left/right
+  { key = 'PageUp', mods = 'CTRL|SHIFT', action = act.MoveTabRelative(-1) },
+  { key = 'PageDown', mods = 'CTRL|SHIFT', action = act.MoveTabRelative(1) },
+
   -- panes
   { key = 'w', mods = 'CTRL|SHIFT', action = act.CloseCurrentPane({ confirm = false }) },
   { key = 'Enter', mods = mod.SUPER, action = act.TogglePaneZoomState },
