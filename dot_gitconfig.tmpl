@@ -43,6 +43,9 @@
     ui = auto
 [commit]
     template = ~/.config/git/commit_message_template
+    # Show the diff being committed in the commit message editor. This makes the
+    # explicit `--verbose` flag in the shell/pwsh commit aliases unnecessary.
+    verbose = true
 [core]
     autocrlf = {{ if eq .osid "windows" }}true{{ else }}input{{ end }}
     editor = nvim
@@ -54,6 +57,9 @@
 
     # Set comment character to something that allows mentioning issue numbers.
     commentChar = ";"
+[diff]
+    # The histogram algorithm produces more readable diffs than the default.
+    algorithm = histogram
 [fetch]
     # Remove any remote-tracking references that no longer exist on the remote.
     prune = true
@@ -63,30 +69,38 @@
     process = git-lfs filter-process
     required = true
 [help]
-    # Correct and execute mistyped commands.
-    autocorrect = 1
+    # Suggest the corrected command and prompt before running it.
+    autocorrect = prompt
 [include]
     path = ~/.config/git/config_local  # include local configuration (optional)
 [init]
     defaultBranch = main
 [interactive]
-	diffFilter = diff-highlight
+    diffFilter = diff-highlight
 [merge]
     # Include summaries of merged commits in newly created merge commit messages.
     log = true
+    # Show the common ancestor alongside both sides in conflict markers.
+    conflictStyle = zdiff3
 [mergetool]
     # Avoid saving an `.orig` backup file after a merge.
     keepBackup = false
 {{ if ne .osid "windows" -}}
 [pager]
-	log = diff-highlight | less
-	show = diff-highlight | less
-	diff = diff-highlight | less
+    log = diff-highlight | less
+    show = diff-highlight | less
+    diff = diff-highlight | less
 {{- end }}
 [push]
     autoSetupRemote = true
     default = current
 [rebase]
     autosquash = true
+    # Stash dirty changes before rebasing and reapply them afterwards.
+    autoStash = true
 [rerere]
     enabled = true
+    # Stage the replayed conflict resolution automatically.
+    autoUpdate = true
+[tag]
+    sort = version:refname
