@@ -20,7 +20,7 @@ touch, so a fresh laptop is one command away from feeling like home.
   repo — no WSL, no per-machine forks — giving one unified set of apps, tools, and aliases everywhere.
 - **Idempotent & convention-driven.** Built on chezmoi templates, `.chezmoidata`, and
   `run_onchange_` scripts; `chezmoi apply` is safe to run twice and CI verifies there's no drift.
-- **A stack you'll recognize.** WezTerm/Alacritty, oh-my-posh, Neovim (NVChad), fzf, ripgrep,
+- **A cohesive terminal stack.** WezTerm, oh-my-posh, Neovim (NVChad), fzf, ripgrep,
   zoxide, and a `pyenv` + `uv` + `ruff` Python toolchain.
 - **Home *and* work aware.** An `install_host = home | work` prompt at init time switches package
   sets and config from the same source.
@@ -144,10 +144,7 @@ Manual setup steps for individual tools / apps:
 |  | **Deb** | **Win** | **Mac** |
 |---|---|---|---|
 | [WezTerm](https://wezfurlong.org/wezterm/) | ✅ | ✅ | ✅ |
-| [Alacritty](https://github.com/alacritty/alacritty)* | ✅ | ✅ | ❓ |
 | [Windows Terminal](https://github.com/microsoft/terminal) | 🚫 | ✅ | 🚫 |
-
-*No tmux yet for Alacritty.
 
 ### Shells
 
@@ -219,7 +216,7 @@ ShareX, Tesseract OCR, DB Browser for SQLite) live in the data files linked unde
   - Modify `C:\msys64\etc\nsswitch.conf` (see below)
 - Initial attempt to use zsh did not go well:
   - terminal was very sluggish
-  - tried in Alacritty, MSYS2, MSYS (Git Bash) and Windows Terminal
+  - tried in MSYS2, MSYS (Git Bash) and Windows Terminal
   - issues accessing Windows tooling
   - difficult working with Windows paths
   - **Decided to use PowerShell on Windows**

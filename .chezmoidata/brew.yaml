@@ -26,7 +26,6 @@ packages:
     - 'font-jetbrains-mono'
     - 'firefox'
     - 'wezterm'
-    - 'alacritty'
     - 'double-commander'
     - 'keepassxc'
     - 'opera'
