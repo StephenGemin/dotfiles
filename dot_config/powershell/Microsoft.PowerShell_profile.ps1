@@ -27,11 +27,10 @@ $env:ZOXIDE_KEY = "s"
 # Aliases
 # -----------------------------------------------------------------------------
 # Remove built-in powershell aliases that conflict with my aliases.
-# PowerShell resolves aliases before functions, so a built-in alias (e.g. gm ->
-# Get-Member) would shadow the matching git function unless removed here.
+# PowerShell resolves aliases before functions, so a built-in alias (e.g. gc ->
+# Get-Content) would shadow the matching git function unless removed here.
 Remove-Item alias:\gc -Force
 Remove-Item alias:\gl -Force
-Remove-Item alias:\gm -Force
 
 # Use "d" to be consistent with my zsh setup on Windows see .zshrc
 # due to alias conflict between zinit and zoxide for zsh on Windows

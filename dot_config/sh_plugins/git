@@ -110,7 +110,6 @@ alias ggo!='git push -v origin --force'
 alias ggof='git push -v origin --force-with-lease'
 alias ggu='git push -v upstream'
 
-alias gm='git merge'
 alias gma='git merge --abort'
 alias gms="git merge --squash"
 alias gmff="git merge --ff-only"
@@ -128,7 +127,7 @@ alias grbum='git rebase --interactive upstream/$(git_main_branch)'
 
 alias grs='git reset'
 function grsh() { if [ -z "$1" ]; then git reset HEAD~1; else git reset HEAD~"$1"; fi; }
-alias grhh='git reset --hard'
+alias grh!='git reset --hard'
 alias gclean!='git clean -fdx'
 
 alias gsts='git stash push -u'

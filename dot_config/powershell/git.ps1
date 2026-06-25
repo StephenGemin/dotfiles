@@ -89,7 +89,9 @@ function gbd { git branch -d @args }
 # collide with gbd. Force-delete a branch with `gb -D <branch>` instead.
 function gco {git checkout @args }
 function gcob { git checkout -b @args }
-function gcoB {git checkout -B @args }
+# No gcoB twin: PowerShell command names are case-insensitive, so it would
+# collide with gcob. `-b` is the safe option (fails if the branch already
+# exists); force-create/reset a branch with `gco -B <branch>` instead.
 function gcod { git checkout $(git_develop_branch) }
 function gcom { git checkout $(git_main_branch) }
 
@@ -121,7 +123,6 @@ function ggo! { git push -v origin --force @args }
 function ggof { git push -v origin --force-with-lease @args }
 function ggu { git push -v upstream @args }
 
-function gm { git merge @args }
 function gma { git merge --abort }
 function gms { git merge --squash @args }
 function gmff { git merge --ff-only @args }
@@ -139,7 +140,7 @@ function grbum { git rebase --interactive upstream/$(git_main_branch) }
 
 function grs { git reset @args }
 function grsh { param ([int]$num = 1); git reset HEAD~$num @args }
-function grhh { git reset --hard @args }
+function grh! { git reset --hard @args }
 function gclean! { git clean -fdx }
 
 function gsts { git stash push -u @args }
