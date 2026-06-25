@@ -4,6 +4,25 @@
 {{ $install_script:= joinPath .chezmoi.sourceDir "scripts" "install_debian.sh" -}}
 # {{ include $install_script | sha256sum }}
 
+# Package lists rendered from .chezmoidata/debian.yaml. install_debian.sh is
+# sourced below and consumes these arrays from the environment. Because the
+# lists are rendered inline here, editing debian.yaml changes this script's
+# content and re-triggers the run_onchange automatically.
+apts=(
+{{- range .debian.apt }}
+    {{ . | quote }}
+{{- end }}
+)
+cargos=(
+{{- range .debian.cargo }}
+    {{ . | quote }}
+{{- end }}
+)
+snaps=(
+{{- range .debian.snap }}
+    {{ . | quote }}
+{{- end }}
+)
 brews="{{ join " " .packages.debian.brews }}"
 source {{ $install_script }} {{ .user.software.default_shell }} {{ .user.software.python_version }} "$brews"{{ range (concat .pipx.common .pipx.debian) }} {{ . | quote }}{{ end }}
 {{ end -}}

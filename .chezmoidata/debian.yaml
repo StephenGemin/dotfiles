@@ -1,0 +1,75 @@
+# Debian/Ubuntu package lists, single source of truth for the install script.
+# Consumed by .chezmoiscripts/run_onchange_debian_01-install.sh.tmpl, which
+# renders these into bash arrays and sources scripts/install_debian.sh. This
+# mirrors how brews/casks live in brew.yaml and pipx packages in pipx.yaml:
+# package data belongs in .chezmoidata, not hardcoded in the install script.
+#
+# snap/cargo entries may carry flags (e.g. "nvim --beta --classic"); each list
+# item is preserved as a single array element so those flags stay grouped.
+debian:
+  apt:
+  - 'snapd'
+  - 'bash-completion'
+  - 'doublecmd-gtk'
+  - 'exfat-fuse'
+  - 'feh'
+  - 'flatpak'
+  - 'git-extras'
+  - 'gpg'
+  - 'htop'
+  - 'nodejs'
+  - 'npm'
+  - 'zsh'
+  - 'vim'
+  - 'wezterm'
+  - 'xclip'
+  # Alacritty
+  # https://github.com/alacritty/alacritty/blob/master/INSTALL.md#debianubuntu
+  - 'cmake'
+  - 'g++'
+  - 'pkg-config'
+  - 'libfreetype6-dev'
+  - 'libfontconfig1-dev'
+  - 'libxcb-xfixes0-dev'
+  - 'libxkbcommon-dev'
+  # Python (refer to pyenv docs)
+  # https://github.com/pyenv/pyenv/wiki#suggested-build-environment
+  - 'build-essential'
+  - 'libssl-dev'
+  - 'zlib1g-dev'
+  - 'libbz2-dev'
+  - 'libreadline-dev'
+  - 'libsqlite3-dev'
+  - 'libncursesw5-dev'
+  - 'xz-utils'
+  - 'tk-dev'
+  - 'libxml2-dev'
+  - 'libxmlsec1-dev'
+  - 'libffi-dev'
+  - 'liblzma-dev'
+  # JetBrains Toolbox
+  # https://dev.to/janetmutua/installing-jetbrains-toolbox-on-ubuntu-527f
+  - 'libfuse2'
+  - 'redshift'
+  - 'redshift-gtk'
+  # flashing ZSA voyager
+  - 'libwebkit2gtk-4.1-0'
+  - 'libgtk-3-0'
+  - 'libusb-1.0-0'
+  cargo:
+  - 'ripgrep'
+  snap:
+  - 'alacritty'
+  - 'chromium'
+  # nvim version through apt-get is ~2 years old, so use snap
+  # https://stackoverflow.com/questions/78585138/visual-studio-code-crashes-on-ubuntu-22-04-4-lts-errorprocess-memory-range-cc7
+  # TODO: upgrade at a later date if crashing stops; tried 170, 175 179(latest)
+  - '--revision 159 --classic code'
+  - 'opera'
+  - 'keepassxc'
+  - 'notion-snap-reborn'
+  - 'nvim --beta --classic'
+  - 'spotify'
+  - 'whatsapp-app'
+  - 'vlc'
+  # - 'firefox'
