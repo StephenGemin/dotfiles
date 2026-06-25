@@ -14,6 +14,7 @@ AGENTS.md
 CLAUDE.md
 .editorconfig
 .gitattributes
+.claude/
 scripts/
 
 # Ignore non-macOS files.

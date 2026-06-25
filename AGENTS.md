@@ -33,6 +33,9 @@ dot_config/              -> ~/.config (wezterm, git, powershell, sh_plugins, ...
 dot_local/               -> ~/.local
 AppData/                 Windows-only target paths (Roaming/...), gated in .chezmoiignore
 .github/workflows/ci.yml shellcheck + chezmoi apply/verify on Linux & macOS
+.claude/                 project-level Claude Code config (not applied to $HOME)
+  agents/                subagent definitions (dotfiles-coder)
+  commands/              slash commands (plan, code, review, docs)
 README.md                user-facing install + tooling docs
 ```
 
