@@ -29,7 +29,7 @@ scripts/                 real, shellcheck-linted bash invoked by the run scripts
   install_debian.sh      Debian package/tool install (apt/snap/cargo/brew/pipx)
   logging.sh             log_* / error / success helpers, sourced by other scripts
 dot_*                    files applied to $HOME (dot_bashrc -> ~/.bashrc, etc.)
-dot_config/              -> ~/.config (alacritty, wezterm, git, powershell, sh_plugins, ...)
+dot_config/              -> ~/.config (wezterm, git, powershell, sh_plugins, ...)
 dot_local/               -> ~/.local
 AppData/                 Windows-only target paths (Roaming/...), gated in .chezmoiignore
 .github/workflows/ci.yml shellcheck + chezmoi apply/verify on Linux & macOS

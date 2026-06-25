@@ -13,7 +13,6 @@
 				{"PackageIdentifier" : "MSYS2.MSYS2"},
 				{"PackageIdentifier" : "wez.wezterm"},
 				{"PackageIdentifier" : "Microsoft.WindowsTerminal"},
-				{"PackageIdentifier" : "Alacritty.Alacritty"},
 				{"PackageIdentifier" : "Microsoft.PowerShell"},
 				{"PackageIdentifier" : "ShareX.ShareX"},
 				{"PackageIdentifier" : "Vitzo.ClipClip"},

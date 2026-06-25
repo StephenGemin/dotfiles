@@ -29,10 +29,8 @@ scripts/
 .config/powershell
 {{- end }}
 
-# For alacritty config
-{{ if ne .chezmoi.os "windows" }}
+# Ignore Windows-only AppData files on non-Windows.
+{{ if ne .chezmoi.os "windows" -}}
 AppData/
-{{ else }}
-.config/alacritty/alacritty.toml
-{{ end }}
+{{- end }}
 

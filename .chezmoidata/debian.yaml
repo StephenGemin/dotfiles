@@ -23,15 +23,6 @@ debian:
   - 'vim'
   - 'wezterm'
   - 'xclip'
-  # Alacritty
-  # https://github.com/alacritty/alacritty/blob/master/INSTALL.md#debianubuntu
-  - 'cmake'
-  - 'g++'
-  - 'pkg-config'
-  - 'libfreetype6-dev'
-  - 'libfontconfig1-dev'
-  - 'libxcb-xfixes0-dev'
-  - 'libxkbcommon-dev'
   # Python (refer to pyenv docs)
   # https://github.com/pyenv/pyenv/wiki#suggested-build-environment
   - 'build-essential'
@@ -59,7 +50,6 @@ debian:
   cargo:
   - 'ripgrep'
   snap:
-  - 'alacritty'
   - 'chromium'
   # nvim version through apt-get is ~2 years old, so use snap
   # https://stackoverflow.com/questions/78585138/visual-studio-code-crashes-on-ubuntu-22-04-4-lts-errorprocess-memory-range-cc7
