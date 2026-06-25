@@ -178,6 +178,9 @@ function Set-LocationUp3{ Set-LocationUp -Levels 3 }
 function Set-LocationUp4{ Set-LocationUp -Levels 4 }
 function Set-LocationUp5{ Set-LocationUp -Levels 5 }
 
+# Lists directories only (mirrors the Unix `lsd` alias).
+function Get-ChildItemDirectory { Get-ChildItem -Directory @args }
+
 # aliases
 # -----------------------------------------------------------------------------
 
@@ -186,6 +189,8 @@ if (!(Get-Command "ls" -ErrorAction "Ignore")) {
 }
 Set-Alias -Name "l" -Value Get-ChildItemAll -Description "Lists visible files in long format."
 Set-Alias -Name "la" -Value Get-ChildItemAll -Description "Lists all files in long format."
+
+Set-Alias -Name "lsd" -Value Get-ChildItemDirectory -Description "Lists directories only."
 
 Set-Alias -Name "cd-" -Value Set-LocationLast -Description "Goes to last used directory."
 Set-Alias -Name ".." -Value Set-LocationUp -Description "cd up 1 directory."
