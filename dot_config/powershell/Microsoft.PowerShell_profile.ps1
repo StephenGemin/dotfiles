@@ -58,7 +58,9 @@ $LocalPlugins = @(
     "file_navigation.ps1",
     "file_management.ps1",
     "git.ps1",
-    "core.ps1"
+    "core.ps1",
+    "datetime.ps1",
+    "power_management.ps1"
 )
 foreach ($plugin in $LocalPlugins) {
     $PluginPath = Join-Path -Path $ProfilePath -ChildPath "$plugin"
