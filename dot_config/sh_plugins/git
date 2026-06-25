@@ -42,7 +42,9 @@ function git_main_branch() {
   local ref
   for ref in refs/{heads,remotes/{origin,upstream}}/{main,master,trunk,mainline,default,stable}; do
     if command git show-ref -q --verify $ref; then
-      echo ${ref:t}
+      # ${ref##*/} (portable) rather than zsh-only ${ref:t}: this file is
+      # sourced by bash too, where :t is not a valid modifier.
+      echo ${ref##*/}
       return 0
     fi
   done

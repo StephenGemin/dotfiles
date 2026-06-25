@@ -60,8 +60,10 @@ if [[ "$isWindows" = 0 ]]; then
     if [ -f "$HOME/.cargo/env" ]; then
         . "$HOME/.cargo/env"
     fi
-    eval "$(pyenv init -)"
-    eval "$(pyenv virtualenv-init -)"
+    if command -v pyenv > /dev/null; then
+        eval "$(pyenv init -)"
+        eval "$(pyenv virtualenv-init -)"
+    fi
 fi
 
 eval "$(fzf --bash)"
