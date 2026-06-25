@@ -8,6 +8,12 @@
 #   ./install_debian.sh zsh 3.10 "fzf ripgrep" virtualenv poetry
 #   ./install_debian.sh bash 3.8 "fzf"
 #
+# This script is meant to be *sourced* by run_onchange_debian_01-install.sh.tmpl,
+# which renders the apts, cargos and snaps arrays from .chezmoidata/debian.yaml
+# into the environment before sourcing. Run directly, those three lists are
+# empty (no apt/cargo/snap packages installed); the positional args above still
+# drive the shell/python/brews/pipx steps.
+#
 
 set -eu  # -e: exit on error; -u exit on unset variables
 set +x   # disable debug mode
@@ -41,75 +47,12 @@ PIPX_PACKAGES=("$@")   # remaining args, one pipx package each
 # shellcheck source=scripts/logging.sh
 source "$(dirname "${BASH_SOURCE[0]}")/logging.sh"
 
-apts=(
-    "snapd"
-    "bash-completion"
-    "doublecmd-gtk"
-    "exfat-fuse"
-    "feh"
-    "flatpak"
-    "git-extras"
-    "gpg"
-    "htop"
-    "nodejs"
-    "npm"
-    "zsh"
-    "vim"
-    "wezterm"
-    "xclip"
-    # Alacritty
-    # https://github.com/alacritty/alacritty/blob/master/INSTALL.md#debianubuntu
-    "cmake"
-    "g++"
-    "pkg-config"
-    "libfreetype6-dev"
-    "libfontconfig1-dev"
-    "libxcb-xfixes0-dev"
-    "libxkbcommon-dev"
-    # Python (refer to pyenv docs)
-    # https://github.com/pyenv/pyenv/wiki#suggested-build-environment
-    "build-essential"
-    "libssl-dev"
-    "zlib1g-dev"
-    "libbz2-dev"
-    "libreadline-dev"
-    "libsqlite3-dev"
-    "libncursesw5-dev"
-    "xz-utils"
-    "tk-dev"
-    "libxml2-dev"
-    "libxmlsec1-dev"
-    "libffi-dev"
-    "liblzma-dev"
-    # JetBrains Toolbox
-    # https://dev.to/janetmutua/installing-jetbrains-toolbox-on-ubuntu-527f
-    "libfuse2"
-    "redshift"
-    "redshift-gtk"
-    # flashing ZSA voyager
-    "libwebkit2gtk-4.1-0"
-    "libgtk-3-0"
-    "libusb-1.0-0"
-)
-
-cargos=("ripgrep")
-
-snaps=(
-    "alacritty"
-    # nvim version through apt-get is ~2 years old, so use snap
-    "chromium"
-    # https://stackoverflow.com/questions/78585138/visual-studio-code-crashes-on-ubuntu-22-04-4-lts-errorprocess-memory-range-cc7
-    # TODO: upgrade at a later date if crashing stops; tried 170, 175 179(latest)
-    "--revision 159 --classic code"
-    "opera"
-    "keepassxc"
-    "notion-snap-reborn"
-    "nvim --beta --classic"
-    "spotify"
-    "whatsapp-app"
-    "vlc"
-    # "firefox"
-)
+# apts, cargos and snaps are provided by the caller. The
+# run_onchange_debian_01-install.sh.tmpl script renders them from
+# .chezmoidata/debian.yaml and sources this script, so the arrays are already
+# set in the environment. `declare -a` (no assignment) documents the contract
+# and keeps shellcheck happy without clobbering the caller's values.
+declare -a apts cargos snaps
 
 command_exists() {
     if type "$1" >/dev/null 2>&1; then
