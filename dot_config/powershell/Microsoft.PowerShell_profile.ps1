@@ -26,7 +26,9 @@ $env:ZOXIDE_KEY = "s"
 
 # Aliases
 # -----------------------------------------------------------------------------
-# Remove built-in powershell aliases that conflict with my aliases
+# Remove built-in powershell aliases that conflict with my aliases.
+# PowerShell resolves aliases before functions, so a built-in alias (e.g. gc ->
+# Get-Content) would shadow the matching git function unless removed here.
 Remove-Item alias:\gc -Force
 Remove-Item alias:\gl -Force
 
