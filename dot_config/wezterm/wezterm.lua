@@ -48,7 +48,6 @@ config.launch_menu = launch.launch_menu
 
 config.leader = bindings.leader
 config.keys = bindings.keys
-config.key_tables = bindings.key_tables
 config.mouse_bindings = bindings.mouse_bindings
 
 config.automatically_reload_config = true

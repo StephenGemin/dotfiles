@@ -143,9 +143,6 @@ bind.keys = {
   -- panes: jump to a pane by label
   { key = 'p', mods = 'LEADER', action = act.PaneSelect({ alphabet = '1234567890' }) },
 
-  -- panes: modal resize (LEADER r, then n/e/i/o to resize, Esc/Enter to exit)
-  { key = 'r', mods = 'LEADER', action = act.ActivateKeyTable({ name = 'resize_pane', one_shot = false, timeout_milliseconds = 1500 }) },
-
   -- workspaces (tmux-style sessions)
   { key = 's', mods = 'LEADER', action = act.ShowLauncherArgs({ flags = 'FUZZY|WORKSPACES' }) },
   { key = '[', mods = 'LEADER', action = act.SwitchWorkspaceRelative(-1) },
@@ -189,18 +186,6 @@ bind.mouse = {
   }
 }
 
--- modal pane-resize table activated by LEADER r (see keys above)
-bind.key_tables = {
-  resize_pane = {
-    { key = LEFT,  action = act.AdjustPaneSize({ 'Left', 3 }) },
-    { key = DOWN,  action = act.AdjustPaneSize({ 'Down', 3 }) },
-    { key = UP,    action = act.AdjustPaneSize({ 'Up', 3 }) },
-    { key = RIGHT, action = act.AdjustPaneSize({ 'Right', 3 }) },
-    { key = 'Escape', action = 'PopKeyTable' },
-    { key = 'Enter',  action = 'PopKeyTable' },
-  },
-}
-
 -- session save/restore keys, only wired up if the resurrect plugin loaded
 if resurrect_ok then
   table.insert(bind.keys, {
@@ -238,6 +223,5 @@ end
 return {
   leader = bind.leader,
   keys = bind.keys,
-  key_tables = bind.key_tables,
   mouse_bindings = bind.mouse,
 }
