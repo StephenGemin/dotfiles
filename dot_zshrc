@@ -15,7 +15,9 @@ source "${ZINIT_HOME}/zinit.zsh"
 # Add in zsh plugins
 zinit light zsh-users/zsh-syntax-highlighting
 zinit light zsh-users/zsh-completions
+export ZSH_AUTOSUGGEST_USE_ASYNC=true
 zinit light zsh-users/zsh-autosuggestions
+zinit light Aloxaf/fzf-tab
 
 # Add in snippets
 zinit snippet OMZP::command-not-found
@@ -50,16 +52,14 @@ done
 
 # Keybindings
 bindkey -v
-bindkey '^['    history-search-backward
-bindkey '^]'    history-search-forward
+bindkey -M viins '^[[A' history-search-backward  # Up arrow
+bindkey -M viins '^[[B' history-search-forward   # Down arrow
 #bindkey '^[[1;5D' backward-word  # CTRL + Left Arrow
 #bindkey '^[[1;5C' forward-word  # CTRL + Right Arrow
 bindkey '^h' backward-word  # CTRL+ALT+h
 bindkey '^l' forward-word  # CTRL+ALT+l
 
 # History
-export ZSH_AUTOSUGGEST_USE_ASYNC=true
-HISTDUP=erase
 setopt appendhistory
 setopt sharehistory
 setopt hist_ignore_space # useful to stop sensitive information in zsh_history; prefix commands with a space!!
@@ -67,7 +67,6 @@ setopt hist_ignore_all_dups
 setopt hist_save_no_dups
 setopt hist_ignore_dups
 setopt hist_find_no_dups
-setopt histignorealldups
 
 # Aliases
 alias cd="$ZOXIDE_KEY" # map zoxide alias
@@ -94,7 +93,9 @@ if command -v pyenv > /dev/null; then
     eval "$(pyenv virtualenv-init -)"
 fi
 
-source <(fzf --zsh)
+if command -v fzf > /dev/null; then
+    source <(fzf --zsh)
+fi
 
 if [ "$TERM_PROGRAM" != "Apple_Terminal" ]; then
   eval "$(oh-my-posh init zsh --config $XDG_CONFIG_HOME/ohmyposh/zen.toml)"

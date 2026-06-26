@@ -15,9 +15,9 @@ zstyle ':completion:*' cache-path "$XDG_CACHE_HOME/zsh/.zcompcache"
 
 # Complete the alias when _expand_alias is used as a function
 zstyle ':completion:*' menu select
-zle -C alias-expension complete-word _generic
-bindkey '^Xa' alias-expension
-zstyle ':completion:alias-expension:*' completer _expand_alias
+zle -C alias-expansion complete-word _generic
+bindkey '^Xa' alias-expansion
+zstyle ':completion:alias-expansion:*' completer _expand_alias
 
 # Autocomplete options for cd instead of directory stack
 zstyle ':completion:*' complete-options true
