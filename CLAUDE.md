@@ -29,10 +29,11 @@ This repo maintains **two parallel shell configs** for every command-line behavi
 | Aliases / functions | `dot_config/sh_plugins/git` (and other plugin files) | zsh — Linux & macOS |
 | PowerShell equivalents | `dot_config/powershell/git.ps1` (and other `.ps1` files) | pwsh — Windows |
 
-**Whenever you add, remove, or change an alias or function in a `sh_plugins/` file you
-MUST make the equivalent change in the matching `dot_config/powershell/` file, and vice
-versa.** Both files must stay in sync — a feature present in one but missing from the
-other is a bug.
+**Whenever you add, remove, or change an alias or function in a `sh_plugins/` file,
+try to make the equivalent change in the matching `dot_config/powershell/` file, and
+vice versa.** Keep both files as close to in sync as possible — if a true equivalent
+cannot be expressed in the target shell, document why in a comment rather than silently
+omitting it.
 
 Differences that are intentional and do not need syncing:
 - PowerShell cannot have case-differing function names (e.g. `gbD` collides with `gbd`);
