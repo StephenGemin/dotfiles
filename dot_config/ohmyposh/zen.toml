@@ -2,6 +2,8 @@
 console_title_template = '{{ .Shell }} in {{ .Folder }}'
 version = 3
 final_space = true
+# emit OSC 133 FTCS prompt marks so terminals (WezTerm) can jump between prompts
+shell_integration = true
 
 [secondary_prompt]
   template = '❯❯ '

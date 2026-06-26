@@ -100,6 +100,15 @@ if [ "$TERM_PROGRAM" != "Apple_Terminal" ]; then
   eval "$(oh-my-posh init zsh --config $XDG_CONFIG_HOME/ohmyposh/zen.toml)"
 fi
 
+# WezTerm: report the cwd via OSC 7 so new tabs/panes/windows open in the same
+# directory. Self-gated to WezTerm so other terminals are unaffected.
+# (OSC 133 prompt marks come from oh-my-posh's shell_integration setting.)
+if [ "$TERM_PROGRAM" = "WezTerm" ]; then
+    autoload -Uz add-zsh-hook
+    _wezterm_osc7() { printf '\033]7;file://%s%s\033\\' "${HOST}" "${PWD}"; }
+    add-zsh-hook precmd _wezterm_osc7
+fi
+
 # alias/function conflict between zinit and zoxide
 # https://github.com/zdharma-continuum/zinit/discussions/312
 # https://github.com/orgs/z-shell/discussions/145
