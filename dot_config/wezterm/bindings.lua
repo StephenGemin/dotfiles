@@ -1,4 +1,6 @@
 local wezterm = require('wezterm')
+-- resurrect.wezterm (personal fork of an archived repo) lives in sessions.lua
+local sessions = require('sessions')
 
 local act = wezterm.action
 local target_triple = wezterm.target_triple
@@ -10,16 +12,6 @@ if target_triple:find("darwin") then
   mod.SUPER = 'CTRL'
 else
   mod.SUPER = 'CTRL' -- to not conflict with Windows key shortcuts
-end
-
--- Session persistence (save/restore windows, tabs, panes).
--- Upstream resurrect.wezterm is archived but functional; pcall-guard it so a
--- failed plugin fetch (e.g. offline) never breaks the rest of the config.
-local resurrect_ok, resurrect = pcall(wezterm.plugin.require, 'https://github.com/MLFlexer/resurrect.wezterm')
-if resurrect_ok then
-  resurrect.state_manager.periodic_save({ interval_seconds = 900 })
-  -- resume the most recently saved workspace automatically on GUI startup
-  wezterm.on('gui-startup', resurrect.state_manager.resurrect_on_gui_startup)
 end
 
 -- https://github.com/mrjones2014/smart-splits.nvim
@@ -206,51 +198,9 @@ bind.mouse = {
   },
 }
 
--- session save/restore keys, only wired up if the resurrect plugin loaded
-if resurrect_ok then
-  table.insert(bind.keys, {
-    key = 'S',
-    mods = 'LEADER',
-    action = wezterm.action_callback(function(win, pane)
-      resurrect.state_manager.save_state(resurrect.workspace_state.get_workspace_state())
-    end),
-  })
-  table.insert(bind.keys, {
-    key = 'R',
-    mods = 'LEADER',
-    action = wezterm.action_callback(function(win, pane)
-      resurrect.fuzzy_loader.fuzzy_load(win, pane, function(id, label)
-        local state_type = string.match(id, '^([^/]+)')
-        id = string.match(id, '([^/]+)$')
-        id = string.match(id, '(.+)%..+$')
-        local opts = {
-          relative = true,
-          restore_text = true,
-          on_pane_restore = resurrect.tab_state.default_on_pane_restore,
-        }
-        if state_type == 'workspace' then
-          resurrect.workspace_state.restore_workspace(resurrect.state_manager.load_state(id, 'workspace'), opts)
-        elseif state_type == 'window' then
-          resurrect.window_state.restore_window(pane:window(), resurrect.state_manager.load_state(id, 'window'), opts)
-        elseif state_type == 'tab' then
-          resurrect.tab_state.restore_tab(pane:tab(), resurrect.state_manager.load_state(id, 'tab'), opts)
-        end
-      end)
-    end),
-  })
-  table.insert(bind.keys, {
-    key = 'D',
-    mods = 'LEADER',
-    action = wezterm.action_callback(function(win, pane)
-      resurrect.fuzzy_loader.fuzzy_load(win, pane, function(id)
-        resurrect.state_manager.delete_state(id)
-      end, {
-        title = 'Delete a saved session',
-        description = 'Select a session to delete  (Enter = delete, Esc = cancel, / = filter)',
-        is_fuzzy = true,
-      })
-    end),
-  })
+-- merge in the resurrect.wezterm session keys (see sessions.lua)
+for _, key in ipairs(sessions.keys) do
+  table.insert(bind.keys, key)
 end
 
 return {
