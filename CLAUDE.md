@@ -1,7 +1,5 @@
 # dotfiles
 
-@AGENTS.md
-
 ## Reading the repo
 
 Read files based on the `## Project structure` map in AGENTS.md — go straight to the
@@ -9,10 +7,23 @@ relevant file rather than reading the whole repo. Only open additional files whe
 structure map and the files you have already read leave you without enough information.
 Stop reading once you can act. This keeps context small and avoids wasting tokens.
 
+## Agent workflow
+
+Four slash commands cover the standard change lifecycle:
+
+- `/plan <task>` — structured planning: maps files, flags risks, gates conversation-first
+  items. No code written. Use for anything non-trivial.
+- `/code <task>` — invokes the `dotfiles-coder` subagent: implements the change, runs
+  `shellcheck` / `bash -n` / `chezmoi verify`, and self-reviews before finishing.
+- `/review` — standalone review checklist when needed outside the normal pipeline.
+- `/docs` — updates README.md and AGENTS.md directly based on what changed.
+
+Agent files live in `.claude/` (version-controlled, excluded from `chezmoi apply`).
+
 ## Documentation
 
-Never update documentation without explicit approval. When a doc change is warranted,
-propose a short summary of the edits and wait for confirmation before touching any file.
+Use `/docs` after completing a code change — it applies documentation updates directly.
+Outside of `/docs`, do not update documentation without explicit approval.
 
 Files to keep in sync when behavior changes:
 - `README.md` — update install steps, the per-OS support tables (✅/❓/🚫), and the
