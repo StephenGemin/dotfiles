@@ -1,7 +1,5 @@
 # dotfiles
 
-@AGENTS.md
-
 ## Reading the repo
 
 Read files based on the `## Project structure` map in AGENTS.md — go straight to the
