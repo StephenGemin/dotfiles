@@ -51,6 +51,13 @@ M.keys = {
           on_pane_restore = resurrect.tab_state.default_on_pane_restore,
         }
         if state_type == 'workspace' then
+          -- Anchor the restore to the current window, the same way the window and
+          -- tab branches below pass pane:window() / pane:tab(). Without opts.window,
+          -- restore_workspace always takes its spawn-new-window path, and a window
+          -- spawned with no workspace lands in wezterm's "default" workspace -- so
+          -- picking a workspace produced a stray duplicate instead of restoring in
+          -- place. Anchoring restores into the workspace you're already in.
+          opts.window = pane:window()
           resurrect.workspace_state.restore_workspace(resurrect.state_manager.load_state(id, 'workspace'), opts)
         elseif state_type == 'window' then
           resurrect.window_state.restore_window(pane:window(), resurrect.state_manager.load_state(id, 'window'), opts)
