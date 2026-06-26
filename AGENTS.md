@@ -30,6 +30,8 @@ scripts/                 real, shellcheck-linted bash invoked by the run scripts
   logging.sh             log_* / error / success helpers, sourced by other scripts
 dot_*                    files applied to $HOME (dot_bashrc -> ~/.bashrc, etc.)
 dot_config/              -> ~/.config (wezterm, git, powershell, sh_plugins, ...)
+  sh_plugins/            zsh aliases & functions (Linux + macOS) — paired with powershell/
+  powershell/            pwsh equivalents (Windows) — must stay in sync with sh_plugins/
 dot_local/               -> ~/.local
 AppData/                 Windows-only target paths (Roaming/...), gated in .chezmoiignore
 .github/workflows/ci.yml shellcheck + chezmoi apply/verify on Linux & macOS

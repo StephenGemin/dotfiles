@@ -61,8 +61,8 @@ alias gacnv='git add --all && git commit --no-verify'
 alias gac!='git add --all && git commit --amend'
 function gacfx() { git add --all && git commit --fixup $1; }
 function grbo() { git rebase --interactive origin/"$1"; }
-alias gacpo!='git add --all && git commit --amend && git push --force-with-lease origin --set-upstream $(git_current_branch)'
-alias gacnvpo!='git add --all && git commit --amend --no-verify && git push origin --force-with-lease --set-upstream $(git_current_branch)'
+alias gacpo!='git add --all && git commit --amend && git push --force-with-lease origin'
+alias gacnvpo!='git add --all && git commit --amend --no-verify && git push origin --force-with-lease'
 alias gds='git diff --stat'
 function gl() { git log --oneline --graph -"${1:-15}"; }
 alias gwip='git add --all && git commit --no-verify -m "[skip ci] WIP"'
@@ -111,6 +111,7 @@ alias ggof='git push -v origin --force-with-lease'
 alias ggu='git push -v upstream'
 
 alias gma='git merge --abort'
+alias gmc='git merge --continue'
 alias gms="git merge --squash"
 alias gmff="git merge --ff-only"
 alias gmom='git merge origin/$(git_main_branch)'
@@ -127,6 +128,7 @@ alias grbum='git rebase --interactive upstream/$(git_main_branch)'
 
 alias grs='git reset'
 function grsh() { if [ -z "$1" ]; then git reset HEAD~1; else git reset HEAD~"$1"; fi; }
+function grsh!() { if [ -z "$1" ]; then git reset --hard HEAD~1; else git reset --hard HEAD~"$1"; fi; }
 alias grh!='git reset --hard'
 alias gclean!='git clean -fdx'
 

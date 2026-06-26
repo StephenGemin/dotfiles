@@ -20,6 +20,27 @@ Four slash commands cover the standard change lifecycle:
 
 Agent files live in `.claude/` (version-controlled, excluded from `chezmoi apply`).
 
+## Shell parity rule
+
+This repo maintains **two parallel shell configs** for every command-line behaviour:
+
+| Layer | File | Platform |
+|---|---|---|
+| Aliases / functions | `dot_config/sh_plugins/git` (and other plugin files) | zsh — Linux & macOS |
+| PowerShell equivalents | `dot_config/powershell/git.ps1` (and other `.ps1` files) | pwsh — Windows |
+
+**Whenever you add, remove, or change an alias or function in a `sh_plugins/` file,
+try to make the equivalent change in the matching `dot_config/powershell/` file, and
+vice versa.** Keep both files as close to in sync as possible — if a true equivalent
+cannot be expressed in the target shell, document why in a comment rather than silently
+omitting it.
+
+Differences that are intentional and do not need syncing:
+- PowerShell cannot have case-differing function names (e.g. `gbD` collides with `gbd`);
+  document the workaround in a comment instead.
+- Syntax naturally differs (bash `alias` vs PowerShell `function`, `@args`, `param`, etc.)
+  — translate the *behaviour*, not the syntax literally.
+
 ## Documentation
 
 Use `/docs` after completing a code change — it applies documentation updates directly.
