@@ -18,6 +18,8 @@ end
 local resurrect_ok, resurrect = pcall(wezterm.plugin.require, 'https://github.com/MLFlexer/resurrect.wezterm')
 if resurrect_ok then
   resurrect.state_manager.periodic_save({ interval_seconds = 900 })
+  -- resume the most recently saved workspace automatically on GUI startup
+  wezterm.on('gui-startup', resurrect.state_manager.resurrect_on_gui_startup)
 end
 
 -- https://github.com/mrjones2014/smart-splits.nvim
@@ -234,6 +236,19 @@ if resurrect_ok then
           resurrect.tab_state.restore_tab(pane:tab(), resurrect.state_manager.load_state(id, 'tab'), opts)
         end
       end)
+    end),
+  })
+  table.insert(bind.keys, {
+    key = 'D',
+    mods = 'LEADER',
+    action = wezterm.action_callback(function(win, pane)
+      resurrect.fuzzy_loader.fuzzy_load(win, pane, function(id)
+        resurrect.state_manager.delete_state(id)
+      end, {
+        title = 'Delete a saved session',
+        description = 'Select a session to delete  (Enter = delete, Esc = cancel, / = filter)',
+        is_fuzzy = true,
+      })
     end),
   })
 end
