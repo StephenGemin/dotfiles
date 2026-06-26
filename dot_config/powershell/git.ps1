@@ -60,7 +60,7 @@ function grbo { param([string]$1); git rebase --interactive origin/$1 }
 function gacpo! {
     git add --all; git commit --amend
     if ($?) {
-        git push origin --force-with-lease --set-upstream $(git_current_branch)
+        git push origin --force-with-lease
     } else {
         Write-Host "git commit failed" -ForegroundColor Red
     }
@@ -68,7 +68,7 @@ function gacpo! {
 function gacnvpo! {
     git add --all; git commit --amend --no-verify
     if ($?) {
-        git push origin --force-with-lease --set-upstream $(git_current_branch)
+        git push origin --force-with-lease
     } else {
         Write-Host "git commit failed" -ForegroundColor Red
     }
@@ -124,6 +124,7 @@ function ggof { git push -v origin --force-with-lease @args }
 function ggu { git push -v upstream @args }
 
 function gma { git merge --abort }
+function gmc { git merge --continue }
 function gms { git merge --squash @args }
 function gmff { git merge --ff-only @args }
 function gmom { git merge origin/$(git_main_branch) }
@@ -140,6 +141,7 @@ function grbum { git rebase --interactive upstream/$(git_main_branch) }
 
 function grs { git reset @args }
 function grsh { param ([int]$num = 1); git reset HEAD~$num @args }
+function grsh! { param ([int]$num = 1); git reset --hard HEAD~$num }
 function grh! { git reset --hard @args }
 function gclean! { git clean -fdx }
 
