@@ -179,11 +179,29 @@ bind.keys = {
 }
 
 bind.mouse = {
+  -- ctrl+click opens links
   {
     event = { Up = { streak = 1, button = 'Left' } },
     mods = 'CTRL',
     action = act.OpenLinkAtMouseCursor,
-  }
+  },
+  -- auto-copy: releasing a mouse selection copies it to the clipboard
+  -- (drag-select, double-click word, triple-click line)
+  {
+    event = { Up = { streak = 1, button = 'Left' } },
+    mods = 'NONE',
+    action = act.CompleteSelectionOrOpenLinkAtMouseCursor('ClipboardAndPrimarySelection'),
+  },
+  {
+    event = { Up = { streak = 2, button = 'Left' } },
+    mods = 'NONE',
+    action = act.CompleteSelection('ClipboardAndPrimarySelection'),
+  },
+  {
+    event = { Up = { streak = 3, button = 'Left' } },
+    mods = 'NONE',
+    action = act.CompleteSelection('ClipboardAndPrimarySelection'),
+  },
 }
 
 -- session save/restore keys, only wired up if the resurrect plugin loaded
