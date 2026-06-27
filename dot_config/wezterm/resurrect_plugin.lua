@@ -62,6 +62,9 @@ M.keys = {
           on_pane_restore = resurrect.tab_state.default_on_pane_restore,
         }
         if state_type == 'workspace' then
+          -- Anchor the restore to the current window so restore_workspace uses
+          -- the in-place path rather than spawning a new window into "default".
+          opts.window = pane:window()
           resurrect.workspace_state.restore_workspace(resurrect.state_manager.load_state(id, 'workspace'), opts)
         elseif state_type == 'window' then
           resurrect.window_state.restore_window(pane:window(), resurrect.state_manager.load_state(id, 'window'), opts)

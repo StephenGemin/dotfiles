@@ -1,6 +1,5 @@
 local wezterm = require('wezterm')
--- resurrect.wezterm (personal fork of an archived repo) lives in resurrect_wrapper.lua
-local resurrect_plugin = require('resurrect_wrapper')
+local resurrect_plugin = require('resurrect_plugin')
 
 local act = wezterm.action
 local target_triple = wezterm.target_triple

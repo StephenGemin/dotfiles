@@ -1,7 +1,7 @@
 local wezterm = require('wezterm')
 local launch = require('launch')
 local bindings = require('bindings')
-local resurrect_wrapper = require('resurrect_wrapper')
+local resurrect_plugin = require('resurrect_plugin')
 require('ui') -- registers the tab-title and status-bar event handlers
 
 -- Allow working with both the current release and the nightly
@@ -51,7 +51,7 @@ config.leader = bindings.leader
 config.keys = bindings.keys
 config.mouse_bindings = bindings.mouse_bindings
 
-resurrect_wrapper.setup(config)
+resurrect_plugin.setup(config) -- wires up periodic autosave and restore-on-startup
 
 config.automatically_reload_config = true
 config.adjust_window_size_when_changing_font_size = false
