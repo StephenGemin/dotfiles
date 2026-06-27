@@ -1,6 +1,6 @@
 local wezterm = require('wezterm')
--- resurrect.wezterm (personal fork of an archived repo) lives in sessions.lua
-local sessions = require('sessions')
+-- resurrect.wezterm (personal fork of an archived repo) lives in resurrect_wrapper.lua
+local resurrect_plugin = require('resurrect_wrapper')
 
 local act = wezterm.action
 local target_triple = wezterm.target_triple
@@ -198,8 +198,8 @@ bind.mouse = {
   },
 }
 
--- merge in the resurrect.wezterm session keys (see sessions.lua)
-for _, key in ipairs(sessions.keys) do
+-- merge in the resurrect.wezterm session keys (see resurrect.lua)
+for _, key in ipairs(resurrect_plugin.keys) do
   table.insert(bind.keys, key)
 end
 
