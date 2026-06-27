@@ -17,7 +17,9 @@ local wezterm = require('wezterm')
 
 local PLUGIN_URL = 'https://github.com/StephenGemin/resurrect.wezterm'
 
-local M = { keys = {} }
+-- setup is a no-op default so wezterm.lua can always call M.setup(config)
+-- safely even when the plugin fails to load (pcall returns early below).
+local M = { keys = {}, setup = function() end }
 
 local ok, resurrect = pcall(wezterm.plugin.require, PLUGIN_URL)
 if not ok then

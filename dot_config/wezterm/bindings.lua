@@ -169,6 +169,7 @@ bind.keys = {
   { key = 'F3', mods = 'NONE', action = act.ShowLauncher },
   { key = 'F11', mods = 'NONE', action = act.ToggleFullScreen },
   { key = 'F12', mods = 'NONE', action = act.ShowDebugOverlay },
+  { key = 'F5',  mods = 'NONE', action = act.ReloadConfiguration },
   { key = 'f',   mods = mod.SUPER, action = act.Search({ CaseInSensitiveString = '' }) },
 }
 
