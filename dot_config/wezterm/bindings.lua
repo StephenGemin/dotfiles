@@ -108,10 +108,6 @@ bind.keys = {
   { key = "PageUp", mods = '', action = act.ScrollByPage(-1) },
   { key = "PageDown", mods = '', action = act.ScrollByPage(1) },
 
-  -- scrollback: jump between shell prompts (needs OSC 133 shell integration)
-  { key = 'i', mods = 'CTRL|SHIFT', action = act.ScrollToPrompt(-1) },
-  { key = 'e', mods = 'CTRL|SHIFT', action = act.ScrollToPrompt(1) },
-
   -- panes: splitting
   { key = DOWN, mods = 'LEADER', action = act.SplitVertical { domain = 'CurrentPaneDomain' } },
   { key = RIGHT, mods = 'LEADER', action = act.SplitHorizontal { domain = 'CurrentPaneDomain' } },
