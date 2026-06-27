@@ -1,6 +1,8 @@
 local wezterm = require('wezterm')
 local launch = require('launch')
 local bindings = require('bindings')
+local resurrect_plugin = require('resurrect_plugin')
+require('ui') -- registers the tab-title and status-bar event handlers
 
 -- Allow working with both the current release and the nightly
 local config = {}
@@ -32,6 +34,15 @@ config.default_cursor_style = 'BlinkingUnderline'
 config.initial_rows = 50
 config.initial_cols = 140
 config.hide_tab_bar_if_only_one_tab = true
+config.scrollback_lines = 10000
+config.inactive_pane_hsb = { saturation = 0.9, brightness = 0.8 }
+
+-- keep the default link detection and also linkify bare www. hostnames
+config.hyperlink_rules = wezterm.default_hyperlink_rules()
+table.insert(config.hyperlink_rules, {
+  regex = [[\bwww\.[\w.-]+\.[a-z]{2,15}\S*\b]],
+  format = 'https://$0',
+})
 
 config.default_prog = launch.default_prog
 config.launch_menu = launch.launch_menu
@@ -39,6 +50,8 @@ config.launch_menu = launch.launch_menu
 config.leader = bindings.leader
 config.keys = bindings.keys
 config.mouse_bindings = bindings.mouse_bindings
+
+resurrect_plugin.setup(config) -- wires up periodic autosave and restore-on-startup
 
 config.automatically_reload_config = true
 config.adjust_window_size_when_changing_font_size = false

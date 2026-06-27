@@ -1,4 +1,5 @@
 local wezterm = require('wezterm')
+local resurrect_plugin = require('resurrect_plugin')
 
 local act = wezterm.action
 local target_triple = wezterm.target_triple
@@ -74,9 +75,12 @@ bind.keys = {
   -- copy/paste --
   { key = 'c', mods = 'CTRL|SHIFT', action = act.CopyTo('Clipboard') },
   { key = 'v', mods = 'CTRL|SHIFT', action = act.PasteFrom('Clipboard') },
+  -- quick select: keyboard-driven copy of urls, paths, hashes on screen
+  { key = 'Space', mods = 'CTRL|SHIFT', action = act.QuickSelect },
 
   -- tabs
-  { key = 't', mods = 'LEADER', action = act.SpawnTab('DefaultDomain') },
+  -- SpawnTab on CurrentPaneDomain so new tabs inherit the current cwd (OSC 7)
+  { key = 't', mods = 'LEADER', action = act.SpawnTab('CurrentPaneDomain') },
   { key = 'w', mods = mod.SUPER, action = act.CloseCurrentTab({ confirm = false }) },
 
   -- tabs: navigation
@@ -92,6 +96,10 @@ bind.keys = {
 
   { key = 'Tab', mods = 'CTRL', action = act.ActivateTabRelative(1) },
   { key = 'Tab', mods = 'CTRL|SHIFT', action = act.ActivateTabRelative(-1) },
+
+  -- tabs: move/reorder the current tab left/right (Colemak n/o, home row)
+  { key = 'n', mods = 'CTRL|SHIFT', action = act.MoveTabRelative(-1) },
+  { key = 'o', mods = 'CTRL|SHIFT', action = act.MoveTabRelative(1) },
 
   -- panes
   { key = 'w', mods = 'CTRL|SHIFT', action = act.CloseCurrentPane({ confirm = false }) },
@@ -115,10 +123,33 @@ bind.keys = {
   split_nav('resize', UP),
   split_nav('resize', RIGHT),
 
+  -- panes: swap the selected pane with the active one
   {
     key = 'p',
     mods = 'CTRL|ALT',
     action = act.PaneSelect({ alphabet = '1234567890', mode = 'SwapWithActiveKeepFocus' }),
+  },
+  -- panes: jump to a pane by label
+  { key = 'p', mods = 'LEADER', action = act.PaneSelect({ alphabet = '1234567890' }) },
+
+  -- workspaces (tmux-style sessions)
+  { key = 's', mods = 'LEADER', action = act.ShowLauncherArgs({ flags = 'FUZZY|WORKSPACES' }) },
+  { key = '[', mods = 'LEADER', action = act.SwitchWorkspaceRelative(-1) },
+  { key = ']', mods = 'LEADER', action = act.SwitchWorkspaceRelative(1) },
+  {
+    key = 'c',
+    mods = 'LEADER',
+    action = act.PromptInputLine({
+      description = wezterm.format({
+        { Attribute = { Intensity = 'Bold' } },
+        { Text = 'Enter name for new workspace' },
+      }),
+      action = wezterm.action_callback(function(window, pane, line)
+        if line and line ~= '' then
+          window:perform_action(act.SwitchToWorkspace({ name = line }), pane)
+        end
+      end),
+    }),
   },
 
   -- window
@@ -133,16 +164,40 @@ bind.keys = {
   { key = 'F3', mods = 'NONE', action = act.ShowLauncher },
   { key = 'F11', mods = 'NONE', action = act.ToggleFullScreen },
   { key = 'F12', mods = 'NONE', action = act.ShowDebugOverlay },
+  { key = 'F5',  mods = 'NONE', action = act.ReloadConfiguration },
   { key = 'f',   mods = mod.SUPER, action = act.Search({ CaseInSensitiveString = '' }) },
 }
 
 bind.mouse = {
+  -- ctrl+click opens links
   {
     event = { Up = { streak = 1, button = 'Left' } },
     mods = 'CTRL',
     action = act.OpenLinkAtMouseCursor,
-  }
+  },
+  -- auto-copy: releasing a mouse selection copies it to the clipboard
+  -- (drag-select, double-click word, triple-click line)
+  {
+    event = { Up = { streak = 1, button = 'Left' } },
+    mods = 'NONE',
+    action = act.CompleteSelectionOrOpenLinkAtMouseCursor('ClipboardAndPrimarySelection'),
+  },
+  {
+    event = { Up = { streak = 2, button = 'Left' } },
+    mods = 'NONE',
+    action = act.CompleteSelection('ClipboardAndPrimarySelection'),
+  },
+  {
+    event = { Up = { streak = 3, button = 'Left' } },
+    mods = 'NONE',
+    action = act.CompleteSelection('ClipboardAndPrimarySelection'),
+  },
 }
+
+-- merge in the resurrect.wezterm session keys (see resurrect.lua)
+for _, key in ipairs(resurrect_plugin.keys) do
+  table.insert(bind.keys, key)
+end
 
 return {
   leader = bind.leader,
