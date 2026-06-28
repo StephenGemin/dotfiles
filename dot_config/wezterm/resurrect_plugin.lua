@@ -28,65 +28,43 @@ if not ok then
 end
 
 -- Called from wezterm.lua with the config object. Enables periodic saves every
--- 15 min and startup restore. keybindings and status_bar are disabled here
--- because we use custom LEADER bindings (below) and ui.lua owns the status bar.
+-- 10 min and startup restore. We lean on the plugin's defaults as much as
+-- possible (save_workspaces/windows/tabs all default true), and only override
+-- keybindings and status_bar: we use custom LEADER bindings (below) and ui.lua
+-- owns the status bar.
 function M.setup(config)
   resurrect.setup(config, {
-    periodic_interval = 900,
+    periodic_interval = 600,
     keybindings = false,
     status_bar = false,
   })
 end
 
+-- These use the plugin's built-in action helpers rather than hand-rolled
+-- callbacks. restore_action auto-detects the saved state type (workspace /
+-- window / tab) from the picker selection and dispatches accordingly.
 M.keys = {
   -- save the current workspace to disk
   {
     key = 'S',
     mods = 'LEADER',
-    action = wezterm.action_callback(function(win, pane)
-      resurrect.state_manager.save_state(resurrect.workspace_state.get_workspace_state())
-    end),
+    action = resurrect.workspace_state.save_workspace_action(),
   },
-  -- restore a saved session (fuzzy picker)
+  -- restore a saved session (fuzzy picker; auto-detects workspace/window/tab)
   {
     key = 'R',
     mods = 'LEADER',
-    action = wezterm.action_callback(function(win, pane)
-      resurrect.fuzzy_loader.fuzzy_load(win, pane, function(id, label)
-        local state_type = string.match(id, '^([^/]+)')
-        id = string.match(id, '([^/]+)$')
-        id = string.match(id, '(.+)%..+$')
-        local opts = {
-          relative = true,
-          restore_text = true,
-          on_pane_restore = resurrect.tab_state.default_on_pane_restore,
-        }
-        if state_type == 'workspace' then
-          -- Anchor the restore to the current window so restore_workspace uses
-          -- the in-place path rather than spawning a new window into "default".
-          opts.window = pane:window()
-          resurrect.workspace_state.restore_workspace(resurrect.state_manager.load_state(id, 'workspace'), opts)
-        elseif state_type == 'window' then
-          resurrect.window_state.restore_window(pane:window(), resurrect.state_manager.load_state(id, 'window'), opts)
-        elseif state_type == 'tab' then
-          resurrect.tab_state.restore_tab(pane:tab(), resurrect.state_manager.load_state(id, 'tab'), opts)
-        end
-      end)
-    end),
+    action = resurrect.fuzzy_loader.restore_action({
+      relative = true,
+      restore_text = true,
+      on_pane_restore = resurrect.tab_state.default_on_pane_restore,
+    }),
   },
   -- delete a saved session (fuzzy picker)
   {
     key = 'D',
     mods = 'LEADER',
-    action = wezterm.action_callback(function(win, pane)
-      resurrect.fuzzy_loader.fuzzy_load(win, pane, function(id)
-        resurrect.state_manager.delete_state(id)
-      end, {
-        title = 'Delete a saved session',
-        description = 'Select a session to delete  (Enter = delete, Esc = cancel, / = filter)',
-        is_fuzzy = true,
-      })
-    end),
+    action = resurrect.fuzzy_loader.delete_action(),
   },
 }
 
