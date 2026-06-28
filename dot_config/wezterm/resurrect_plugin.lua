@@ -4,9 +4,11 @@ local wezterm = require('wezterm')
 -- resurrect.wezterm -- save / restore / delete session state (windows, tabs,
 -- panes), plus autosave and resume-on-startup.
 --
--- NOTE: this points at a personal FORK. The upstream repo
--- (MLFlexer/resurrect.wezterm) is archived/unmaintained, so we use
--- https://github.com/StephenGemin/resurrect.wezterm instead.
+-- NOTE: this points at the UPSTREAM repo (MLFlexer/resurrect.wezterm), which
+-- is archived/unmaintained. We track upstream here to see how the plugin
+-- behaves out of the box; the personal fork
+-- (https://github.com/StephenGemin/resurrect.wezterm) can be swapped back in by
+-- changing PLUGIN_URL below.
 --
 -- All resurrect.wezterm configuration lives in this file. The plugin require is
 -- pcall-guarded so a failed fetch (e.g. offline) never breaks the rest of the
@@ -15,7 +17,7 @@ local wezterm = require('wezterm')
 -- restore.
 -- =============================================================================
 
-local PLUGIN_URL = 'https://github.com/StephenGemin/resurrect.wezterm'
+local PLUGIN_URL = 'https://github.com/MLFlexer/resurrect.wezterm'
 
 -- setup is a no-op default so wezterm.lua can always call M.setup(config)
 -- safely even when the plugin fails to load (pcall returns early below).
@@ -27,15 +29,31 @@ if not ok then
   return M
 end
 
--- Called from wezterm.lua with the config object. Enables periodic saves every
--- 15 min and startup restore. keybindings and status_bar are disabled here
--- because we use custom LEADER bindings (below) and ui.lua owns the status bar.
-function M.setup(config)
-  resurrect.setup(config, {
-    periodic_interval = 900,
-    keybindings = false,
-    status_bar = false,
+-- Called from wezterm.lua. Upstream MLFlexer has NO setup() entry point -- the
+-- fork bundled everything into resurrect.setup(config, opts); upstream requires
+-- wiring each piece by hand:
+--
+--   * periodic_save -> autosave workspaces/windows/tabs on a 15 min (900s) timer
+--   * gui-startup   -> restore the most recent saved state when wezterm launches
+--
+-- Deliberately omitted vs. a full upstream setup:
+--   * set_encryption -- NOT called, so state is written as plaintext JSON.
+--     Encryption is excluded by request; add resurrect.state_manager
+--     .set_encryption{...} here to turn it back on.
+--   * keybindings    -- our custom LEADER bindings live in M.keys below.
+--   * status bar     -- ui.lua owns the right status bar.
+--
+-- `config` is accepted (so wezterm.lua can keep calling M.setup(config)
+-- unconditionally) but unused: upstream's autosave and restore register
+-- globally via wezterm events rather than through the config object.
+function M.setup(config) -- luacheck: ignore config
+  resurrect.state_manager.periodic_save({
+    interval_seconds = 900,
+    save_workspaces = true,
+    save_windows = true,
+    save_tabs = true,
   })
+  wezterm.on('gui-startup', resurrect.state_manager.resurrect_on_gui_startup)
 end
 
 M.keys = {
