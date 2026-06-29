@@ -1,4 +1,5 @@
 local wezterm = require('wezterm')
+local resurrect = require('resurrect_plugin')
 
 local act = wezterm.action
 local target_triple = wezterm.target_triple
@@ -135,6 +136,11 @@ bind.keys = {
   { key = 'F12', mods = 'NONE', action = act.ShowDebugOverlay },
   { key = 'f',   mods = mod.SUPER, action = act.Search({ CaseInSensitiveString = '' }) },
 }
+
+-- merge in resurrect.wezterm session keys (save / restore / delete / fuzzy)
+for _, key in ipairs(resurrect.keys) do
+  table.insert(bind.keys, key)
+end
 
 bind.mouse = {
   {
