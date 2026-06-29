@@ -1,6 +1,7 @@
 local wezterm = require('wezterm')
 local launch = require('launch')
 local bindings = require('bindings')
+local resurrect = require('resurrect_plugin')
 
 -- Allow working with both the current release and the nightly
 local config = {}
@@ -39,6 +40,10 @@ config.launch_menu = launch.launch_menu
 config.leader = bindings.leader
 config.keys = bindings.keys
 config.mouse_bindings = bindings.mouse_bindings
+
+-- resurrect.wezterm: periodic autosave + restore-on-startup (keys are merged
+-- into bindings.keys above).
+resurrect.setup(config)
 
 config.automatically_reload_config = true
 config.adjust_window_size_when_changing_font_size = false
