@@ -122,3 +122,6 @@ pytestdebug.log
 
 # Built Visual Studio Code Extensions
 *.vsix
+
+# Claude files
+**/.claude/settings.local.json
