@@ -131,26 +131,28 @@ bind.keys = {
   },
   -- panes: jump to a pane by label
   { key = 'p', mods = 'LEADER', action = act.PaneSelect({ alphabet = '1234567890' }) },
+  -- break the active pane out into a new window
+  { key = "b", mods = 'LEADER', action = wezterm.action_callback(function(win, pane) pane:move_to_new_window() end) },
 
-  -- workspaces (tmux-style sessions)
-  { key = 's', mods = 'LEADER', action = act.ShowLauncherArgs({ flags = 'FUZZY|WORKSPACES' }) },
-  { key = '[', mods = 'LEADER', action = act.SwitchWorkspaceRelative(-1) },
-  { key = ']', mods = 'LEADER', action = act.SwitchWorkspaceRelative(1) },
-  {
-    key = 'c',
-    mods = 'LEADER',
-    action = act.PromptInputLine({
-      description = wezterm.format({
-        { Attribute = { Intensity = 'Bold' } },
-        { Text = 'Enter name for new workspace' },
-      }),
-      action = wezterm.action_callback(function(window, pane, line)
-        if line and line ~= '' then
-          window:perform_action(act.SwitchToWorkspace({ name = line }), pane)
-        end
-      end),
-    }),
-  },
+--   -- workspaces (tmux-style sessions); Replaced in favour of resurrect.wezterm for persisted saves
+--   { key = 's', mods = 'LEADER', action = act.ShowLauncherArgs({ flags = 'FUZZY|WORKSPACES' }) },
+--   { key = '[', mods = 'LEADER', action = act.SwitchWorkspaceRelative(-1) },
+--   { key = ']', mods = 'LEADER', action = act.SwitchWorkspaceRelative(1) },
+--   {
+--     key = 'c',
+--     mods = 'LEADER',
+--     action = act.PromptInputLine({
+--       description = wezterm.format({
+--         { Attribute = { Intensity = 'Bold' } },
+--         { Text = 'Enter name for new workspace' },
+--       }),
+--       action = wezterm.action_callback(function(window, pane, line)
+--         if line and line ~= '' then
+--           window:perform_action(act.SwitchToWorkspace({ name = line }), pane)
+--         end
+--       end),
+--     }),
+--   },
 
   -- window
   { key = 'n', mods = 'LEADER', action = act.SpawnWindow },

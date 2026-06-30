@@ -27,18 +27,12 @@ if not ok then
   return M
 end
 
--- Called from wezterm.lua with the config object. Enables periodic saves every
--- 10 min, startup restore, and the plugin's default keybindings
--- (Alt + W/S/Shift+W/Shift+T/R/D). status_bar stays off because ui.lua owns the
--- status bar.
+-- https://github.com/StephenGemin/resurrect.wezterm#basic-setup
 function M.setup(config)
   resurrect.setup(config, {
     periodic_interval = 600,
     status_bar = false,
   })
 end
-
--- M.keys is left empty (default from the M table above): the plugin installs
--- its own bindings via setup(), so bindings.lua's merge loop is a no-op.
 
 return M
