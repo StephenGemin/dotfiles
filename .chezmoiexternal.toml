@@ -27,3 +27,8 @@
     url = "https://github.com/plantuml/plantuml/releases/latest/download/plantuml.jar"
     refreshPeriod = "8766h"
 
+[".config/wezterm/wezterm.sh"]
+    type = "file"
+    url = "https://raw.githubusercontent.com/wezterm/wezterm/main/assets/shell-integration/wezterm.sh"
+    refreshPeriod = "8766h"
+
