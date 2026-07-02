@@ -50,6 +50,24 @@ if ($PSVersionTable.PSVersion.Major -ge 7) {
 
 oh-my-posh init pwsh --config "$env:USERPROFILE\.config\ohmyposh\zen.toml"| Invoke-Expression
 
+# WezTerm: report cwd via OSC 7 so new tabs/panes inherit it (parity with the
+# wezterm.sh sourcing in .zshrc/.bashrc). OSC 133 marks intentionally omitted:
+# omp's emission is unreadable by WezTerm (oh-my-posh#6088) and pwsh has no
+# preexec hook for the C mark.
+if ($env:TERM_PROGRAM -eq 'WezTerm') {
+    $__omp_prompt = $function:prompt
+    function prompt {
+        $p = $executionContext.SessionState.Path.CurrentLocation
+        $osc7 = ''
+        if ($p.Provider.Name -eq 'FileSystem') {
+            $esc = [char]27
+            $path = $p.ProviderPath -replace '\\', '/'
+            $osc7 = "$esc]7;file://$env:COMPUTERNAME/$path$esc\"
+        }
+        "$osc7$(& $__omp_prompt)"
+    }
+}
+
 # Plugins & Extra customizations
 # -----------------------------------------------------------------------------
 # Determine user profile parent directory.

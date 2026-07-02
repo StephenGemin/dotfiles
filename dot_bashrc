@@ -68,4 +68,13 @@ fi
 
 eval "$(fzf --bash)"
 eval "$(oh-my-posh init bash --config $XDG_CONFIG_HOME/ohmyposh/zen.toml)"
+
+# WezTerm shell integration (OSC 133 marks + OSC 7 cwd) via wezterm's official
+# script. Not omp's shell_integration flag: WezTerm can't read those marks
+# (oh-my-posh#6088). Must stay after the oh-my-posh init so wezterm's precmd
+# wraps the final prompt.
+if [ "$TERM_PROGRAM" = "WezTerm" ] && [ -f "$XDG_CONFIG_HOME/wezterm/wezterm.sh" ]; then
+    source "$XDG_CONFIG_HOME/wezterm/wezterm.sh"
+fi
+
 eval "$(zoxide init --cmd $ZOXIDE_KEY bash)"
