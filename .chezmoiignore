@@ -35,3 +35,12 @@ scripts/
 AppData/
 {{- end }}
 
+# VSCode's user settings.json lives at a different path per OS: ~/.config/Code on
+# Linux, ~/Library/Application Support/Code on macOS. Keep only the matching one.
+{{ if eq .chezmoi.os "darwin" -}}
+.config/Code/User/settings.json
+{{- end }}
+{{ if ne .chezmoi.os "darwin" -}}
+Library/Application Support/Code/User/settings.json
+{{- end }}
+

@@ -1,4 +1,10 @@
 {
+  "files.autoSave": "afterDelay",
+  "explorer.confirmDelete": false,
+  "explorer.confirmDragAndDrop": false,
+  "editor.minimap.enabled": false,
+  "plantuml.jar": {{ joinPath .chezmoi.homeDir ".local" "bin" "plantuml.jar" | quote }},
+  "plantuml.render": "Local",
   "Lua.workspace.library": [
     {{ joinPath .chezmoi.homeDir ".config" "wezterm-types" | quote }}
   ]
