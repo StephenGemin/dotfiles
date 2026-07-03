@@ -58,6 +58,14 @@ I have a software development and testing background and know when I'm going ove
 - If you're weighing a choice, give a recommendation, not a survey of options.
 - For exploratory questions, 2–3 sentences with a recommendation and the main tradeoff.
 
+## Summaries and session notes
+
+When asked for a summary (or writing one proactively), save it as a markdown
+file under this project's Claude project directory — the same directory that
+holds this project's `memory/` folder (`~/.claude/projects/<project-slug>/`),
+not inside the git-tracked source repo. A stray summary file in the repo
+risks being accidentally committed. Give me a file path to the result.
+
 ## What requires conversation before acting
 
 - Architectural changes spanning more than two files
