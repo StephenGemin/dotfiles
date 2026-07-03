@@ -14,12 +14,13 @@ elseif wezterm.target_triple:find("darwin") then
     default_prog = { '/bin/zsh' , '-l' }
     launch_menu = {
         { label = 'Zsh', args = { 'zsh', '-l' } },
+        { label = 'Bash', args = { 'bash', '-l' } },
     }
 else
     default_prog = { '/usr/bin/zsh' }
     launch_menu = {
-        { label = 'Zsh', args = { 'zsh' } },
-        { label = 'Bash', args = { 'bash' } },
+        { label = 'Zsh', args = { 'zsh', '-l' } },
+        { label = 'Bash', args = { 'bash', '-l' } },
     }
 end
 

@@ -30,7 +30,9 @@ end
 -- https://github.com/StephenGemin/resurrect.wezterm#basic-setup
 function M.setup(config)
   resurrect.setup(config, {
-    periodic_interval = 600,
+    periodic_interval = 300,
+    save_windows=false,  -- no periodic save of windows
+    save_tabs=false,  -- no periodic save of tabs
     status_bar = false,
   })
 end
