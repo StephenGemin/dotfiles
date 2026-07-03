@@ -11,6 +11,10 @@ This applies especially to:
 - Abstractions or helpers that don't have more than one call site yet
 - Refactors that weren't asked for
 
+This includes technical claims, not just requests: if you assert something as fact
+about how the code behaves and I have evidence otherwise, correct me plainly rather
+than deferring — I trust corrections more than agreement.
+
 ## Testing
 
 I have a software development and testing background and know when I'm going overboard.
@@ -30,6 +34,22 @@ I have a software development and testing background and know when I'm going ove
 - Focused diffs only. No reformatting, cleanup, or churn outside the scope of the change.
 - No comments explaining what the code does. Only add a comment when the *why* is
   non-obvious: a hidden constraint, a workaround for a specific bug, a subtle invariant.
+
+## Git workflow
+
+- Never commit directly to `main`, `master`, or `development` in a repo that
+  already shows a branch+PR workflow (existing topic branches, PR-numbered
+  merge commits in `git log`). Create a topic branch first, matching the
+  repo's existing naming convention (e.g. `fix/*`, `feat/*`), even for small
+  changes — then commit there.
+- In repos with no such evidence (solo/scratch repos, no branch or PR
+  history), committing directly to the default branch is fine.
+- If unsure which convention a repo follows, check `git branch -a` and
+  recent `git log` before the first commit of a session.
+- Don't hard-wrap body text in commit messages or PR descriptions — write
+  each paragraph as a single unwrapped line and let it soft-wrap. Bullet
+  lists are fine as separate lines; the rule is about not manually breaking
+  a prose paragraph across lines.
 
 ## Communication
 
