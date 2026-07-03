@@ -122,6 +122,26 @@ bind.keys = {
     action = act.PaneSelect({ alphabet = '1234567890', mode = 'SwapWithActiveKeepFocus' }),
   },
 
+    -- workspaces (tmux-style sessions)
+  { key = 's', mods = 'LEADER', action = act.ShowLauncherArgs({ flags = 'FUZZY|WORKSPACES' }) },
+  { key = '[', mods = 'LEADER', action = act.SwitchWorkspaceRelative(-1) },
+  { key = ']', mods = 'LEADER', action = act.SwitchWorkspaceRelative(1) },
+  {
+    key = 'c',
+    mods = 'LEADER',
+    action = act.PromptInputLine({
+      description = wezterm.format({
+        { Attribute = { Intensity = 'Bold' } },
+        { Text = 'Enter name for new workspace' },
+      }),
+      action = wezterm.action_callback(function(window, pane, line)
+        if line and line ~= '' then
+          window:perform_action(act.SwitchToWorkspace({ name = line }), pane)
+        end
+      end),
+    }),
+  },
+
   -- window
   { key = 'n', mods = 'LEADER', action = act.SpawnWindow },
   { key = '=', mods = mod.SUPER, action = act.IncreaseFontSize },
