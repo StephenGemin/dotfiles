@@ -32,3 +32,8 @@
     url = "https://raw.githubusercontent.com/wezterm/wezterm/main/assets/shell-integration/wezterm.sh"
     refreshPeriod = "8766h"
 
+[".config/wezterm-types"]
+    type = "git-repo"
+    url = "https://github.com/DrKJeff16/wezterm-types"
+    refreshPeriod = "720h"
+
