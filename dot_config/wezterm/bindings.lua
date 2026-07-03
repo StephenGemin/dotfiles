@@ -32,7 +32,7 @@ end
 --  l = 'Right',
 --}
 
--- Colemak
+-- Colemak-DH
 LEFT = 'n'
 DOWN = 'e'
 UP = 'i'

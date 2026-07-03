@@ -37,12 +37,24 @@ config.hide_tab_bar_if_only_one_tab = true
 config.scrollback_lines = 10000
 config.inactive_pane_hsb = { saturation = 0.9, brightness = 0.8 }
 
--- keep the default link detection and also linkify bare www. hostnames
+-- keep the default link detection and also linkify additional URL forms
 config.hyperlink_rules = wezterm.default_hyperlink_rules()
-table.insert(config.hyperlink_rules, {
-  regex = [[\bwww\.[\w.-]+\.[a-z]{2,15}\S*\b]],
-  format = 'https://$0',
-})
+for _, rule in ipairs({
+  -- bare www. hostnames, e.g. www.example.com
+  { regex = [[\bwww\.[\w.-]+\.[a-z]{2,15}\S*\b]], format = 'https://$0' },
+  -- a URL in parens: (URL)
+  { regex = [[\((\w+://\S+)\)]], format = '$1', highlight = 1 },
+  -- a URL in brackets: [URL]
+  { regex = [=[\[(\w+://\S+)\]]=], format = '$1', highlight = 1 },
+  -- a URL in curly braces: {URL}
+  { regex = [[\{(\w+://\S+)\}]], format = '$1', highlight = 1 },
+  -- a URL in angle brackets: <URL>
+  { regex = [[<(\w+://\S+)>]], format = '$1', highlight = 1 },
+  -- implicit mailto link for bare email addresses
+  { regex = [[\b\w+@[\w-]+(\.[\w-]+)+\b]], format = 'mailto:$0' },
+}) do
+  table.insert(config.hyperlink_rules, rule)
+end
 
 config.default_prog = launch.default_prog
 config.launch_menu = launch.launch_menu
