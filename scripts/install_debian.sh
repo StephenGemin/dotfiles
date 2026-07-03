@@ -90,6 +90,11 @@ install_pyenv() {
 
 install_rustup() {
     if command_exists rustup; then
+        if [[ "$CI" == "true" ]]; then
+            log_info "[CI] Would run rustup update"
+            return
+        fi
+        rustup update
         return
     fi
     if [[ "$CI" == "true" ]]; then
