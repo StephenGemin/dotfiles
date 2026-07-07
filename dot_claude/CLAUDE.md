@@ -34,6 +34,12 @@ I have a software development and testing background and know when I'm going ove
 - Focused diffs only. No reformatting, cleanup, or churn outside the scope of the change.
 - No comments explaining what the code does. Only add a comment when the *why* is
   non-obvious: a hidden constraint, a workaround for a specific bug, a subtle invariant.
+- Global variables — especially mutable ones — are never acceptable, including in
+  dynamic languages like Python and Lua where module-level "globals" are easy to
+  reach for. Use function/closure-local state, class instances, or explicit
+  parameters instead. If module-level state seems unavoidable, keep it as a
+  private/local binding and only expose a setter function, never a directly
+  mutable public field.
 
 ## Git workflow
 
@@ -50,6 +56,9 @@ I have a software development and testing background and know when I'm going ove
   each paragraph as a single unwrapped line and let it soft-wrap. Bullet
   lists are fine as separate lines; the rule is about not manually breaking
   a prose paragraph across lines.
+- Keep commit and PR descriptions concise but informative: a tight bulleted summary of
+  what changed and why, not prose paragraphs or an exhaustive line-by-line
+  restatement of the diff. Cut anything a reviewer can get from the diff itself.
 
 ## Communication
 
