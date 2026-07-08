@@ -76,5 +76,15 @@ if [[ "$isWindows" = 0 ]]; then
 
     # Added by Toolbox App
     export PATH="$PATH:$HOME/.local/share/JetBrains/Toolbox/scripts"
+
+    # Android SDK (installed via `brew install --cask android-commandlinetools`)
+    if [ -d "/opt/homebrew/share/android-commandlinetools" ]; then
+        export ANDROID_HOME="/opt/homebrew/share/android-commandlinetools"
+        export PATH="$PATH:$ANDROID_HOME/platform-tools:$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/emulator"
+    fi
+
+    if [ -z "$JAVA_HOME" ] && command -v /usr/libexec/java_home > /dev/null 2>&1; then
+        export JAVA_HOME="$(/usr/libexec/java_home)"
+    fi
 fi
 
