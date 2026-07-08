@@ -10,16 +10,11 @@
 # shellcheck shell=bash
 # shellcheck source=/dev/null
 
-if [ -f "$HOME/.bashenv" ]; then
-    . "$HOME/.bashenv"
+if [ -f "/home/linuxbrew/.linuxbrew/bin/brew" ]; then
+    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 fi
 
-if [[ "$isWindows" = 0 ]]; then
-    eval "$(pyenv init -)"
-    eval "$(pyenv virtualenv-init -)"
-
-    if [ -f "$HOME/.cargo/env" ]; then
-        . "$HOME/.cargo/env"
-    fi
+if [ -f "$HOME/.bashrc" ]; then
+    . "$HOME/.bashrc"
 fi
 

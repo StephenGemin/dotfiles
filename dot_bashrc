@@ -56,9 +56,6 @@ fi
 # Shell integrations
 # -----------------------------------------------------------------------------
 # Note to future self: order is important here as some commands in this section modify PATH
-if [ -f "/home/linuxbrew/.linuxbrew/bin/brew" ]; then
-    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-fi
 if [[ "$isWindows" = 0 ]]; then
     if [ -f "$HOME/.cargo/env" ]; then
         . "$HOME/.cargo/env"
