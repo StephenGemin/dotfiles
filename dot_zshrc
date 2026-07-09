@@ -54,10 +54,9 @@ done
 bindkey -v
 bindkey -M viins '^[[A' history-search-backward  # Up arrow
 bindkey -M viins '^[[B' history-search-forward   # Down arrow
-#bindkey '^[[1;5D' backward-word  # CTRL + Left Arrow
-#bindkey '^[[1;5C' forward-word  # CTRL + Right Arrow
-bindkey '^h' backward-word  # CTRL+ALT+h
-bindkey '^l' forward-word  # CTRL+ALT+l
+bindkey -M viins '^[[1;3D' backward-word  # ALT/Option + Left Arrow
+bindkey -M viins '^[[1;3C' forward-word   # ALT/Option + Right Arrow
+bindkey -M viins '^[[3;3~' backward-kill-word  # ALT/Option + Backspace
 
 # History
 setopt appendhistory

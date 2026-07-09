@@ -43,6 +43,9 @@ eval "alias ${ZOXIDE_KEY}-='${ZOXIDE_KEY} -'"
 # Keybindings
 bind 'set show-all-if-ambiguous on'
 bind 'TAB:menu-complete'
+bind '"\e[1;3D": backward-word'  # ALT/Option + Left Arrow
+bind '"\e[1;3C": forward-word'   # ALT/Option + Right Arrow
+bind '"\e[3;3~": backward-kill-word'  # ALT/Option + Backspace
 
 # Load custom code from separate configuration file.
 # -----------------------------------------------------------------------------
