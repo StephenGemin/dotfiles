@@ -189,7 +189,7 @@ Language-agnostic managers, per OS:
 | [zoxide](https://github.com/ajeetdsouza/zoxide) | ✅ | ✅ | ✅ |  |
 | [pyenv](https://github.com/pyenv/pyenv) | ✅ | ✅ | ✅ | Windows uses [pyenv-win](https://github.com/pyenv-win/pyenv-win) |
 | [uv](https://github.com/astral-sh/uv) | ✅ | ✅ | ✅ |  |
-| [Ruff](https://github.com/astral-sh/ruff) | ✅ | ✅ | ❓ |  |
+| [Ruff](https://github.com/astral-sh/ruff) | ✅ | ✅ | ✅ |  |
 | [GitHub CLI](https://cli.github.com/) | ✅ | ✅ | ✅ |  |
 | [PlantUML](https://plantuml.com/) / [Graphviz](https://graphviz.org/) | ✅ | ❓ | ✅ |  |
 | [Double Commander](https://doublecmd.sourceforge.io/) | ✅ | ✅ | ✅ |  |
