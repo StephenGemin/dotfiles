@@ -40,6 +40,7 @@ packages:
   debian:
     brews:
     - 'fzf'
+    - 'gh'
     - 'pipx'
     - 'ruff'
     - 'uv'

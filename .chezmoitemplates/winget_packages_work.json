@@ -6,6 +6,7 @@
 		{
 			"Packages" :
 			[
+				{"PackageIdentifier" : "GitHub.cli"},
 				{"PackageIdentifier" : "flux.flux"},
 				{"PackageIdentifier" : "MSYS2.MSYS2"},
 				{"PackageIdentifier" : "wez.wezterm"},
