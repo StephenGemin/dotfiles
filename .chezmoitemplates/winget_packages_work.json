@@ -27,7 +27,6 @@
 				{"PackageIdentifier" : "burntsushi.ripgrep.MSVC"},
 				{"PackageIdentifier" : "sharkdp.fd"},
 				{"PackageIdentifier" : "jqlang.jq"},
-				{"PackageIdentifier" : "zig.zig"},
 				{"PackageIdentifier" : "astral-sh.ruff"},
 				{"PackageIdentifier" : "astral-sh.uv"}
 			],

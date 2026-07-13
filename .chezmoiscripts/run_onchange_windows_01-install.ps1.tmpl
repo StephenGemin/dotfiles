@@ -203,6 +203,17 @@ if (Get-Command scoop -ErrorAction SilentlyContinue) {
         }
     }
 
+    # scoop puts its shim on the persisted User PATH; provide `zig cc` as the C compiler for nvim-treesitter.
+    if (-not (Get-Command zig -ErrorAction SilentlyContinue)) {
+        Write-Host "Installing zig"
+        if ($CI) {
+            Write-Host "[CI] Would install zig via scoop" -ForegroundColor $ColorInfo
+        }
+        else {
+            scoop install zig
+        }
+    }
+
     Write-Host "Install packages with pipx"
     if ($CI) {
         Write-Host "[CI] Would install pipx packages: virtualenv poetry pip-tools black" -ForegroundColor $ColorInfo
