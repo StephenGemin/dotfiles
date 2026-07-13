@@ -21,13 +21,8 @@
 # change system properties.
 #Disabled Requires -RunAsAdministrator
 
-# Note to future self, chezmoi runs this script on Powershell 5 even if a
-# higher level version is installed!
-
-# Create missing $IsWindows if running Powershell 5 or below.
-if (!(Test-Path variable:global:IsWindows)) {
-    Set-Variable "IsWindows" -Scope "Global" -Value ([System.Environment]::OSVersion.Platform -eq "Win32NT")
-}
+# chezmoi runs .ps1 scripts under pwsh (PowerShell 7) via the [interpreters.ps1] config
+# Avoids Windows PowerShell 5.1 compatibility shims
 
 if ($null -eq (Get-Variable "ColorInfo" -ErrorAction "Ignore")) {
     Set-Variable -Name ColorInfo -Value "DarkYellow"
@@ -88,9 +83,6 @@ $XDGPath = if ($env:XDG_CONFIG_HOME) {
 # #
 # # Dependencies
 # #
-if ($PSVersionTable.PSVersion.Major -le 5) {
-    Import-Module PowerShellGet
-}
 
 # Install or update Powershell modules from Powershell Gallery
 $modules = @{

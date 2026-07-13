@@ -88,7 +88,8 @@ chezmoi init --apply -v https://github.com/$GITHUB_USERNAME/dotfiles.git
 <details>
 <summary>Expand Windows install steps</summary>
 
-- Recommend running in **PowerShell** (not pwsh)
+- Run the prerequisite installs in **Windows PowerShell 5.1** (the `powershell`
+  that ships with Windows) — pwsh might not be installed by this point.
   - run as non-admin (for scoop)
   - may need to change the execution policy(ies):
     - `Set-ExecutionPolicy -ExecutionPolicy Unrestricted -Scope CurrentUser`
@@ -107,6 +108,7 @@ chezmoi init --apply -v https://github.com/$GITHUB_USERNAME/dotfiles.git
   #      - i.e. Github microsoft/winget-cli issue 4916
 
   winget install -e --id Git.Git
+  winget install Microsoft.PowerShell
   winget install twpayne.chezmoi
   $GITHUB_USERNAME = "StephenGemin"
   chezmoi init --apply https://github.com/$GITHUB_USERNAME/dotfiles.git
