@@ -84,50 +84,16 @@ $XDGPath = if ($env:XDG_CONFIG_HOME) {
 # # Dependencies
 # #
 
-# Install or update Powershell modules from Powershell Gallery
-$modules = @{
-    "PSFzf" = @{
-        Info = "fzf wrapper for pwsh";
-        Repo = "https://github.com/kelleyma49/PSFzf";
-        Install = $true;
-        Force = $false;
-        Prerelease = $false;
-        AllowClobber = $false;
-        SkipPublisherCheck = $false;
-        Update = $false;
-    };
-}
-($modules.GetEnumerator() | Sort-Object -Property name) | ForEach-Object {
-    if (!$_.Value.Install) {
-        continue
-    }
-    if (Get-Module -ListAvailable -Name $_.Name -ErrorAction "Ignore") {
-        if ($Update) {
-            Write-Host "Checking for $($_.Name) updates ($($_.Value.Info))..." -ForegroundColor $ColorInfo
-            if ($CI) {
-                Write-Host "[CI] Would update module $($_.Name)" -ForegroundColor $ColorInfo
-            }
-            else {
-                Install-Module $_.Name -Scope CurrentUser
-            }
-        }
+# Install PSFzf (fzf wrapper for pwsh) from the PowerShell Gallery
+if (-not (Get-Module -ListAvailable -Name PSFzf -ErrorAction "Ignore")) {
+    Write-Host "Installing PSFzf (fzf wrapper for pwsh)..." -ForegroundColor $ColorInfo
+    if ($CI) {
+        Write-Host "[CI] Would install module PSFzf" -ForegroundColor $ColorInfo
     }
     else {
-        Write-Host "Installing $($_.Name) ($($_.Value.Info))..." -ForegroundColor $ColorInfo
-        if ($CI) {
-            Write-Host "[CI] Would install module $($_.Name)" -ForegroundColor $ColorInfo
-        }
-        elseif ($AllowPrerelease -and $_.Value.Prerelease) {
-            Install-Module $_.Name -Scope CurrentUser -Force:$_.Value.Force -SkipPublisherCheck:$_.Value.SkipPublisherCheck -AllowClobber:$_.Value.AllowClobber -AllowPrerelease:$_.Value.Prerelease
-        }
-        else {
-            Install-Module $_.Name -Scope CurrentUser -Force:$_.Value.Force -SkipPublisherCheck:$_.Value.SkipPublisherCheck -AllowClobber:$_.Value.AllowClobber
-        }
-        if (-not $CI) {
-            Get-Module -ListAvailable -Name $_.Name
-        }
-        $count++
+        Install-Module PSFzf -Scope CurrentUser
     }
+    $count++
 }
 
 # Check if winget is available
