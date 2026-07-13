@@ -123,6 +123,9 @@ jobs:
           install_host = "home"
           wingit_install_dir = "C:/Program Files/Git"
           osid = "windows"
+          [interpreters.ps1]
+          command = "pwsh"
+          args = ["-NoLogo", "-NoProfile"]
           '@ | Set-Content -Path "$HOME/.config/chezmoi/chezmoi.toml"
 
       # apply runs the PowerShell scripts too, not just file rendering. GitHub
@@ -176,6 +179,9 @@ jobs:
           install_host = "home"
           wingit_install_dir = "C:/Program Files/Git"
           osid = "windows"
+          [interpreters.ps1]
+          command = "pwsh"
+          args = ["-NoLogo", "-NoProfile"]
           '@ | Set-Content -Path "$HOME/.config/chezmoi/chezmoi.toml"
 
       # The *.ps1.tmpl scripts contain Go template syntax, so render them with

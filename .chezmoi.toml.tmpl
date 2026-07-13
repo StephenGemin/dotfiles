@@ -35,6 +35,14 @@ Using standard toml comments causes problems with chezmoi init */ -}}
     wingit_install_dir = {{ $wingit_install_dir | quote }}
     osid = {{ $osid | quote }}
 
+{{ if eq .chezmoi.os "windows" -}}
+# Run all Windows .ps1 scripts under PowerShell 7 (pwsh); documented bootstrap prerequisite (see README)
+# Had quite a few issues between Powershell 5.1 vs. 7, particularly on work setups
+[interpreters.ps1]
+    command = "pwsh"
+    args = ["-NoLogo", "-NoProfile"]
+{{ end -}}
+
 # https://www.chezmoi.io/user-guide/tools/diff/#dont-show-scripts-in-the-diff-output
 [diff]
     exclude = ["scripts"]
