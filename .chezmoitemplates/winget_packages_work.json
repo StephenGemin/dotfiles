@@ -14,7 +14,7 @@
 				{"PackageIdentifier" : "Microsoft.WindowsTerminal"},
 				{"PackageIdentifier" : "Microsoft.PowerShell"},
 				{"PackageIdentifier" : "ShareX.ShareX"},
-				{"PackageIdentifier" : "Vitzo.ClipClip"},				
+				{"PackageIdentifier" : "Vitzo.ClipClip"},
 				{"PackageIdentifier" : "Mozilla.Firefox"},
 				{"PackageIdentifier" : "7zip.7zip"},
 				{"PackageIdentifier" : "Notepad++.Notepad++"},
@@ -28,6 +28,7 @@
 				{"PackageIdentifier" : "neovim.neovim"},
 				{"PackageIdentifier" : "burntsushi.ripgrep.MSVC"},
 				{"PackageIdentifier" : "sharkdp.fd"},
+				{"PackageIdentifier" : "jqlang.jq"},
 				{"PackageIdentifier" : "zig.zig"},
 				{"PackageIdentifier" : "astral-sh.ruff"},
 				{"PackageIdentifier" : "astral-sh.uv"}
