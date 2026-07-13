@@ -7,97 +7,10 @@
 # functions
 # -----------------------------------------------------------------------------
 
-function Get-ChildItemSimple {
-    <#
-    .SYNOPSIS
-        Lists visible files in wide format.
-    .PARAMETER Path
-        The directory to list from.
-    .INPUTS
-        System.String[]
-    .OUTPUTS
-        System.IO.FileInfo
-        System.IO.DirectoryInfo
-    .LINK
-        Get-ChildItem
-    #>
-    [CmdletBinding()]
-    param(
-        [Parameter(
-            Mandatory=$false,
-            ValueFromPipeline=$true
-        )]
-        [string[]]$Path = ".",
+# Simple (non-CmdletBinding) functions so @args forwards all args to Get-ChildItem.
+function Get-ChildItemSimple { Get-ChildItem @args | Format-Wide }
 
-        [Parameter(ValueFromRemainingArguments=$true)]
-        $Params
-    )
-
-    begin {
-        # https://stackoverflow.com/a/33302472
-        $hashtable = @{}
-        if ($Params) {
-            $Params | ForEach-Object {
-                if ($_ -match "^-") {
-                    $hashtable.$($_ -replace "^-") = $null
-                }
-                else {
-                    $hashtable.$(([string[]]$hashtable.Keys)[-1]) = $_
-                }
-            }
-        }
-    }
-
-    process {
-        Get-ChildItem -Path @Path @hashtable | Format-Wide
-    }
-}
-
-function Get-ChildItemAll {
-    <#
-    .SYNOPSIS
-        Lists all files in long format, excluding `.` and `..`.
-    .PARAMETER Path
-        The directory to list from.
-    .INPUTS
-        System.String[]
-    .OUTPUTS
-        System.IO.FileInfo
-        System.IO.DirectoryInfo
-    .LINK
-        Get-ChildItem
-    #>
-    [CmdletBinding()]
-    param(
-        [Parameter(
-            Mandatory=$false,
-            ValueFromPipeline=$true
-        )]
-        [string[]]$Path = ".",
-
-        [Parameter(ValueFromRemainingArguments=$true)]
-        $Params
-    )
-
-    begin {
-        # https://stackoverflow.com/a/33302472
-        $hashtable = @{}
-        if ($Params) {
-            $Params | ForEach-Object {
-                if ($_ -match "^-") {
-                    $hashtable.$($_ -replace "^-") = $null
-                }
-                else {
-                    $hashtable.$(([string[]]$hashtable.Keys)[-1]) = $_
-                }
-            }
-        }
-    }
-
-    process {
-        Get-ChildItem -Path @Path -Force @hashtable
-    }
-}
+function Get-ChildItemAll { Get-ChildItem -Force @args }
 
 function Set-LocationLast {
     <#
