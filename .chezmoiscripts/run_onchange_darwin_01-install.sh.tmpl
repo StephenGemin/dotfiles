@@ -43,13 +43,14 @@ show_hidden_files_in_finder() {
 
 # Install git diff-highlight
 install_git_diff_highlight() {
-    if command_exists "diff-highlight"; then
-        return
-    fi
+    # Target git's `opt` prefix, not the version-pinned Cellar path: opt/git
+    # always follows the current git, so the link survives `brew upgrade git`
+    # instead of dangling. No command_exists guard — `type` treats a dangling
+    # link as present and would skip the repair; `ln -sf` is idempotent and
+    # re-points a stale link on every run.
     local diff_highlight_path
-    diff_highlight_path="$(find "$(realpath "$(brew --prefix git)")" -type f -name diff-highlight 2>/dev/null \
-    | grep '/contrib/diff-highlight/diff-highlight$')"
-    if [[ -n "$diff_highlight_path" ]]; then
+    diff_highlight_path="$(brew --prefix git)/share/git-core/contrib/diff-highlight/diff-highlight"
+    if [[ -f "$diff_highlight_path" ]]; then
         ln -sf "$diff_highlight_path" ~/.local/bin/diff-highlight
         echo "Installed diff-highlight"
     else
@@ -78,6 +79,15 @@ install_rustup() {
     curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 }
 
+# Homebrew requires trusting Microsoft's own tap
+install_powershell() {
+    if command_exists pwsh; then
+        return
+    fi
+    brew trust powershell/tap
+    brew install powershell/tap/powershell
+}
+
 # run program
 install_xcode_select
 
@@ -85,6 +95,7 @@ if [ "${CI:-}" = "true" ]; then
     echo "[CI] Would brew bundle: {{ len .packages.darwin.brews }} brews, {{ len .packages.darwin.casks }} casks"
     echo "[CI] Would install pipx packages: ${pipxs[*]}"
     echo "[CI] Would install diff-highlight, python {{ .user.software.python_version }}, rustup"
+    echo "[CI] Would trust powershell/tap and install PowerShell"
     echo "[CI] Would show hidden files in Finder"
 else
     brew bundle --file=/dev/stdin <<EOF
@@ -101,6 +112,7 @@ EOF
     install_git_diff_highlight
     install_python
     install_rustup
+    install_powershell
 fi
 
 echo "All installations completed successfully!"

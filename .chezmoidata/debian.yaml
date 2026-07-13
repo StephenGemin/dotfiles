@@ -62,4 +62,5 @@ debian:
   - 'spotify'
   - 'whatsapp-app'
   - 'vlc'
+  - 'powershell --classic'
   # - 'firefox'
