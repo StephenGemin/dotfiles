@@ -25,7 +25,7 @@ packages:
     casks:
     - 'font-jetbrains-mono'
     - 'firefox'
-    - 'wezterm'
+    - 'wezterm@nightly'
     - 'double-commander'
     - 'keepassxc'
     - 'opera'
