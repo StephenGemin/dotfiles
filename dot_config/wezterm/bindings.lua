@@ -107,9 +107,11 @@ bind.keys = {
   { key = "PageUp", mods = '', action = act.ScrollByPage(-1) },
   { key = "PageDown", mods = '', action = act.ScrollByPage(1) },
 
-  -- panes: splitting
-  { key = DOWN, mods = 'LEADER', action = act.SplitVertical { domain = 'CurrentPaneDomain' } },
-  { key = RIGHT, mods = 'LEADER', action = act.SplitHorizontal { domain = 'CurrentPaneDomain' } },
+  -- panes: splitting (Colemak n/e/i/o -> left/down/up/right, matches nav)
+  { key = LEFT,  mods = 'LEADER', action = act.SplitPane { direction = 'Left',  command = { domain = 'CurrentPaneDomain' } } },
+  { key = DOWN,  mods = 'LEADER', action = act.SplitPane { direction = 'Down',  command = { domain = 'CurrentPaneDomain' } } },
+  { key = UP,    mods = 'LEADER', action = act.SplitPane { direction = 'Up',    command = { domain = 'CurrentPaneDomain' } } },
+  { key = RIGHT, mods = 'LEADER', action = act.SplitPane { direction = 'Right', command = { domain = 'CurrentPaneDomain' } } },
 
   -- panes: naviation
   -- move between split panes
@@ -155,7 +157,7 @@ bind.keys = {
 --   },
 
   -- window
-  { key = 'n', mods = 'LEADER', action = act.SpawnWindow },
+  { key = 'Enter', mods = 'CTRL|SHIFT', action = act.SpawnWindow },
   { key = '=', mods = mod.SUPER, action = act.IncreaseFontSize },
   { key = '-', mods = mod.SUPER, action = act.DecreaseFontSize },
   { key = '0', mods = mod.SUPER, action = act.ResetFontSize },
