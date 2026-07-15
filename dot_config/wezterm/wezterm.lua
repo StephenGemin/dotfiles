@@ -16,7 +16,7 @@ config.disable_default_key_bindings = true
 -- https://github.com/catppuccin/wezterm
 local function scheme_for_appearance(appearance)
   if appearance:find "Dark" then
-    return "Catppuccin Macchiato"
+    return "Solarized Dark - Patched"
   else
     return "Catppuccin Latte"
   end
@@ -26,7 +26,24 @@ local font = wezterm.font('JetBrains Mono')
 config.font = font
 config.font_size = 14
 config.window_frame = { font = font, font_size = 12 }
-config.color_scheme = scheme_for_appearance(wezterm.gui.get_appearance())
+local scheme_name = scheme_for_appearance(wezterm.gui.get_appearance())
+config.color_scheme = scheme_name
+
+-- Solarized's red (used for git diff removals, among other things) reads too
+-- bright/saturated on screen; tone it down while leaving the rest of the
+-- scheme's palette untouched.
+do
+  local scheme = wezterm.color.get_builtin_schemes()[scheme_name]
+  if scheme and scheme.ansi and scheme.brights then
+    local ansi = {}
+    local brights = {}
+    for i, c in ipairs(scheme.ansi) do ansi[i] = c end
+    for i, c in ipairs(scheme.brights) do brights[i] = c end
+    ansi[2] = '#9c4b48'
+    brights[2] = '#ad5f5c'
+    config.colors = { ansi = ansi, brights = brights }
+  end
+end
 config.enable_scroll_bar = true
 config.use_fancy_tab_bar = false
 config.tab_max_width = 25
