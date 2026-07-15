@@ -69,6 +69,27 @@ local function activate_tab_by_val(key)
   return { key = tostring(key), mods = 'SUPER', action = act.ActivateTab(key - 1)}
 end
 
+-- fuzzy-searchable, live-previewed picker over all builtin + custom color schemes
+local function choose_color_scheme()
+  local schemes = wezterm.color.get_builtin_schemes()
+  local choices = {}
+  for name, _ in pairs(schemes) do
+    table.insert(choices, { label = name })
+  end
+  table.sort(choices, function(a, b) return a.label < b.label end)
+
+  return act.InputSelector({
+    title = 'Pick a color scheme',
+    choices = choices,
+    fuzzy = true,
+    action = wezterm.action_callback(function(window, _pane, _id, label)
+      if label then
+        window:set_config_overrides({ color_scheme = label })
+      end
+    end),
+  })
+end
+
 -- like nvim leader "space" or tmux ctrl+b
 bind.leader = { key = 'Space', mods = mod.SUPER, timeout_milliseconds = 1000 }
 bind.keys = {
@@ -170,6 +191,9 @@ bind.keys = {
   { key = 'F12', mods = 'NONE', action = act.ShowDebugOverlay },
   { key = 'F5',  mods = 'NONE', action = act.ReloadConfiguration },
   { key = 'f',   mods = mod.SUPER, action = act.Search({ CaseInSensitiveString = '' }) },
+  { key = 'F6',  mods = 'NONE', action = wezterm.action_callback(function(win, pane) win:perform_action(choose_color_scheme(), pane) end) },
+  -- clear F6 preview overrides and fall back to whatever wezterm.lua computes
+  { key = 'F6',  mods = 'SHIFT', action = wezterm.action_callback(function(win, _pane) win:set_config_overrides({}) end) },
 }
 
 bind.mouse = {
