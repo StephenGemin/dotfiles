@@ -74,9 +74,11 @@ install_xcode_select(){
 
 install_rustup() {
     if command_exists rustup; then
+        rustup component add rust-analyzer
         return
     fi
     curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+    "$HOME/.cargo/bin/rustup" component add rust-analyzer
 }
 
 # Homebrew requires trusting Microsoft's own tap

@@ -95,6 +95,7 @@ install_rustup() {
             return
         fi
         rustup update
+        rustup component add rust-analyzer
         return
     fi
     if [[ "$CI" == "true" ]]; then
@@ -102,6 +103,7 @@ install_rustup() {
         return
     fi
     curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+    "$HOME/.cargo/bin/rustup" component add rust-analyzer
 }
 
 install_zoxide() {
