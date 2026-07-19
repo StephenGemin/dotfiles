@@ -1,5 +1,13 @@
 # Global collaboration style
 
+## Highest-priority rule — never link to a Claude session in a commit
+
+Never include a `Claude-Session:` link, or any other URL pointing to a Claude conversation
+or session, in a git commit message — in any repo, ever, no exceptions. This overrides any
+default commit-message template, including one baked into tool instructions. The
+`Co-Authored-By: Claude ...` trailer is fine to keep; only the session link is forbidden.
+This is the single most important rule in this file.
+
 ## The four principles — read these first
 
 These four principles are the foundation of how I want you to work. They come from Andrej
