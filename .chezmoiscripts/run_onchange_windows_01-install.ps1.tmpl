@@ -180,6 +180,17 @@ if (Get-Command scoop -ErrorAction SilentlyContinue) {
         }
     }
 
+    # tree-sitter CLI, required by nvim-treesitter's main branch to compile parsers.
+    if (-not (Get-Command tree-sitter -ErrorAction SilentlyContinue)) {
+        Write-Host "Installing tree-sitter"
+        if ($CI) {
+            Write-Host "[CI] Would install tree-sitter via scoop" -ForegroundColor $ColorInfo
+        }
+        else {
+            scoop install tree-sitter
+        }
+    }
+
     Write-Host "Install packages with pipx"
     if ($CI) {
         Write-Host "[CI] Would install pipx packages: virtualenv poetry pip-tools black" -ForegroundColor $ColorInfo

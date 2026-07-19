@@ -22,6 +22,7 @@ packages:
     - 'scrcpy'
     - 'uv'
     - 'graphviz'
+    - 'tree-sitter-cli'
     casks:
     - 'font-jetbrains-mono'
     - 'firefox'
@@ -45,3 +46,4 @@ packages:
     - 'ruff'
     - 'uv'
     - 'graphviz'
+    - 'tree-sitter-cli'
