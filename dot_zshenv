@@ -1,6 +1,7 @@
 # -*-mode:zsh-*- vim:ft=zsh
 
 # PATH - include user's private bins if they exist.
+typeset -U path PATH  # keep PATH entries unique; first occurrence wins
 if [ -d "$HOME/bin" ] ; then
     PATH="$HOME/bin:$PATH"
 fi
