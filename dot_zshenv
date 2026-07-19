@@ -11,6 +11,9 @@ fi
 if [ "$(uname)" = "Darwin" ]; then
     export PATH=/bin:/usr/bin:/sbin:/usr/sbin:$PATH
     export PATH="/usr/local/sbin:$PATH"
+    # .zprofile's `brew shellenv` runs after this file, so brew bins must be on
+    # PATH here for the nvim check below to find them.
+    export PATH="/opt/homebrew/bin:/opt/homebrew/sbin:$PATH"
 fi
 
 # XDG

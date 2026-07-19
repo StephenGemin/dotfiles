@@ -19,6 +19,11 @@ else
     if [ -d "$HOME/.local/bin" ] ; then
         PATH="$HOME/.local/bin:$PATH"
     fi
+    # brew shellenv runs from .bash_profile, after this file, so brew bins must
+    # be on PATH here for the nvim check below to find them.
+    if [ -d /opt/homebrew/bin ]; then
+        export PATH="/opt/homebrew/bin:/opt/homebrew/sbin:$PATH"
+    fi
 fi
 
 # XDG
