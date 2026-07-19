@@ -31,7 +31,7 @@ function git_develop_branch {
             return $branch
         }
     }
-    return -1
+    return 'develop'
 }
 
 function git_main_branch {
@@ -47,28 +47,29 @@ function git_main_branch {
             }
         }
     }
-    return -1
+    return 'main'
 }
 
 # my most used commands
 function gac { git add --all; git commit @args }
 function gacp { git add -p; git commit @args }
 function gacnv { git add --all; git commit --no-verify @args }
-function gac! { git add --all; git commit --amend @args }
+function gac! { git add --all; git commit --amend --no-edit @args }
+function gace! { git add --all; git commit --amend @args }
 function gacfx { param([string]$1); git add --all; git commit --fixup $1 }
 function grbo { param([string]$1); git rebase --interactive origin/$1 }
 function gacpo! {
-    git add --all; git commit --amend
+    git add --all; git commit --amend --no-edit
     if ($?) {
-        git push origin --force-with-lease
+        git push origin --force-with-lease @args
     } else {
         Write-Host "git commit failed" -ForegroundColor Red
     }
 }
 function gacnvpo! {
-    git add --all; git commit --amend --no-verify
+    git add --all; git commit --amend --no-verify --no-edit
     if ($?) {
-        git push origin --force-with-lease
+        git push origin --force-with-lease @args
     } else {
         Write-Host "git commit failed" -ForegroundColor Red
     }
@@ -100,11 +101,13 @@ function gcpa { git cherry-pick --abort }
 function gacpc { git add --all; git cherry-pick --continue }
 
 function gc { git commit @args }
-function gc! { git commit --amend @args }
-function gcfx { param([string]$1); git commit --fixup $1 }
-function gcnvfx { param([string]$1); git commit --no-verify --fixup $1 }
+function gc! { git commit --amend --no-edit @args }
+function gce! { git commit --amend @args }
+function gcfx { git commit --fixup @args }
+function gcnvfx { git commit --no-verify --fixup @args }
 
 function gd { git diff @args }
+function gdn { git add -N --all; git diff @args }  # include untracked files in the diff
 function gs { git status @args }
 function gsh { git show @args }
 function glastsha { git log -1 --pretty="%H" }
@@ -140,16 +143,16 @@ function grbm { git rebase --interactive origin/$(git_main_branch) }
 function grbum { git rebase --interactive upstream/$(git_main_branch) }
 
 function grs { git reset @args }
-function grsh { param ([int]$num = 1); git reset HEAD~$num @args }
+function grsh { param ([int]$num = 1); git reset HEAD~$num }
 function grsh! { param ([int]$num = 1); git reset --hard HEAD~$num }
 function grh! { git reset --hard @args }
-function gclean! { git clean -fdx }
+function gclean! { git clean -fdx @args }
 
 function gsts { git stash push -u @args }
 function gstsp { git stash push -p @args }
 function gsta { git stash apply @args }
 function gstc { git stash clear }
-function gstl { git stash list }
+function gstl { git stash list @args }
 function gstd {
     param ([int]$Ref = 0)
     if ($Ref -gt 0) {
@@ -170,21 +173,21 @@ function gstp {
 # more personal aliases & functions
 # nkf family -> checkout to branch, nuke previous local branch, then pull
 function gnkf {
-    $CURRENT_BRANCH = git rev-parse --abbrev-ref HEAD;
+    $CURRENT_BRANCH = git_current_branch
     git checkout $args[0]
     git branch -D $CURRENT_BRANCH
     git pull
 }
 
 function gnkfm {
-    $CURRENT_BRANCH = git rev-parse --abbrev-ref HEAD;
+    $CURRENT_BRANCH = git_current_branch
     git checkout $(git_main_branch)
     git branch -D $CURRENT_BRANCH
     git pull
 }
 
 function gnkfd {
-    $CURRENT_BRANCH = git rev-parse --abbrev-ref HEAD;
+    $CURRENT_BRANCH = git_current_branch
     git checkout $(git_develop_branch)
     git branch -D $CURRENT_BRANCH
     git pull

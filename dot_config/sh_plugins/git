@@ -58,11 +58,12 @@ function git_main_branch() {
 alias gac='git add --all && git commit'
 alias gacp='git add -p && git commit'
 alias gacnv='git add --all && git commit --no-verify'
-alias gac!='git add --all && git commit --amend'
+alias gac!='git add --all && git commit --amend --no-edit'
+alias gace!='git add --all && git commit --amend'
 function gacfx() { git add --all && git commit --fixup $1; }
 function grbo() { git rebase --interactive origin/"$1"; }
-alias gacpo!='git add --all && git commit --amend && git push --force-with-lease origin'
-alias gacnvpo!='git add --all && git commit --amend --no-verify && git push origin --force-with-lease'
+alias gacpo!='git add --all && git commit --amend --no-edit && git push --force-with-lease origin'
+alias gacnvpo!='git add --all && git commit --amend --no-verify --no-edit && git push origin --force-with-lease'
 alias gds='git diff --stat'
 function gl() { git log --oneline --graph -"${1:-15}"; }
 alias gwip='git add --all && git commit --no-verify -m "[skip ci] WIP"'
@@ -87,11 +88,13 @@ alias gcpa='git cherry-pick --abort'
 alias gacpc='git add --all && git cherry-pick --continue'
 
 alias gc='git commit'
-alias gc!='git commit --amend'
+alias gc!='git commit --amend --no-edit'
+alias gce!='git commit --amend'
 alias gcfx='git commit --fixup'
 alias gcnvfx='git commit --no-verify --fixup'
 
 alias gd='git diff'
+alias gdn='git add -N --all && git diff'  # include untracked files in the diff
 alias gs='git status'
 alias gsh='git show'
 alias glastsha='git log -1 --pretty="%H"'  # output full sha of last commit
