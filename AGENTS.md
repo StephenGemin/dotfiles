@@ -28,16 +28,25 @@ or secret values.
 scripts/                 real, shellcheck-linted bash invoked by the run scripts
   install_debian.sh      Debian package/tool install (apt/snap/cargo/brew/pipx)
   logging.sh             log_* / error / success helpers, sourced by other scripts
+dot_gitconfig.tmpl       -> ~/.gitconfig; check before adding/recommending git aliases —
+                         behavior (rebase.autosquash, fetch.prune, push.autoSetupRemote,
+                         etc.) may already be configured here instead of needing an alias
 dot_*                    files applied to $HOME (dot_bashrc -> ~/.bashrc, etc.)
 dot_config/              -> ~/.config (wezterm, git, powershell, sh_plugins, ...)
   sh_plugins/            zsh aliases & functions (Linux + macOS) — paired with powershell/
   powershell/            pwsh equivalents (Windows) — must stay in sync with sh_plugins/
 dot_local/               -> ~/.local
+dot_claude/CLAUDE.md     -> ~/.claude/CLAUDE.md; the user's GLOBAL Claude Code
+                         instructions (applies to every project, not just this repo) —
+                         don't confuse with this repo's own CLAUDE.md below
 AppData/                 Windows-only target paths (Roaming/...), gated in .chezmoiignore
+Library/                 macOS-only target paths (~/Library/Application Support/...),
+                         gated in .chezmoiignore — same role as AppData/ for Windows
 .github/workflows/ci.yml shellcheck + chezmoi apply/verify on Linux & macOS
 .claude/                 project-level Claude Code config (not applied to $HOME)
   agents/                subagent definitions (dotfiles-coder)
   commands/              slash commands (plan, code, review, docs)
+CLAUDE.md                this repo's own Claude Code instructions (project-scoped)
 README.md                user-facing install + tooling docs
 ```
 
