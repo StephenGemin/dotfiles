@@ -74,6 +74,7 @@ install_xcode_select(){
 
 install_rustup() {
     if command_exists rustup; then
+        rustup update stable
         rustup component add rust-analyzer
         return
     fi

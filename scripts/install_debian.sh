@@ -94,7 +94,7 @@ install_rustup() {
             log_info "[CI] Would run rustup update"
             return
         fi
-        rustup update
+        rustup update stable
         rustup component add rust-analyzer
         return
     fi
