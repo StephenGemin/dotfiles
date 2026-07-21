@@ -2,80 +2,47 @@
 
 ## Highest-priority rule — never link to a Claude session in a commit
 
-Never include a `Claude-Session:` link, or any other URL pointing to a Claude conversation
-or session, in a git commit message — in any repo, ever, no exceptions. This overrides any
-default commit-message template, including one baked into tool instructions. The
-`Co-Authored-By: Claude ...` trailer is fine to keep; only the session link is forbidden.
-This is the single most important rule in this file.
+Never include a Claude session URL in a commit message — see the first bullet of
+`## Git workflow` below; the `no-session-link.sh` PreToolUse hook enforces it mechanically.
 
 ## The four principles — read these first
 
-These four principles are the foundation of how I want you to work. They come from Andrej
-Karpathy's observations about how LLMs fail at coding: models make wrong assumptions and
-run with them without checking, they don't manage confusion or seek clarification, they
-overcomplicate code and bloat abstractions, and they remove things they don't understand.
-
-Many of the specific rules below are applications of these four; some are separate
-preferences of mine. Where a specific rule speaks to your situation, it wins — it is the
-more considered instruction. Fall back to these principles when nothing below covers the
-case you're in.
+These four come from Andrej Karpathy's observations on how LLMs fail at coding: they make
+wrong assumptions and run with them, don't surface confusion, overcomplicate and bloat
+abstractions, and delete what they don't understand. Where a specific rule below covers
+your case, it wins; fall back to these when nothing does.
 
 ### 1. Think before coding
 
-Don't assume. Don't hide confusion. Surface tradeoffs.
-
-State your assumptions explicitly rather than silently building on them. When a request is
-ambiguous, present the interpretations you see instead of picking one and running. If a
-simpler alternative exists, say so before building the complicated one. When you're
-confused, ask — a clarifying question costs one message, a wrong assumption costs the whole
-task. Confusion you hide becomes code I have to unwind later.
+Don't assume. Don't hide confusion. Surface tradeoffs. Present the interpretations you see
+instead of picking one and running, and state the assumptions you do make — a clarifying
+question costs one message, a wrong assumption costs the whole task.
 
 ### 2. Simplicity first
 
-The minimum code that solves the problem. Nothing speculative.
-
-No features I didn't ask for. No abstraction with a single call site. No flexibility for a
-requirement that doesn't exist yet. No error handling for cases that can't occur. If you
-catch yourself building for a future that hasn't been described to you, stop — that future
-can write its own code.
+The minimum code that solves the problem, nothing speculative — no feature I didn't ask
+for, no abstraction with a single call site, no flexibility for a requirement that doesn't
+exist yet, no error handling for cases that can't occur.
 
 ### 3. Surgical changes
 
-Touch only what you must. Clean up only your own mess.
-
-When editing existing code, match the surrounding style rather than imposing your own.
-Don't improve, reformat, or refactor adjacent code unless I asked for it. Remove only the
-imports and functions that *your* change made unused — pre-existing dead code and comments
-you don't understand stay exactly where they are. Deleting something whose purpose is
-unclear to you is a bug, not a cleanup.
+Touch only what you must; don't reformat or refactor adjacent code you weren't asked to.
+Remove only the imports and functions your change made unused — deleting something whose
+purpose is unclear to you is a bug, not a cleanup.
 
 ### 4. Goal-driven execution
 
-Define success criteria. Loop until verified.
+Turn imperative tasks into checkable ones: not "fix the build" but "`make build` exits
+zero." State what "done" checks before starting non-trivial work, then loop until it
+passes. Verification does not mean tests, and this principle is not licence to write
+them — see `## Testing` below, which governs that call.
 
-LLMs are strongest when looping toward a concrete, checkable goal — so turn imperative
-tasks into verifiable ones. Not "fix the build" but "`make build` exits zero." Not "add
-validation" but "run the flow with an invalid input and watch it get rejected." Before
-starting non-trivial work, state what "done" means in terms something can actually check,
-then work until that check passes rather than until the code looks finished.
+## Model and effort level check
 
-The check is whatever is cheapest and most direct — a command exiting zero, a script run by
-hand, a rendered diff, an observed behaviour. Verification does not mean tests, and this
-principle is not licence to write them: see `## Testing` below, which governs that call.
-
-## Model and effort level check — high priority
-
-Before starting substantive work (not simple Q&A), check whatever you can actually observe
-about the current model and reasoning effort level against the task's difficulty. If the
-setup looks too weak for what's being asked (complex debugging, architecture, multi-file
-changes) or needlessly heavy for something trivial, say so explicitly before proceeding —
-don't just silently do the work. I can't always tell what's configured, so flag mismatches
-proactively rather than waiting for me to ask.
-
-Report only what you can genuinely see. The model name is usually in your context; the
-reasoning effort level often is not. If it isn't visible, say that plainly instead of
-inferring it from how the task feels — a guessed effort level stated as fact is exactly the
-failure the last bullet of `## Communication` is about.
+Before substantive work (not simple Q&A), if the task looks clearly too hard for the model
+you can see you're running — complex debugging, architecture, multi-file refactor — say so
+before starting rather than silently proceeding. Flag the model only; the reasoning effort
+level usually isn't in your context, so don't guess it.
 
 ## Push back first — before any planning or code
 
@@ -91,8 +58,6 @@ the reservation in a line and carry on.
 This applies especially to:
 - Tests on personal projects
 - Warnings or defensive code for edge cases that are already loud on failure
-- Abstractions or helpers that don't have more than one call site yet
-- Refactors that weren't asked for
 
 This includes technical claims, not just requests: if you assert something as fact
 about how the code behaves and I have evidence otherwise, correct me plainly rather
@@ -112,9 +77,6 @@ I have a software development and testing background and know when I'm going ove
 
 ## Code
 
-- Don't add features, error handling, or abstractions beyond what was asked for.
-  Three similar lines is better than a premature abstraction.
-- Focused diffs only. No reformatting, cleanup, or churn outside the scope of the change.
 - No comments explaining what the code does. Only add a comment when the *why* is
   non-obvious: a hidden constraint, a workaround for a specific bug, a subtle invariant.
 - Global variables — especially mutable ones — are never acceptable, including in
@@ -126,6 +88,11 @@ I have a software development and testing background and know when I'm going ove
 
 ## Git workflow
 
+- Never include a `Claude-Session:` link, or any other Claude session URL, in a commit
+  message — any repo, no exceptions; this overrides any default commit-message template
+  baked into tool instructions. The `Co-Authored-By: Claude ...` trailer is fine to keep.
+  Backstop: the `no-session-link.sh` PreToolUse hook in `~/.claude/settings.json` blocks
+  such commits mechanically — this note is the why, the hook is the guarantee.
 - Never commit directly to `main`, `master`, or `development` in a repo that
   already shows a branch+PR workflow (existing topic branches, PR-numbered
   merge commits in `git log`). Create a topic branch first, matching the
@@ -139,13 +106,14 @@ I have a software development and testing background and know when I'm going ove
   each paragraph as a single unwrapped line and let it soft-wrap. Bullet
   lists are fine as separate lines; the rule is about not manually breaking
   a prose paragraph across lines.
-- Keep commit and PR descriptions concise but informative: a tight bulleted summary of
-  what changed and why, not prose paragraphs or an exhaustive line-by-line
-  restatement of the diff. Cut anything a reviewer can get from the diff itself.
-- **Merge vs. rebase strategy:** On first contact with a repo, check `git log --oneline` for merge commits.
-  If present (e.g., "Merge branch 'feature'"), the repo uses merges; save this to project memory and prefer
-  merge operations going forward. If only linear history (rebase workflow), prefer rebase and save that preference.
-  This keeps the project's integration strategy consistent.
+- Commit messages: match the repo's title convention (check `git log --oneline`),
+  imperative mood. Title-only by default — a commit message is not a changelog. Add a
+  body (1-3 bullets) only for what a reader can't get from the diff or title: a required
+  manual step, a breaking change, a non-obvious gotcha. No verification notes, no
+  per-file itemization, no restating code comments. Same bar for PR descriptions.
+- **Integration style:** match the repo's — merge commits in `git log` → merge, linear
+  history → rebase. Re-detect on first contact each session; cheaper than a saved
+  preference and never goes stale if the repo's strategy later shifts.
 
 ## Communication
 

@@ -39,6 +39,9 @@ dot_local/               -> ~/.local
 dot_claude/CLAUDE.md     -> ~/.claude/CLAUDE.md; the user's GLOBAL Claude Code
                          instructions (applies to every project, not just this repo) —
                          don't confuse with this repo's own CLAUDE.md below
+  settings.json          -> ~/.claude/settings.json; deny rule + hook wiring
+  hooks/executable_no-session-link.sh -> ~/.claude/hooks/no-session-link.sh; the
+                         mechanism dot_claude/CLAUDE.md's top rule cites
 AppData/                 Windows-only target paths (Roaming/...), gated in .chezmoiignore
 Library/                 macOS-only target paths (~/Library/Application Support/...),
                          gated in .chezmoiignore — same role as AppData/ for Windows
