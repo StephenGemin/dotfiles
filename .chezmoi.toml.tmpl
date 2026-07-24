@@ -9,7 +9,8 @@ Using standard toml comments causes problems with chezmoi init */ -}}
 {{- $name := promptString "❔ Git username (enter for default)" $git_username }}
 {{- writeToStdout (printf "✅ chezmoi init: name=%s\n" $name) -}}
 
-{{- $email := promptString "❔ Git email address" }}
+{{- $git_email := "45926479+StephenGemin@users.noreply.github.com" -}}
+{{- $email := promptString "❔ Git email address (enter for default)" $git_email }}
 {{- writeToStdout (printf "✅ chezmoi init: email=%s\n" $email) -}}
 
 {{- $install_host := promptString "❔ Installation type (work/home; enter for default)" "home" }}
