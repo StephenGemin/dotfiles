@@ -20,7 +20,7 @@ touch, so a fresh laptop is one command away from feeling like home.
   repo — no WSL, no per-machine forks — giving one unified set of apps, tools, and aliases everywhere.
 - **Idempotent & convention-driven.** Built on chezmoi templates, `.chezmoidata`, and
   `run_onchange_` scripts; `chezmoi apply` is safe to run twice and CI verifies there's no drift.
-- **A cohesive terminal stack.** WezTerm, oh-my-posh, Neovim (NVChad), fzf, ripgrep,
+- **A cohesive terminal stack.** WezTerm, oh-my-posh, Neovim, fzf, ripgrep,
   zoxide, and a `pyenv` + `uv` + `ruff` Python toolchain.
 - **Home *and* work aware.** An `install_host = home | work` prompt at init time switches package
   sets and config from the same source.
@@ -115,9 +115,9 @@ chezmoi init --apply -v https://github.com/$GITHUB_USERNAME/dotfiles.git
   ```
 
 - May need to install MSYS2 manually
-- NeoVim with NVChad
-  - ***Do not start Neovim until NVChad reqs are installed!***
-  - Install dependencies for NVChad (use MSYS2)
+- Neovim
+  - ***Do not start Neovim until the reqs below are installed!***
+  - Install build dependencies (use MSYS2)
     - `pacman -S --needed base-devel mingw-w64-ucrt-x86_64-toolchain`
     - `pacman -S make gcc`
 - To install fonts go to `~\.local\share\fonts`; find ttf files, right-click desired files, and select **install**
@@ -135,7 +135,6 @@ chezmoi init --apply -v https://github.com/$GITHUB_USERNAME/dotfiles.git
 Manual setup steps for individual tools / apps:
 
 - [PyCharm](https://www.jetbrains.com/pycharm/) — Import settings from `~\.config`
-- [Neovim](https://neovim.io/) — Run `:MasonInstallAll` on first run
 
 ## Tooling
 
@@ -175,7 +174,7 @@ Language-agnostic managers, per OS:
 |---|---|---|---|---|
 | [Chezmoi](https://www.chezmoi.io/) | ✅ | ✅ | ✅ |  |
 | [Git](https://git-scm.com/) | ✅ | ✅ | ✅ | git-lfs / git-extras |
-| [Neovim](https://neovim.io/) | ✅ | ✅ | ✅ | [NVChad](https://github.com/NvChad/NvChad) via [nvim-starter](https://github.com/StephenGemin/nvim-starter) |
+| [Neovim](https://neovim.io/) | ✅ | ✅ | ✅ | [nvim-config](https://github.com/StephenGemin/nvim-config) |
 | [Vim](https://www.vim.org/) | ✅ | ✅ | ✅ |  |
 | [Nano](https://www.nano-editor.org/) | ✅ | 🚫 | ✅ |  |
 | [Notepad++](https://notepad-plus-plus.org/) | 🚫 | ✅ | 🚫 |  |

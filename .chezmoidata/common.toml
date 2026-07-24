@@ -1,5 +1,8 @@
 fontsDir = ".local/share/fonts"
 
+# Switching this url requires deleting the checkout first; see README "Per-tool setup".
+nvimRepo = "https://github.com/StephenGemin/nvim-config"
+
 [terminalFont]
   name = "JetBrains Mono"
   size = 14

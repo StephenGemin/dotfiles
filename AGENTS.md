@@ -19,10 +19,10 @@ or secret values.
                          (name, email, install_host, wingit_install_dir, osid)
 .chezmoidata/            static template data merged into the `.` context
   brew.yaml              .packages.{darwin,debian}.{brews,casks}
-  common.toml            .fontsDir, .terminalFont, .user.software.*
+  common.toml            .fontsDir, .nvimRepo, .terminalFont, .user.software.*
 .chezmoitemplates/       named fragments included via includeTemplate/template
                          (e.g. is-linux-debian, get-catppuccin-themes-dir, app configs)
-.chezmoiexternal.toml    external git repos & files (nvim-starter, fonts, plantuml.jar)
+.chezmoiexternal.toml    external git repos & files (nvim-config, fonts, plantuml.jar)
 .chezmoiignore           which source files are NOT applied + per-OS gating
 .chezmoiscripts/         run_onchange_ scripts, gated per-OS (debian/darwin/windows)
 scripts/                 real, shellcheck-linted bash invoked by the run scripts
@@ -112,7 +112,8 @@ Templates depend on a stable data shape. Changing these keys breaks rendering el
 grep first, change deliberately:
 
 - From `.chezmoidata/`: `.packages.{darwin,debian}.{brews,casks}`, `.fontsDir`,
-  `.terminalFont.{name,size}`, `.user.software.{python_version,default_shell}`.
+  `.nvimRepo`, `.terminalFont.{name,size}`,
+  `.user.software.{python_version,default_shell}`.
 - From `.chezmoi.toml.tmpl` `[data]`: `.name`, `.email`, `.install_host`,
   `.wingit_install_dir`, `.osid`.
 
