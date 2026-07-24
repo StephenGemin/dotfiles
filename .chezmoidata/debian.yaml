@@ -49,6 +49,8 @@ debian:
   - 'libusb-1.0-0'
   cargo:
   - 'ripgrep'
+  # nvim-treesitter's main branch generates parsers with the tree-sitter CLI
+  - 'tree-sitter-cli'
   snap:
   - 'chromium'
   # nvim version through apt-get is ~2 years old, so use snap

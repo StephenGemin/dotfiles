@@ -34,6 +34,7 @@
 				{"PackageIdentifier" : "ajeetdsouza.zoxide"},
 				{"PackageIdentifier" : "junegunn.fzf"},
 				{"PackageIdentifier" : "neovim.neovim"},
+				{"PackageIdentifier" : "equalsraf.win32yank"},
 				{"PackageIdentifier" : "burntsushi.ripgrep.MSVC"},
 				{"PackageIdentifier" : "sharkdp.fd"},
 				{"PackageIdentifier" : "jqlang.jq"},

@@ -8,6 +8,7 @@
 			[
 				{"PackageIdentifier" : "GitHub.cli"},
 				{"PackageIdentifier" : "flux.flux"},
+				{"PackageIdentifier" : "Microsoft.VCRedist.2015+.x64"},
 				{"PackageIdentifier" : "MSYS2.MSYS2"},
 				{"PackageIdentifier" : "wez.wezterm"},
 				{"PackageIdentifier" : "Microsoft.WindowsTerminal"},
@@ -25,6 +26,7 @@
 				{"PackageIdentifier" : "ajeetdsouza.zoxide"},
 				{"PackageIdentifier" : "junegunn.fzf"},
 				{"PackageIdentifier" : "neovim.neovim"},
+				{"PackageIdentifier" : "equalsraf.win32yank"},
 				{"PackageIdentifier" : "burntsushi.ripgrep.MSVC"},
 				{"PackageIdentifier" : "sharkdp.fd"},
 				{"PackageIdentifier" : "jqlang.jq"},
